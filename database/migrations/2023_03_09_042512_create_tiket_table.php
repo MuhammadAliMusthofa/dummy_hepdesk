@@ -20,6 +20,7 @@ class CreateTiketTable extends Migration
             $table->string('email');
             $table->string('departemen');
             $table->time('experied');
+            $table->string('helpdesk');
             $table->timestamps();
         });
     }
