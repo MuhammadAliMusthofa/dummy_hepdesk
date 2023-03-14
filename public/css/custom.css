@@ -1,0 +1,47 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+p,
+a {
+  margin: 0;
+  padding: 0;
+  color: black;
+}
+
+.h1,
+.h2,
+.h3,
+.h4,
+.h5 {
+  margin: 0;
+  padding: 0;
+  color: black;
+}
+
+.navbar-nav.sidebar {
+  background-color: #2f4050;
+}
+
+.sidebar-brand {
+  background: #caecfa;
+}
+
+.sidebar-info {
+  background-color: #29445f;
+}
+
+.sdid #accordion .card-header,
+.sdid #accordion .card-body {
+  background-color: #d6e2e9;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.card-header .btn {
+  color: black;
+}
+
+.kategori button {
+  background-color: #76a0b4;
+}
