@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Admin</title>
+  <link rel="stylesheet" href="{{ asset('css/style.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/fontawesome/css/font-awesome.min.css') }}">
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
@@ -50,30 +51,34 @@
               aria-describedby="cari-pesan">
           </div>
         </div>
-        @for ($i=0; $i < 11; $i++) <div class="d-flex justify-content-between align-items-center">
-          <div class="p-2">
-            <div class="text-center bg-light rounded-circle d-flex align-items-center justify-content-center"
-              style="width: 50px; height: 50px">
-              <i class="fa fa-user"></i>
+        <div id="obrolan">
+          @for ($i=0; $i < 11; $i++) <a href="/pesan/{{ $i }}">
+            <div class="d-flex justify-content-between align-items-center p-2">
+              <div class="p-2">
+                <div class="text-center bg-light rounded-circle d-flex align-items-center justify-content-center"
+                  style="width: 50px; height: 50px">
+                  <i class="fa fa-user"></i>
+                </div>
+              </div>
+              <div class="p-2">
+                <h5 class="font-weight-bold m-0">Dosen 1</h5>
+                <p class="m-0">Dosen Universitas X</p>
+              </div>
+              <div class="ml-auto p-2">
+                <div class="d-flex align-items-top">
+                  <p class="text-sm-left ml-auto m-0">09.00</p>
+                </div>
+              </div>
             </div>
-          </div>
-          <div class="p-2">
-            <h5 class="font-weight-bold m-0">Dosen 1</h5>
-            <p class="m-0">Dosen Universitas X</p>
-          </div>
-          <div class="ml-auto p-2">
-            <div class="d-flex align-items-top">
-              <p class="text-sm-left ml-auto m-0">09.00</p>
-            </div>
-          </div>
+            </a>
+            <hr class="m-0">
+            @endfor
+        </div>
       </div>
-      <hr class="m-0">
-      @endfor
     </div>
-  </div>
-  <div class="col-md-7 pl-0">
-    @include('admin.antrianPage')
-  </div>
+    <div class="col-md-7 pl-0">
+      @yield('subcontent')
+    </div>
   </div>
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
     integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
