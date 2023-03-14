@@ -34,4 +34,9 @@ class HomeController extends Controller
         Auth::logout();
          return redirect('/login');
     }
+
+    public function riwayat_keluhan()
+    {
+        return view('users.riwayat_keluhan');
+    }
 }
