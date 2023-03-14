@@ -25,9 +25,13 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+<<<<<<< HEAD
 
 Route::get('/pesan/{id_tiket}', 'TiketController@index')->name('pesan');
 Route::get('/pesan/detail/{id_tiket}', 'TiketController@detail')->name('pesan.detail');
+=======
+Route::get('/riwayat_keluhan', 'HomeController@riwayat_keluhan')->name('riwayat_keluhan');
+>>>>>>> 9c0d4b40d956fa04455ac3666e58b61ffffc5c61
 // Route::controller('users', 'UserController');
 
 
