@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '65e4b22c84fc47dc2e4e96402df70e64615eb1a6',
+        'reference' => '317c8a428300dda05cf1a1a97ead6d94046f0380',
         'name' => 'laravel/laravel',
         'dev' => true,
     ),
@@ -298,7 +298,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '65e4b22c84fc47dc2e4e96402df70e64615eb1a6',
+            'reference' => '317c8a428300dda05cf1a1a97ead6d94046f0380',
             'dev_requirement' => false,
         ),
         'laravel/tinker' => array(
@@ -311,12 +311,12 @@
             'dev_requirement' => false,
         ),
         'league/flysystem' => array(
-            'pretty_version' => '1.0.70',
-            'version' => '1.0.70.0',
+            'pretty_version' => '1.0.46',
+            'version' => '1.0.46.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../league/flysystem',
             'aliases' => array(),
-            'reference' => '585824702f534f8d3cf7fab7225e8466cc4b7493',
+            'reference' => 'f3e0d925c18b92cf3ce84ea5cc58d62a1762a2b2',
             'dev_requirement' => false,
         ),
         'mockery/mockery' => array(

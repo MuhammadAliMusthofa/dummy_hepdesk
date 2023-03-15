@@ -27,7 +27,7 @@ class HomeController extends Controller
         if (
             Auth::user()->role == 0
         ) {
-            return view('admin.dashboard');
+            return view('user.sdid');
         } elseif (Auth::user()->role == 1) {
             return view('users.dashboard');
         }
@@ -38,5 +38,15 @@ class HomeController extends Controller
     public function riwayat_keluhan()
     {
         return view('users.riwayat_keluhan');
+    }
+
+    public function riwayat_detail()
+    {
+        return view('users.riwayat_detail');
+    }
+
+    public function user_chat()
+    {
+        return view('users.chat_user');
     }
 }

@@ -26,6 +26,8 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/riwayat_keluhan', 'HomeController@riwayat_keluhan')->name('riwayat_keluhan');
+Route::get('/riwayat_detail', 'HomeController@riwayat_detail')->name('riwayat_detail');
+Route::get('/user_chat', 'HomeController@user_chat')->name('user_chat');
 // Route::controller('users', 'UserController');
 
 
