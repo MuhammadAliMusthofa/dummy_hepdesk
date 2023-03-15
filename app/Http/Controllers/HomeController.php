@@ -29,7 +29,7 @@ class HomeController extends Controller
         ) {
             return view('admin.subcontent.antrian');
         } elseif (Auth::user()->role == 1) {
-            return view('users.dashboard');
+            return view('user.sdid');
         }
         Auth::logout();
         return redirect('/login');

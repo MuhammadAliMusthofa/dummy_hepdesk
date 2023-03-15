@@ -27,14 +27,14 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 //chat user
-Route::get('/user/pesan', 'ViewChatController@user');
+Route::get('/user/pesan', 'ViewChatController@userChat');
 Route::get('/user/riwayat/{id_pengguna}', 'ViewChatController@riwayat');
 Route::get('/user/riwayat/detail/{id_tiket}', 'ViewChatController@riwayat_detail');
 
 // chat admin
-Route::get('/admin/pesan', 'ViewChatController@admin');
-Route::get('/admin/pesan/{id_tiket}', 'ViewChatController@admin_chat');
-Route::get('/admin/pesan/detail/{id_tiket}', 'ViewChatController@admin_detail');
+Route::get('/admin/pesan', 'ViewChatController@adminChat');
+Route::get('/admin/pesan/{id_tiket}', 'ViewChatController@adminChatUser');
+Route::get('/admin/pesan/detail/{id_tiket}', 'ViewChatController@adminChatDetail');
 
 // SSD user
 Route::get('/ssd', 'SSDController@index');
