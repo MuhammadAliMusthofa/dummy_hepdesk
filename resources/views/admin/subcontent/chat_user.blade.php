@@ -26,7 +26,7 @@
       </div>
     </div>
   </div>
-  <div class="card-body h-100" style="max-height: 80vh; overflow: auto;>
+  <div class="card-body h-100" style="max-height: 100vh; overflow: auto;>
     <ul class=" list-unstyled">
     <li class="media mr-3" style="width:35%">
 
@@ -56,7 +56,7 @@
 
     </ul>
   </div>
-  <div class="card-footer mt-5 " style="background-color: #BACFDA">
+  <div class="card-footer mt-5 position-sticky" style="background-color: #BACFDA;">
     <form class="">
       <div class="form-group d-flex justify-content-between align-items-center">
         <div class="btn" style="font-size:20px"><i class="fa fa-paperclip "></i></div>
