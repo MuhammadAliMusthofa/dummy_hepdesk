@@ -1,75 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Riwayat detail</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
+@extends('layouts.dashboard_layout')
 
-    <style>
-        #card-header-chat{
-            background-color: #295D77;
-        }
-
-        #chat-admin{
-
-            background-color:#D6E2E9; 
-            border-radius: 0px 15px 15px 15px / 25px 15px 15px 15px;
-            box-shadow: 2px 2px rgb(161, 159, 159);
-        }
-
-        #footer{
-            background-color: #295D77;
-        }
-
-        #chat-user p {
-            background-color: #214B5F;
-             color:white; 
-             width: 45%; 
-             border-radius:10px;
-             box-shadow: 2px 2px rgb(12, 32, 92);
-        }
-    </style>
-</head>
-
-<body >
-
-   
-    
-    <nav class="navbar navbar-expand topbar mb-4 static-top">
-        <!-- Sidebar Toggle (Topbar) -->
-        <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-          <i class="fas fa-fw fa-bars"></i>
-        </button>
-
-        <!-- Topbar Search -->
-        <div class="navbar-nav flex-column mt-4">
-          <p class="m-0 h4 font-weight-bold mb-2 text-dark">Layanan Informasi</p>
-          <p class="m-0 h6 text-dark font-weight-bold">Beranda / Layanan Helpdesk / Riwayat / Detail</p>
-        </div>
-
-        <!-- Topbar Navbar -->
-        <ul class="navbar-nav ml-auto">
-          <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-
-          <!-- Nav Item - User Information -->
-          <li class="nav-item no-arrow d-flex align-items-center">
-            <i class="fas fa-cog mr-2"></i>
-            <p class="m-0 font-weight-bold text-dark">Pengaturan</p>
-          </li>
-
-          <li class="nav-item no-arrow d-flex align-items-center ml-4">
-            <i class="fas fa-sign-out-alt mr-2"></i>
-            <p class="m-0 font-weight-bold text-dark">Keluar</p>
-          </li>
-        </ul>
-      </nav>
+@section('content')
+      {{-- chat --}}
       
-
-    {{-- chat --}}
-    <div class="container mt-5 col-md-12">
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -80,8 +13,8 @@
                         <a href="{{ route('riwayat_keluhan') }}"><i class="fas fa-arrow-left text-white"></i></a>
                             
                         </div>
-                            <h3>ADMIN 1</h3>
-                            <h5 class="my-auto">09/03/2023</h5>
+                            <h3 class="text-white">ADMIN 1</h3>
+                            <h5 class="my-auto text-white">09/03/2023</h5>
                         </div>
                     <div class="card-body">
                         <ul class="list-unstyled">
@@ -136,7 +69,17 @@
                 </div>
             </div>
         </div>
-    </div>
+   
+@endsection
+
+
+
+   
+    
+   
+      
+
+  
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>

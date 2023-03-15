@@ -25,9 +25,15 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/pesan/{id_tiket}', 'TiketController@index')->name('pesan');
+Route::get('/pesan/user/{id_tiket}', 'TiketController@user')->name('pesan.user');
+Route::get('/pesan/detail/{id_tiket}', 'TiketController@detail')->name('pesan.detail');
+
 Route::get('/riwayat_keluhan', 'HomeController@riwayat_keluhan')->name('riwayat_keluhan');
 Route::get('/riwayat_detail', 'HomeController@riwayat_detail')->name('riwayat_detail');
 Route::get('/user_chat', 'HomeController@user_chat')->name('user_chat');
+Route::get('/ssd', 'HomeController@ssd')->name('ssd');
 // Route::controller('users', 'UserController');
 
 

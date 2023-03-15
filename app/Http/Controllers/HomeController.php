@@ -27,17 +27,12 @@ class HomeController extends Controller
         if (
             Auth::user()->role == 0
         ) {
-            return view('user.sdid');
+            return view('admin.subcontent.antrian');
         } elseif (Auth::user()->role == 1) {
-            return view('users.dashboard');
+            return view('user.sdid');
         }
         Auth::logout();
-         return redirect('/login');
-    }
-
-    public function riwayat_keluhan()
-    {
-        return view('users.riwayat_keluhan');
+        return redirect('/login');
     }
 
     public function riwayat_detail()
@@ -47,6 +42,12 @@ class HomeController extends Controller
 
     public function user_chat()
     {
-        return view('users.chat_user');
+        return view('users.dashboard');
+    }
+
+  
+    public function riwayat_keluhan()
+    {
+        return view('users.riwayat_keluhan');
     }
 }
