@@ -311,12 +311,12 @@
             'dev_requirement' => false,
         ),
         'league/flysystem' => array(
-            'pretty_version' => '1.0.70',
-            'version' => '1.0.70.0',
+            'pretty_version' => '1.0.46',
+            'version' => '1.0.46.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../league/flysystem',
             'aliases' => array(),
-            'reference' => '585824702f534f8d3cf7fab7225e8466cc4b7493',
+            'reference' => 'f3e0d925c18b92cf3ce84ea5cc58d62a1762a2b2',
             'dev_requirement' => false,
         ),
         'mockery/mockery' => array(
