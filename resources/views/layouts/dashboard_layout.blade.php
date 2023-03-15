@@ -19,7 +19,7 @@
   <!-- Custom styles for this template-->
   <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet" />
   <link rel="stylesheet" href="{{ asset('css/custom.css') }}" />
-  
+
 </head>
 
 <body id="page-top">
@@ -187,8 +187,8 @@
         <div id="layananHD" class="collapse" aria-labelledby="headingLHD" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Custom Components:</h6>
-            <a class="collapse-item" href="/pesan">Chat</a>
-            <a class="collapse-item" href="cards.html">Riwayat</a>
+            <a class="collapse-item" href="/user/pesan">Chat</a>
+            <a class="collapse-item" href="/user/riwayat">Riwayat</a>
           </div>
         </div>
       </li>
