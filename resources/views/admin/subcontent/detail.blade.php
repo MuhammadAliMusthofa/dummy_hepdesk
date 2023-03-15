@@ -1,4 +1,4 @@
-@extends('admin.dashboard')
+@extends('admin.admin_chat')
 
 @section('subcontent')
 <div class="p-4" style="background-color: #D6E2E9">

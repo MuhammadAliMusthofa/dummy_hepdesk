@@ -1,4 +1,4 @@
-@extends('admin.dashboard')
+@extends('admin.admin_chat')
 
 @section('subcontent')
 <div class="card h-100" style="max-height: 100vh">
