@@ -34,14 +34,4 @@ class HomeController extends Controller
         Auth::logout();
         return redirect('/login');
     }
-
-    public function riwayat_detail()
-    {
-        return view('users.riwayat_detail');
-    }
-
-    public function user_chat()
-    {
-        return view('users.chat_user');
-    }
 }
