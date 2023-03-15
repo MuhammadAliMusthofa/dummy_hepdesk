@@ -232,7 +232,7 @@
             </li>
 
             <a href="{{ route('logout') }}"
-              onclick="event.preventDefault();                                                   document.getElementById('logout-form').submit();">
+              onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
               <li class="nav-item no-arrow d-flex align-items-center ml-4">
                 <i class="fas fa-sign-out-alt mr-2"></i>
                 <p class="m-0 font-weight-bold text-dark">Keluar</p>
