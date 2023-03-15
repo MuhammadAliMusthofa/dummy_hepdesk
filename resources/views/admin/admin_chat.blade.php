@@ -37,7 +37,7 @@
             aria-describedby="cari-pesan">
         </div>
       </div>
-      <div id="obrolan" style="max-height: 100vh; overflow: auto; scrollbar-width: none">
+      <div id="obrolan" style="max-height: 80vh; overflow: auto; scrollbar-width: none">
         @for ($i=0; $i < 20; $i++) <a href="/pesan/{{ $i }}">
           <div class="d-flex justify-content-between align-items-center">
             <div class="p-2">
