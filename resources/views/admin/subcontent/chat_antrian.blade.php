@@ -22,7 +22,8 @@
 </div>
 <div class="d-flex align-items-center flex-column h-50">
   <div class="mt-auto p-2">
-    <button class="btn text-light font-weight-bold" style="background-color: #76A0B4">Terima</button>
+    <a href="/pesan/user/{{ $id_tiket }}" class="btn text-light font-weight-bold"
+      style="background-color: #76A0B4">Terima</a>
   </div>
 </div>
 @endsection

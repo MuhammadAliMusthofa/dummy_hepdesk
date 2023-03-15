@@ -15,9 +15,8 @@
 
 <body>
 
-  <div class="row">
-    <div class="col-md-5 pr-0">
-
+  <div class="d-flex justify-content-between">
+    <div class="col p-0">
       <div class="container" style="background-color: #D6E2E9">
         <div class="d-flex justify-content-around">
           <div class="p-2">
@@ -52,9 +51,9 @@
               aria-describedby="cari-pesan">
           </div>
         </div>
-        <div id="obrolan">
-          @for ($i=0; $i < 11; $i++) <a href="/pesan/{{ $i }}">
-            <div class="d-flex justify-content-between align-items-center p-2">
+        <div id="obrolan" style="max-height: 80vh; overflow: auto; scrollbar-width: none">
+          @for ($i=0; $i < 20; $i++) <a href="/pesan/{{ $i }}">
+            <div class="d-flex justify-content-between align-items-center">
               <div class="p-2">
                 <div class="text-center bg-light rounded-circle d-flex align-items-center justify-content-center"
                   style="width: 50px; height: 50px">
@@ -77,7 +76,7 @@
         </div>
       </div>
     </div>
-    <div class="col-md-7 pl-0">
+    <div class="col p-0">
       @yield('subcontent')
     </div>
   </div>

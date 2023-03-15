@@ -11,9 +11,6 @@
 </head>
 <body >
 
-   
-
-
     {{-- chat --}}
     <div class="container-fluid mt-5">
         <div class="row">
