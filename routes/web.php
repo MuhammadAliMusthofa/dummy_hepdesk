@@ -25,7 +25,22 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-// Route::controller('users', 'UserController');
+
+//chat user
+Route::get('/user/pesan', 'ViewChatController@userChat');
+Route::get('/user/riwayat/{id_pengguna}', 'ViewChatController@riwayat');
+Route::get('/user/riwayat/detail/{id_tiket}', 'ViewChatController@riwayat_detail');
+
+// chat admin
+Route::get('/admin/pesan', 'ViewChatController@adminChat');
+Route::get('/admin/pesan/{id_tiket}', 'ViewChatController@adminChatUser');
+Route::get('/admin/pesan/detail/{id_tiket}', 'ViewChatController@adminChatDetail');
+
+// SSD user
+Route::get('/ssd', 'SSDController@index');
+Route::get('/ssd/search/{query}', 'SSDController@show');
+
+// SSD admin
 
 
 Route::post('/send-message', function (Request $request) {
