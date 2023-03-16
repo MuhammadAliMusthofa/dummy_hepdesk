@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\SSD;
+use App\Models\SSD;
 use Illuminate\Http\Request;
 
 class SSDController extends Controller
@@ -14,7 +14,7 @@ class SSDController extends Controller
      */
     public function index()
     {
-        //
+        return view('SSD.sdd');
     }
 
     /**

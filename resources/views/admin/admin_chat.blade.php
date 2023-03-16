@@ -1,4 +1,4 @@
-@extends('layouts.dashboard_layout')
+@extends('layouts.dashboard_admin_layout')
 
 @section('content')
 <div class="d-flex justify-content-between">
@@ -38,7 +38,7 @@
         </div>
       </div>
       <div id="obrolan" style="max-height: 80vh; overflow: auto; scrollbar-width: none">
-        @for ($i=0; $i < 20; $i++) <a href="/pesan/{{ $i }}">
+        @for ($i=0; $i < 20; $i++) <a href="/admin/pesan/{{ $i }}">
           <div class="d-flex justify-content-between align-items-center">
             <div class="p-2">
               <div class="text-center bg-light rounded-circle d-flex align-items-center justify-content-center"

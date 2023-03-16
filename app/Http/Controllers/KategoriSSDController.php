@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\KategoriSSD;
+use App\Models\KategoriSSD;
 use Illuminate\Http\Request;
 
 class KategoriSSDController extends Controller
