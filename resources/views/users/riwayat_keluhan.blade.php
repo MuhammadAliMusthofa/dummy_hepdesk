@@ -36,8 +36,8 @@
         <td>{{ $tiket->nama }}</td>
         <td>{{ $tiket->email }}</td>
         <td>{{ $tiket->departemen }}</td>
-        <td><a href="/user/riwayat/detail/ {{ $tiket->id_tiket }}"><i
-              class="fas fa-search-plus btn btn-secondary"></i></a>
+        <td><a href="/user/riwayat/detail/ {{ $tiket->id_tiket }}" class="btn btn-secondary"><i
+              class="fas fa-search-plus"></i></a>
         </td>
         <td>
           @if ($tiket->status == 0)
