@@ -185,8 +185,7 @@
         </a>
         <div id="layananHD" class="collapse" aria-labelledby="headingLHD" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="{{ route('ssd') }}">SSD</a>
-            <a class="collapse-item" href="{{ route('user.riwayat') }}">Riwayat</a>
+            <a class="collapse-item" href="{{ route('admin.chat') }}">Chat</a>
           </div>
         </div>
       </li>

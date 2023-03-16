@@ -27,18 +27,18 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 //chat user
-Route::get('/user/pesan', 'ViewChatController@userChat');
-Route::get('/user/riwayat/{id_pengguna}', 'ViewChatController@riwayat');
-Route::get('/user/riwayat/detail/{id_tiket}', 'ViewChatController@riwayat_detail');
+Route::get('/user/pesan', 'ViewChatController@userChat')->name('user.chat');
+Route::get('/user/riwayat', 'ViewChatController@riwayat')->name('user.riwayat');
+Route::get('/user/riwayat/detail/{id_tiket}', 'ViewChatController@riwayat_detail')->name('user.riwayat.detail');
 
 // chat admin
-Route::get('/admin/pesan', 'ViewChatController@adminChat');
-Route::get('/admin/pesan/{id_tiket}', 'ViewChatController@adminChatUser');
-Route::get('/admin/pesan/detail/{id_tiket}', 'ViewChatController@adminChatDetail');
+Route::get('/admin/pesan', 'ViewChatController@adminChat')->name('admin.chat');
+Route::get('/admin/pesan/{id_tiket}', 'ViewChatController@adminChatUser')->name('admin.chat.user');
+Route::get('/admin/pesan/detail/{id_tiket}', 'ViewChatController@adminChatDetail')->name('admin.chat.user.detail');
 
 // SSD user
-Route::get('/ssd', 'SSDController@index');
-Route::get('/ssd/search/{query}', 'SSDController@show');
+Route::get('/ssd', 'SSDController@index')->name('ssd');
+Route::get('/ssd/search/{query}', 'SSDController@show')->name('ssd.search');
 
 // SSD admin
 

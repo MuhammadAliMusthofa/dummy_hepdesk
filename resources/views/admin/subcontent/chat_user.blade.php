@@ -3,7 +3,7 @@
 @section('subcontent')
 <div class="card h-100" style="max-height: 100vh">
   <div class="card-header  text-white d-flex justify-content-between" style="background-color: #D6E2E9">
-    <a href="/pesan/{{ $id_tiket }}">
+    <a href="{{ route('admin.chat') }}">
       <div class="d-flex flex-row align-items-center">
         <div class="p-2">
           <i class="fa fa-arrow-left" aria-hidden="true"></i>
@@ -19,7 +19,7 @@
           <a href="#search" class="h5"><i class="fa fa-search" aria-hidden="true"></i></a>
         </div>
         <div class="p-2">
-          <a href="/pesan/detail/{{ $id_tiket }}" class="h4">
+          <a href="/admin/pesan/detail/{{ $id_tiket }}" class="h4">
             <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
           </a>
         </div>

@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Tiket;
+use App\Models\Tiket;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ViewChatController extends Controller
 {
@@ -15,7 +16,9 @@ class ViewChatController extends Controller
 
     public function riwayat()
     {
-        return view('users.riwayat_keluhan');
+        $id = Auth::user()->id;
+        $tikets = Tiket::where('id_pengguna', $id)->get();
+        return view('users.riwayat_keluhan')->with('tikets', $tikets);
     }
 
     public function riwayat_detail()
@@ -25,7 +28,7 @@ class ViewChatController extends Controller
 
     public function adminChat(Request $request, Tiket $tiket)
     {
-        return view('admin.subcontent.chat_antrian');
+        return view('admin.subcontent.antrian');
     }
 
     public function adminChatUser(Request $request, Tiket $tiket)

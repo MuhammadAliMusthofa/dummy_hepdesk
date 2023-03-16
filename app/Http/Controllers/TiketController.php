@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Tiket;
+use App\Models\Tiket;
 use Illuminate\Http\Request;
 
 class TiketController extends Controller

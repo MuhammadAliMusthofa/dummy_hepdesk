@@ -4,7 +4,7 @@
 <div class="p-4" style="background-color: #D6E2E9">
   <div class="d-flex flex-row justify-content-start">
     <div class="p-2">
-      <a href="/pesan/user/{{ $id_tiket }}">
+      <a href="/admin/pesan/{{ $id_tiket }}">
         <i class="fa fa-arrow-left pr-2" aria-hidden="true"></i> kembali
       </a>
     </div>
