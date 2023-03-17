@@ -48,7 +48,7 @@ class HomeController extends Controller
         $pesans = Tiket::where('id_tiket', $request->route('id_tiket'))->with('pesanPerTiket')->get();
         // dd($pesans);
         return view(
-            'trying.subcontent.chat_user',
+            'trying.admin_chat',
             [
                 'tikets' => $tikets,
                 'pesans' => $pesans,
