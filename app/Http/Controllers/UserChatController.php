@@ -6,7 +6,7 @@ use App\Models\Tiket;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class ViewChatController extends Controller
+class UserChatController extends Controller
 {
 
     public function userChat(Request $request, Tiket $tiket)

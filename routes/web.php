@@ -24,17 +24,22 @@ Route::get('/', function () {
 
 Auth::routes();
 
+// chat admin
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/admin', 'AdminChatController@index')->name('admin.chat');
+Route::get('/admin/admin_chat_head', 'AdminChatController@admin_chat_head');
+Route::get('/admin/admin_chat_main/{status}', 'AdminChatController@admin_chat_main');
+Route::get('/admin/antrian', 'AdminChatController@antrian')->name('antrian');
+Route::get('/admin/pesan/{id_tiket}', 'AdminChatController@pesan');
+Route::get('/admin/detail/{id_tiket}', 'AdminChatController@detail');
+
+Route::post('kirimPesan', 'AdminChatController@kirimPesan');
 
 //chat user
 Route::get('/user/pesan', 'ViewChatController@userChat')->name('user.chat');
 Route::get('/user/riwayat', 'ViewChatController@riwayat')->name('user.riwayat');
 Route::get('/user/riwayat/detail/{id_tiket}', 'ViewChatController@riwayat_detail')->name('user.riwayat.detail');
 
-// chat admin
-Route::get('/admin/pesan', 'ViewChatController@adminChat')->name('admin.chat');
-Route::get('/admin/pesan/{id_tiket}', 'ViewChatController@adminChatUser')->name('admin.chat.user');
-Route::get('/admin/pesan/detail/{id_tiket}', 'ViewChatController@adminChatDetail')->name('admin.chat.user.detail');
 
 // SSD user
 Route::get('/ssd', 'SSDController@index')->name('ssd');

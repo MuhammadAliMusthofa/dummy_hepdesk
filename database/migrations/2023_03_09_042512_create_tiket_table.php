@@ -15,7 +15,8 @@ class CreateTiketTable extends Migration
     {
         Schema::create('tiket', function (Blueprint $table) {
             $table->increments('id_tiket');
-            $table->uuid('id_pengguna');
+            $table->char('id_pengguna_user');
+            $table->char('id_pengguna_admin');
             $table->date('tanggal');
             $table->string('nama');
             $table->string('email');
