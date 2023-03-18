@@ -1,12 +1,7 @@
-@extends('admin.admin_chat')
-
-@section('subcontent')
 <div class="p-4" style="background-color: #D6E2E9">
   <div class="d-flex flex-row justify-content-start">
-    <div class="p-2">
-      <a href="/admin/pesan/{{ $id_tiket }}">
-        <i class="fa fa-arrow-left pr-2" aria-hidden="true"></i> kembali
-      </a>
+    <div class="p-2 text-dark pointer" id="back-pesan">
+      <i class="fa fa-arrow-left pr-2" aria-hidden="true"></i> kembali
     </div>
   </div>
 </div>
@@ -19,8 +14,8 @@
       </div>
     </div>
     <div class="p-2">
-      <h5 class="font-weight-bold m-0">Dosen 1</h5>
-      <p class="m-0">Dosen Universitas X</p>
+      <h5 class="font-weight-bold m-0">{{ $tiket->name }}</h5>
+      <p class="m-0">{{ $tiket->asal_pt }}</p>
     </div>
   </div>
   <table>
@@ -29,19 +24,19 @@
         <th class="pr-5">
           <h5>Departement</h5>
         </th>
-        <td>Dosen</td>
+        <td>{{ $tiket->departemen }}</td>
       </tr>
       <tr>
         <th>
           <h5>Email</h5>
         </th>
-        <td>dosen123@univ123.ac.id</td>
+        <td>{{ $tiket->email }}</td>
       </tr>
       <tr>
         <th>
           <h5>Direspon oleh</h5>
         </th>
-        <td>Helpdesk 1</td>
+        <td>{{ $tiket->id_pengguna_admin }}</td>
       </tr>
     </tbody>
   </table>
@@ -57,13 +52,13 @@
         <th>
           <h5>Dibuat</h5>
         </th>
-        <td>09 maret 2023 - 09.46</td>
+        <td>{{ $tiket->tanggal }}</td>
       </tr>
       <tr>
         <th>
           <h5>Sisa waktu</h5>
         </th>
-        <td>29 Menit</td>
+        <td>{{ $tiket->sisa_waktu }}</td>
       </tr>
       <tr>
         <th>
@@ -71,10 +66,17 @@
         </th>
         <td>
           <select name="status" id="status" style="background-color: transparent" class="custom-select border-0">
-            <option value="0" selected>Antrian</option>
-            <option value="1">Berjalan</option>
-            <option value="2">Tertunda</option>
-            <option value="3">Ditutup</option>
+            @php
+            $data = ['Antrian', 'Berjalan', 'Tertunda', 'Ditutup'];
+            @endphp
+            @for ($j = 0; $j < count($data); $j++) @if ($tiket->status == $j)
+              <option value="{{ $j }}" selected>{{ $data[$j] }}</option>
+              @elseif($j == 3)
+              <option value="{{ $j }}" disabled>{{ $data[$j] }}</option>
+              @else
+              <option value="{{ $j }}">{{ $data[$j] }}</option>
+              @endif
+              @endfor
           </select>
         </td>
       </tr>
@@ -101,4 +103,3 @@
     </div>
   </div>
 </div>
-@endsection
