@@ -2,13 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\Message;
-use App\Models\Pesan;
-use App\Models\Tiket;
-use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Pusher\Pusher;
 
 class HomeController extends Controller
 {
@@ -33,7 +28,7 @@ class HomeController extends Controller
             Auth::user()->role == 0
         ) {
             return redirect('/admin');
-        } elseif (Auth::user()->role == 1) {
+        } else if (Auth::user()->role == 1) {
             return view('SSD.sdd');
         }
         Auth::logout();

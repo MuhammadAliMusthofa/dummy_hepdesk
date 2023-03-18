@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
   <meta name="description" content="" />
   <meta name="author" content="" />
+
   <!-- CSRF Token -->
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -285,7 +286,7 @@
       </div>
     </div>
   </div>
-  {{-- <script src="{{ local('') }}" charset="utf-8"></script> --}}
+  <!-- Pusher CDN -->
   <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
 
   <!-- Bootstrap core JavaScript-->
@@ -305,11 +306,11 @@
   {{-- <script src="js/demo/chart-area-demo.js"></script> --}}
   {{-- <script src="js/demo/chart-pie-demo.js"></script> --}}
   <script>
+    var id_pengguna = "{{ Auth::id() }}";
     var id_tiket = localStorage['id_tiket'];
     var status = localStorage['status'];
     var home = localStorage['home'];
     var sessionDetail = localStorage['sessionDetail'];
-    var id_pengguna = "{{ Auth::user()->id_pengguna }}";
     var isiPesan = '';
 
     $(document).ready(function () {
@@ -329,7 +330,7 @@
       
       var channel = pusher.subscribe('my-channel');
       channel.bind('my-event', function (data) {
-        if(id_pengguna == data.penerima){
+        if(data.id_tiket == id_tiket){
           admin_chat_main();
           pesan();
         }
@@ -412,6 +413,7 @@
       cache: false,
       success: function(data) {
       $('#subcontent').html(data);
+      scrollToBottomFunc();
       }
       });
     }
@@ -500,15 +502,14 @@
         error: function (jqXHR, status, err) {
         },
         complete: function () {
-        scrollToBottomFunc();
         }
         });
       }
 
     // make a function to scroll down auto
         function scrollToBottomFunc() {
-        $('.card-body.h-100').animate({
-        scrollTop: $('.card-body.h-100').get(0).scrollHeight
+        $('#scrolling').animate({
+        scrollTop: $('#scrolling').get(0).scrollHeight
         }, 50);
         }
   </script>

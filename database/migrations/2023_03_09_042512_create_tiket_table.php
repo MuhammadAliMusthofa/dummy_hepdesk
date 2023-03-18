@@ -21,7 +21,7 @@ class CreateTiketTable extends Migration
             $table->string('nama');
             $table->string('email');
             $table->string('departemen');
-            $table->time('experied');
+            $table->time('sisa_waktu');
             $table->string('helpdesk');
             $table->integer('status')->default(0);
             $table->timestamps();

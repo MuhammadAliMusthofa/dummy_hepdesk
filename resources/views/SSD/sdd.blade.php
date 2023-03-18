@@ -160,7 +160,7 @@
 
 <div class="text-center mt-5">
     <p class="font-weight-bold">Punya pertanyaan spesifik ?</p>
-    <a href="{{ route('user.chat') }}" class="btn btn-success px-5 py-2 my-3">Chat dengan Helpdesk</a>
+    <a href="{{ route('user.pesan') }}" class="btn btn-success px-5 py-2 my-3">Chat dengan Helpdesk</a>
 </div>
 
 @endsection
