@@ -55,7 +55,8 @@ a:hover {
   background-color: #295d77;
 }
 
-#chat-admin {
+#chat-left {
+  max-width: 20vw;
   background-color: #d6e2e9;
   border-radius: 0px 15px 15px 15px / 25px 15px 15px 15px;
   box-shadow: 2px 2px rgb(161, 159, 159);
@@ -65,12 +66,14 @@ a:hover {
   background-color: #295d77;
 }
 
-#chat-user p {
+#chat-right {
   background-color: #214b5f;
-  color: white;
-  width: 45%;
+  max-width: 20vw;
   border-radius: 10px;
   box-shadow: 2px 2px rgb(161, 159, 159);
+}
+#chat-right p {
+  color: white !important;
 }
 
 #action_page a {

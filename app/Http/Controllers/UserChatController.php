@@ -8,40 +8,33 @@ use Illuminate\Support\Facades\Auth;
 
 class UserChatController extends Controller
 {
-
-    public function userChat(Request $request, Tiket $tiket)
+    public function index()
     {
-        return view('users.chat');
+        $id_pengguna = Auth::id();
+        $tiket = Tiket::where('id_pengguna_user', $id_pengguna)->first();
+        return view('users.pesan', ['id_tiket' => $tiket->id_tiket]);
+    }
+    public function pesan($id_tiket)
+    {
+        $tiket = Tiket::where([
+            'id_tiket' => $id_tiket,
+            ['status', '=', 1]
+        ])->orWhere('status', 2)->with('pesanPerTiket')->first();
+        // dd($tikets);
+        return view(
+            'users.isi_pesan',
+            ['tiket' => $tiket]
+        );
     }
 
     public function riwayat()
     {
-        $id = Auth::user()->id;
-        $tikets = Tiket::where('id_pengguna', $id)->get();
-        return view('users.riwayat_keluhan')->with('tikets', $tikets);
+        # code...
     }
 
-    public function riwayat_detail()
+    public function detailRiwayat($id_pengguna)
     {
-        return view('users.riwayat_detail');
-    }
-
-    public function adminChat(Request $request, Tiket $tiket)
-    {
-        return view('admin.subcontent.antrian');
-    }
-
-    public function adminChatUser(Request $request, Tiket $tiket)
-    {
-        $id_tiket = $request->route('id_tiket');
-        // dd($id_tiket);
-        return view('admin.subcontent.chat_user')->with('id_tiket', $id_tiket);
-    }
-
-    public function adminChatDetail(Request $request, Tiket $tiket)
-    {
-        $id_tiket = $request->route('id_tiket');
-        // dd($tiket->first());
-        return view('admin.subcontent.detail')->with('id_tiket', $id_tiket);
+        $tiket = Tiket::where('id_pengguna_user', $id_pengguna)->first();
+        return view('admin.subcontent.detail', ['tiket' => $tiket]);
     }
 }

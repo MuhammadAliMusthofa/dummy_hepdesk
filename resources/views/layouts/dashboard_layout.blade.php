@@ -8,6 +8,9 @@
   <meta name="description" content="" />
   <meta name="author" content="" />
 
+  <!-- CSRF Token -->
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+
   <title>Sister</title>
 
   <!-- Custom fonts for this template-->
@@ -286,6 +289,9 @@
     </div>
   </div>
 
+  <!-- Pusher CDN -->
+  <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
+
   <!-- Bootstrap core JavaScript-->
   <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
   <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
@@ -300,8 +306,93 @@
   <script src="{{ asset('vendor/chart.js/Chart.min.js') }}vendor/chart.js/Chart.min.js"></script>
 
   <!-- Page level custom scripts -->
-  <script src="js/demo/chart-area-demo.js"></script>
-  <script src="js/demo/chart-pie-demo.js"></script>
+  {{-- <script src="js/demo/chart-area-demo.js"></script>
+  <script src="js/demo/chart-pie-demo.js"></script> --}}
+  <script>
+    var id_pengguna = '{{ Auth::id() }}';
+    var id_tiket = '{{ $id_tiket }}';
+    var isiPesan = '';
+
+    $(document).ready(function () {
+      $.ajaxSetup({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+      });
+      
+      // Enable pusher logging - don't include this in production
+      // Pusher.logToConsole = true;
+      
+      var pusher = new Pusher('3ac5c5980227abf2bc42', {
+        cluster: 'mt1',
+        forceTLS: true
+      });
+      
+      var channel = pusher.subscribe('my-channel');
+      channel.bind('my-event', function (data) {
+        if(data.id_tiket == id_tiket){
+        pesan();
+        }
+      });
+
+      // menampilkan pesan
+      pesan();
+
+      $(document).on('click', '#kirim', function(){
+      isiPesan = $('.query').val();
+      $('.query').val(''); // mengkosongkan formuilr pesan
+      kirim();
+      });
+      
+      $(document).on('keyup', '.query', function(e){
+      isiPesan = $(this).val();
+      
+      if(e.which === 13 && isiPesan != ''){
+      $(this).val(''); // mengkosongkan formuilr pesan
+      kirim(e);
+      }
+      })
+
+    });
+
+    function pesan(){
+      return $.ajax({
+      type: 'get',
+      url: '/user/pesan/' + id_tiket,
+      data: '',
+      cache: false,
+      success: function(data) {
+      $('#subcontent').html(data);
+      scrollToBottomFunc();
+      }
+      });
+    }
+
+    function kirim(e){
+    var datastr = `id_tiket=${id_tiket}&id_pengguna=${id_pengguna}&pesan=${isiPesan}`;
+    
+    $.ajax({
+    type: "post",
+    url: "/kirimPesan", // need to create this post route
+    data: datastr,
+    cache: false,
+    success: function (data) {
+    isiPesan();
+    },
+    error: function (jqXHR, status, err) {
+    },
+    complete: function () {
+    }
+    });
+    }
+    
+    // make a function to scroll down auto
+    function scrollToBottomFunc() {
+    $('#scrolling').animate({
+    scrollTop: $('#scrolling').get(0).scrollHeight
+    }, 50);
+    }
+  </script>
 </body>
 
 </html>

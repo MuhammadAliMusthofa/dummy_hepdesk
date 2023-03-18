@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tiket;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AdminChatController extends Controller
@@ -26,16 +25,19 @@ class AdminChatController extends Controller
 
     public function antrian()
     {
-        $tikets = Tiket::all();
+        $tikets = Tiket::where('status', '=', 0)->get();
         $count = count($tikets);
         return view('admin.subcontent.antrian', ['count' => $count]);
     }
 
     public function pesan($id_tiket)
     {
-        // return $id_pengguna;;
-        $tikets = Tiket::where('id_tiket', $id_tiket)->with('pesanPerTiket')->get()->reverse();
-        // // dd($pesans);
+        $id_pengguna = Auth::id();
+        $tikets = Tiket::where([
+            'id_tiket' => $id_tiket,
+            'id_pengguna_admin' => $id_pengguna
+        ])->with('pesanPerTiket')->get()->reverse();
+        // dd($id_pengguna);
         return view(
             'admin.subcontent.chat_user',
             ['tikets' => $tikets]
@@ -46,21 +48,5 @@ class AdminChatController extends Controller
     {
         $tiket = Tiket::where('id_tiket', $id_tiket)->first();
         return view('admin.subcontent.detail', ['tiket' => $tiket]);
-    }
-
-    public function kirimPesan(Request $request)
-    {
-        $tiket = Tiket::where('id_tiket', $request->id_tiket)->first();
-        $id_tiket = $request->id_tiket;
-        $id_pengguna = $request->id_pengguna;
-        $pesan = $request->pesan;
-
-        $data = new Pesan();
-        $data->id_tiket = $id_tiket;
-        $data->id_pengguna = $id_pengguna;
-        $data->pesan = $pesan;
-        $data->save();
-
-        event(new Message($tiket->id_pengguna_user, $pesan));
     }
 }

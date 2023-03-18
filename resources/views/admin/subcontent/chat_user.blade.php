@@ -8,39 +8,39 @@
         <h5 class="m-0">{{ $tikets[0]->nama }}</h5>
       </div>
     </div>
-    <div>
-      <div class="d-flex flex-row align-items-center">
-        <div class="p-2">
-          <a href="#search" class="h5"><i class="fa fa-search" aria-hidden="true"></i></a>
-        </div>
-        <div class="p-2 text-dark pointer" id="detail">
-          <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-        </div>
+    <div class="d-flex flex-row align-items-center">
+      <div class="p-2">
+        <a href="#search" class="h5"><i class="fa fa-search" aria-hidden="true"></i></a>
+      </div>
+      <div class="p-2 text-dark pointer" id="detail">
+        <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
       </div>
     </div>
   </div>
-  <div class="card-body h-100 align-items-end" style="max-height: 100vh; overflow-y: auto;">
+  <div class="card-body h-100 align-items-end" style="max-height: 100vh; overflow-y: auto;" id="scrolling">
     <ul class=" list-unstyled">
       @foreach ($tikets as $tiket)
       @foreach ($tiket->pesanPerTiket as $pesanPerTiket)
-      @if ($pesanPerTiket->id_pengguna != Auth::user()->id_pengguna)
-      <li class="media mr-3 my-4" style="width:35%">
-        <div class="media-body" style="background-color:#D6E2E9; border-radius:10px;">
+      @if ($pesanPerTiket->id_pengguna != $tiket->id_pengguna_admin)
+      <li class="media my-3" style="width:35%">
+        <div id="chat-left" class="media-body">
           <p class="mt-0 mb-1 p-2">{{ $pesanPerTiket->pesan }}</p>
-        </div>
-        <div class="ml-2 d-flex mt-auto">
-          @php
-          $time=strtotime($pesanPerTiket->created_at);
-          @endphp
-          <p>{{ date("H:i", $time) }}</p>
+
+          <div class="ml-2 d-flex justify-content-end align-items-end mr-2 mt-2">
+            @php
+            $time=strtotime($pesanPerTiket->created_at);
+            @endphp
+            <p>{{ date("H:i", $time) }}</p>
+          </div>
         </div>
       </li>
       @else
-      <li class="media my-4 ">
-        <div class="media-body d-flex flex-row-reverse">
-          <p class="mt-0 mb-1 p-2" style="background-color: #606060; color:white; width: 45%; border-radius:10px;">
-            {{ $pesanPerTiket->pesan }}</p>
-          <div class="mr-2 d-flex mt-auto">
+      <li class="media my-3 d-flex flex-row-reverse">
+        <div id="chat-right" class="media-body">
+          <p class="mt-0 mb-1 p-2">
+            {{ $pesanPerTiket->pesan }}
+          </p>
+          <div class="mr-2 d-flex justify-content-end mt-auto">
             @php
             $time=strtotime($pesanPerTiket->created_at);
             @endphp
