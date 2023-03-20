@@ -1,4 +1,4 @@
-<div class="card-header  text-white d-flex justify-content-between" style="background-color: #D6E2E9">
+<div class="card-header text-white d-flex justify-content-between" style="background-color: #D6E2E9">
   <div class="d-flex flex-row align-items-center text-dark pointer">
     <div class="p-2 text-center">
       <h5 class="m-0 font-weight-bold">{{ $tiket->nama }}</h5>
@@ -7,14 +7,14 @@
   <div class="d-flex flex-row align-items-center text-dark pointer">
     <div class="text-center">
       <h6>Sisa Waktu</h6>
-      <div class="btn disabled p-1" style="background-color: #F8AC59;">{{ $tiket->sisa_waktu }}</div>
+      <div id="countdown" class="btn disabled p-1 bg-success">00:00</div>
     </div>
   </div>
   <div class="d-flex flex-row align-items-center">
     <button class="btn btn-danger text-light">Akhiri Sesi</button>
   </div>
 </div>
-<div class="card-body h-100 align-items-end" style="max-height: 100vh; overflow-y: auto;" id="scrolling">
+<div class="card-body h-100 d-flex flex-column-reverse" style="max-height: 100vh; overflow-y: auto;" id="scrolling">
   <ul class=" list-unstyled">
     @foreach ($tiket->pesanPerTiket as $pesanPerTiket)
     @if ($pesanPerTiket->id_pengguna == $tiket->id_pengguna_admin)

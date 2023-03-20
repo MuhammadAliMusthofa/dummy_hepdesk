@@ -330,8 +330,8 @@
       
       var channel = pusher.subscribe('my-channel');
       channel.bind('my-event', function (data) {
+        admin_chat_main();
         if(data.id_tiket == id_tiket){
-          admin_chat_main();
           pesan();
         }
       });
@@ -413,8 +413,7 @@
       cache: false,
       success: function(data) {
       $('#subcontent').html(data);
-      scrollToBottomFunc();
-      }
+      },
       });
     }
 
@@ -501,17 +500,8 @@
         },
         error: function (jqXHR, status, err) {
         },
-        complete: function () {
-        }
         });
       }
-
-    // make a function to scroll down auto
-        function scrollToBottomFunc() {
-        $('#scrolling').animate({
-        scrollTop: $('#scrolling').get(0).scrollHeight
-        }, 50);
-        }
   </script>
 </body>
 

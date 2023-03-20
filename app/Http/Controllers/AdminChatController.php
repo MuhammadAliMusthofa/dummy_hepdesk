@@ -37,7 +37,6 @@ class AdminChatController extends Controller
             'id_tiket' => $id_tiket,
             'id_pengguna_admin' => $id_pengguna
         ])->with('pesanPerTiket')->get()->reverse();
-        // dd($id_pengguna);
         return view(
             'admin.subcontent.chat_user',
             ['tikets' => $tikets]

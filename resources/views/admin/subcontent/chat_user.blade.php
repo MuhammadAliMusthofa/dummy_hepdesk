@@ -17,8 +17,8 @@
       </div>
     </div>
   </div>
-  <div class="card-body h-100 align-items-end" style="max-height: 100vh; overflow-y: auto;" id="scrolling">
-    <ul class=" list-unstyled">
+  <div class="card-body h-100 d-flex flex-column-reverse" style="max-height: 80vh; overflow-y: auto;" id="scrolling">
+    <ul class="list-unstyled">
       @foreach ($tikets as $tiket)
       @foreach ($tiket->pesanPerTiket as $pesanPerTiket)
       @if ($pesanPerTiket->id_pengguna != $tiket->id_pengguna_admin)
@@ -30,7 +30,7 @@
             @php
             $time=strtotime($pesanPerTiket->created_at);
             @endphp
-            <p>{{ date("H:i", $time) }}</p>
+            <p>{{ date("m:i", $time) }}</p>
           </div>
         </div>
       </li>

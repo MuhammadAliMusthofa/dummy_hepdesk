@@ -33,7 +33,7 @@
       <!-- Sidebar - Brand -->
       <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
         <div class="sidebar-brand-icon">
-          <img src="./img/logo.png" alt="" />
+          {{-- <img src="./img/logo.png" alt="" /> --}}
         </div>
         <div class="sidebar-brand-text text-dark mx-3">Sister</div>
       </a>
@@ -300,17 +300,16 @@
   <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
 
   <!-- Custom scripts for all pages-->
-  <script src="js/sb-admin-2.min.js"></script>
+  {{-- <script src="js/sb-admin-2.min.js"></script> --}}
 
   <!-- Page level plugins -->
-  <script src="{{ asset('vendor/chart.js/Chart.min.js') }}vendor/chart.js/Chart.min.js"></script>
+  {{-- <script src="{{ asset('vendor/chart.js/Chart.min.js') }}vendor/chart.js/Chart.min.js"></script> --}}
 
   <!-- Page level custom scripts -->
   {{-- <script src="js/demo/chart-area-demo.js"></script>
   <script src="js/demo/chart-pie-demo.js"></script> --}}
   <script>
     var id_pengguna = '{{ Auth::id() }}';
-    var id_tiket = '{{ $id_tiket }}';
     var isiPesan = '';
 
     $(document).ready(function () {
@@ -342,29 +341,28 @@
       isiPesan = $('.query').val();
       $('.query').val(''); // mengkosongkan formuilr pesan
       kirim();
-      });
-      
-      $(document).on('keyup', '.query', function(e){
+    });
+    
+    $(document).on('keyup', '.query', function(e){
       isiPesan = $(this).val();
       
       if(e.which === 13 && isiPesan != ''){
-      $(this).val(''); // mengkosongkan formuilr pesan
+        $(this).val(''); // mengkosongkan formuilr pesan
       kirim(e);
       }
       })
 
     });
-
+    
     function pesan(){
       return $.ajax({
-      type: 'get',
-      url: '/user/pesan/' + id_tiket,
-      data: '',
-      cache: false,
-      success: function(data) {
-      $('#subcontent').html(data);
-      scrollToBottomFunc();
-      }
+        type: 'get',
+        url: '/user/pesan/' + id_tiket,
+        data: '',
+        cache: false,
+        success: function(data) {
+          $('#subcontent').html(data);
+      },
       });
     }
 
@@ -377,22 +375,15 @@
     data: datastr,
     cache: false,
     success: function (data) {
-    isiPesan();
+      pesan();
     },
     error: function (jqXHR, status, err) {
     },
-    complete: function () {
-    }
     });
-    }
-    
-    // make a function to scroll down auto
-    function scrollToBottomFunc() {
-    $('#scrolling').animate({
-    scrollTop: $('#scrolling').get(0).scrollHeight
-    }, 50);
-    }
+
+  }
   </script>
+
 </body>
 
 </html>
