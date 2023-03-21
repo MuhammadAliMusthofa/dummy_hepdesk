@@ -32,12 +32,9 @@ class HomeController extends Controller
         if (
             Auth::user()->role == 0 
         ) {
-            // role 0 adalah admin
-            return view('admin.subcontent.antrian');
-
-        } elseif (Auth::user()->role == 1) {
-            // role 1 adalah user
-            return view('user.sdid');
+            return redirect('/admin');
+        } else if (Auth::user()->role == 1) {
+            return view('SSD.sdd');
         }
         
         Auth::logout();
@@ -48,11 +45,6 @@ class HomeController extends Controller
     public function riwayat_detail()
     {
         return view('users.riwayat_detail');
-    }
-
-    public function user_chat()
-    {
-        return view('users.dashboard');
     }
 
   
@@ -67,13 +59,13 @@ class HomeController extends Controller
     public function search(Request $request)
     {
 
-    $query = $request->input('query');
-    $datas = Tiket::where('id_tiket', 'LIKE', "%$query%")
-    ->orWhere('tanggal', 'LIKE', "%$query%")
-    ->orWhere('nama', 'LIKE', "%$query%")
-    ->orWhere('email', 'LIKE', "%$query%")
-    ->get();
-    return view('users.riwayat_search', compact('datas', 'query'));
+        $query = $request->input('query');
+        $datas = Tiket::where('id_tiket', 'LIKE', "%$query%")
+        ->orWhere('tanggal', 'LIKE', "%$query%")
+        ->orWhere('nama', 'LIKE', "%$query%")
+        ->orWhere('email', 'LIKE', "%$query%")
+        ->get();
+        return view('users.riwayat_search', compact('datas', 'query'));
 
     }
 

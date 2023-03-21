@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePesansTable extends Migration
+class CreateSSDsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreatePesansTable extends Migration
      */
     public function up()
     {
-        Schema::create('pesan', function (Blueprint $table) {
-            $table->increments('id_pesan');
-            $table->integer('id_tiket');
-            $table->char('id_pengguna');
-            $table->text('pesan');
+        Schema::create('ssd', function (Blueprint $table) {
+            $table->increments('id_ssd');
+            $table->text('pertanyaan');
+            $table->text('jawaban');
+            $table->dateTime('tanggal');
+            $table->integer('id_kategori');
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ class CreatePesansTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pesan');
+        Schema::dropIfExists('s_s_ds');
     }
 }

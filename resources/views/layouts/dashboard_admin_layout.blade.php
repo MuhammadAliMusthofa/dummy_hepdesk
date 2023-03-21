@@ -22,7 +22,6 @@
   <!-- Custom styles for this template-->
   <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet" />
   <link rel="stylesheet" href="{{ asset('css/custom.css') }}" />
-
 </head>
 
 <body id="page-top">
@@ -33,7 +32,7 @@
       <!-- Sidebar - Brand -->
       <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
         <div class="sidebar-brand-icon">
-          <img src="./img/logo.png" alt="" />
+          {{-- <img src="./img/logo.png" alt="" /> --}}
         </div>
         <div class="sidebar-brand-text text-dark mx-3">Sister</div>
       </a>
@@ -188,8 +187,7 @@
         </a>
         <div id="layananHD" class="collapse" aria-labelledby="headingLHD" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="{{ route('ssd') }}">SSD</a>
-            <a class="collapse-item" href="{{ route('user.riwayat') }}">Riwayat</a>
+            <a class="collapse-item" href="{{ route('admin.chat') }}">Chat</a>
           </div>
         </div>
       </li>
@@ -288,7 +286,6 @@
       </div>
     </div>
   </div>
-
   <!-- Pusher CDN -->
   <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
 
@@ -300,65 +297,118 @@
   <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
 
   <!-- Custom scripts for all pages-->
-  <script src="js/sb-admin-2.min.js"></script>
+  {{-- <script src="js/sb-admin-2.min.js"></script> --}}
 
   <!-- Page level plugins -->
-  <script src="{{ asset('vendor/chart.js/Chart.min.js') }}vendor/chart.js/Chart.min.js"></script>
+  {{-- <script src="{{ asset('vendor/chart.js/Chart.min.js') }}vendor/chart.js/Chart.min.js"></script> --}}
 
   <!-- Page level custom scripts -->
-  {{-- <script src="js/demo/chart-area-demo.js"></script>
-  <script src="js/demo/chart-pie-demo.js"></script> --}}
+  {{-- <script src="js/demo/chart-area-demo.js"></script> --}}
+  {{-- <script src="js/demo/chart-pie-demo.js"></script> --}}
   <script>
-    var id_pengguna = '{{ Auth::id() }}';
-    var id_tiket = '{{ $id_tiket }}';
+    var id_pengguna = "{{ Auth::id() }}";
+    var id_tiket = localStorage['id_tiket'];
+    var status = localStorage['status'];
+    var home = localStorage['home'];
+    var sessionDetail = localStorage['sessionDetail'];
     var isiPesan = '';
 
     $(document).ready(function () {
       $.ajaxSetup({
-        headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
+      headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
       });
-      
+
       // Enable pusher logging - don't include this in production
       // Pusher.logToConsole = true;
       
       var pusher = new Pusher('3ac5c5980227abf2bc42', {
-        cluster: 'mt1',
-        forceTLS: true
+      cluster: 'mt1',
+      forceTLS: true
       });
       
       var channel = pusher.subscribe('my-channel');
       channel.bind('my-event', function (data) {
         if(data.id_tiket == id_tiket){
-        pesan();
+          admin_chat_main();
+          pesan();
         }
       });
 
-      // menampilkan pesan
-      pesan();
-
-      $(document).on('click', '#kirim', function(){
-      isiPesan = $('.query').val();
-      $('.query').val(''); // mengkosongkan formuilr pesan
-      kirim();
-      });
-      
-      $(document).on('keyup', '.query', function(e){
-      isiPesan = $(this).val();
-      
-      if(e.which === 13 && isiPesan != ''){
-      $(this).val(''); // mengkosongkan formuilr pesan
-      kirim(e);
+      admin_chat_head();
+      if(id_tiket != ''){
+        pesan();
+      }else if(sessionDetail == 1){
+        detail();
+      }else{
+        antrian();
       }
-      })
 
+        $(document).on('click', '.status', function(){
+          $('.status').removeClass('selectedStatus');
+          $('.status').prop('disabled', false);
+          $(this).addClass('selectedStatus');
+          $(this).prop('disabled', true);
+          localStorage['status'] = $(this).attr('id');
+          status = $(this).attr('id');
+          admin_chat_main();
+          if(id_tiket == ''){
+            antrian();
+          }else{
+            pesan();
+          }
+        });
+
+        $(document).on('click', '.user',function(){
+          $('.user').removeClass('liActive');
+          $(this).addClass('liActive');
+          
+          if(id_tiket != $(this).attr('id')){
+            localStorage['id_tiket'] = $(this).attr('id');
+            id_tiket = $(this).attr('id');
+            localStorage['sessionDetail'] = 0;
+            pesan();
+          }
+        });
+
+        $(document).on('click', '#back-page', function(){
+          $('.user').removeClass('liActive');
+          localStorage['id_tiket'] = '';
+          id_tiket = '';
+          antrian();
+        });
+
+        $(document).on('click', '#detail', function(){
+          localStorage['sessionDetail'] = 1;
+          detail();
+        });
+
+        $(document).on('click', '#back-pesan', function(){
+          localStorage['sessionDetail'] = 0;
+          pesan();
+        });
+
+        $(document).on('click', '#kirim', function(){
+        isiPesan = $('.query').val();
+        $('.query').val(''); // mengkosongkan formuilr pesan
+        kirim();
+        });
+
+        $(document).on('keyup', '.query', function(e){
+          isiPesan = $(this).val();
+          
+          if(e.which === 13 && isiPesan != ''){
+            $(this).val(''); // mengkosongkan formuilr pesan
+            kirim(e);
+          } 
+        })
     });
 
     function pesan(){
       return $.ajax({
       type: 'get',
-      url: '/user/pesan/' + id_tiket,
+      url: '/admin/pesan/' + id_tiket,
       data: '',
       cache: false,
       success: function(data) {
@@ -368,30 +418,100 @@
       });
     }
 
-    function kirim(e){
-    var datastr = `id_tiket=${id_tiket}&id_pengguna=${id_pengguna}&pesan=${isiPesan}`;
-    
-    $.ajax({
-    type: "post",
-    url: "/kirimPesan", // need to create this post route
-    data: datastr,
+    function admin_chat_head(){
+    return $.ajax({
+    type: 'get',
+    url: '/admin/admin_chat_head',
+    data: '',
     cache: false,
-    success: function (data) {
-    isiPesan();
-    },
-    error: function (jqXHR, status, err) {
-    },
-    complete: function () {
-    }
+    success: function(data) {
+    $('#contentPesan').html(data);
+    $('.status').each(function(){
+      if(status == $(this).attr('id')){
+        $(this).addClass('selectedStatus')
+        $(this).prop('disabled', true);
+      };
     });
+    admin_chat_main();
+    }});
     }
-    
+
+    function admin_chat_main(){
+      return $.ajax({
+      type: 'get',
+      url: '/admin/admin_chat_main/' + status,
+      data: '',
+      cache: false,
+      success: function(data) {
+        $('#list-pesan').html(data);
+        
+        // removeClass liActive
+        $('.user').removeClass('liActive');
+
+        // select tiket
+        // addClass('liActive');
+        $('.user').each(function(){
+          if($(this).attr('id') == id_tiket){
+              $(this).addClass('liActive');
+            }
+        });
+      }
+    });
+    };
+
+    function antrian(){
+      return $.ajax({
+      type: 'get',
+      url: '/admin/antrian',
+      data: '',
+      cache: false,
+      success: function(data) {
+      $('#subcontent').html(data);
+      if(status != 0){
+        $('#antrian').html('Layanan Informasi Helpdesk')
+      }
+      }
+      });
+    }
+
+    function detail(){
+      return $.ajax({
+      type: 'get',
+      url: '/admin/detail/' + id_tiket,
+      data: '',
+      cache: false,
+      success: function(data) {
+      $('#subcontent').html(data);
+      }
+      });
+    }
+
+
+    function kirim(e){
+        var datastr = `id_tiket=${id_tiket}&id_pengguna=${id_pengguna}&pesan=${isiPesan}`;
+      
+        $.ajax({
+        type: "post",
+        url: "/kirimPesan", // need to create this post route
+        data: datastr,
+        cache: false,
+        success: function (data) {
+          admin_chat_main();
+          pesan();
+        },
+        error: function (jqXHR, status, err) {
+        },
+        complete: function () {
+        }
+        });
+      }
+
     // make a function to scroll down auto
-    function scrollToBottomFunc() {
-    $('#scrolling').animate({
-    scrollTop: $('#scrolling').get(0).scrollHeight
-    }, 50);
-    }
+        function scrollToBottomFunc() {
+        $('#scrolling').animate({
+        scrollTop: $('#scrolling').get(0).scrollHeight
+        }, 50);
+        }
   </script>
 </body>
 

@@ -1,8 +1,6 @@
 <?php
 
 
-use App\Events\Message;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -24,6 +22,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
+// chat admin
 Route::get('/home', 'HomeController@index')->name('home');
 // Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/riwayat/data', 'HomeController@getData');
@@ -37,16 +36,28 @@ Route::get('/riwayat_detail', 'HomeController@riwayat_detail')->name('riwayat_de
 Route::get('/user_chat', 'HomeController@user_chat')->name('user_chat');
 Route::get('/ssd', 'HomeController@ssd')->name('ssd');
 // Route::controller('users', 'UserController');
+Route::get('/admin', 'AdminChatController@index')->name('admin.chat');
+Route::get('/admin/admin_chat_head', 'AdminChatController@admin_chat_head');
+Route::get('/admin/admin_chat_main/{status}', 'AdminChatController@admin_chat_main');
+Route::get('/admin/antrian', 'AdminChatController@antrian')->name('antrian');
+Route::get('/admin/pesan/{id_tiket}', 'AdminChatController@pesan');
+Route::get('/admin/detail/{id_tiket}', 'AdminChatController@detail');
 
 Route::get('/search', 'HomeController@search')->name('search');
 // Route::get('/search', 'SearchController@search')->name('search');
 // Route::get('/paginate', 'HomeController@paginate')->name('paginate');
 
-Route::post('/send-message', function (Request $request) {
-    event(
-        new Message(
-            $request->input('username'),
-            $request->input('message')
-        )
-    );
-});
+//chat user
+Route::get('/user/pesan', 'UserChatController@index')->name('user.pesan');
+Route::get('/user/pesan/{id_tiket}', 'UserChatController@pesan')->name('user.isi.pesan');
+Route::get('/user/riwayat', 'UserChatController@riwayat')->name('user.riwayat');
+Route::get('/user/riwayat/detail/{id_tiket}', 'ViewChatController@riwayat_detail')->name('user.riwayat.detail');
+
+// mengirim pesan
+Route::post('/kirimPesan', 'PesanController@kirimPesan');
+
+// SSD user
+Route::get('/ssd', 'SSDController@index')->name('ssd');
+Route::get('/ssd/search/{query}', 'SSDController@show')->name('ssd.search');
+
+// SSD admin

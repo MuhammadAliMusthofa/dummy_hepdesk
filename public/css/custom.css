@@ -51,38 +51,49 @@ a:hover {
   background-color: #76a0b4;
 }
 
-#card-header-chat{
-    background-color: #295D77;
+#card-header-chat {
+  background-color: #295d77;
 }
 
-#chat-admin{
-
-    background-color:#D6E2E9; 
-    border-radius: 0px 15px 15px 15px / 25px 15px 15px 15px;
-    box-shadow: 2px 2px rgb(161, 159, 159);
+#chat-left {
+  max-width: 20vw;
+  background-color: #d6e2e9;
+  border-radius: 0px 15px 15px 15px / 25px 15px 15px 15px;
+  box-shadow: 2px 2px rgb(161, 159, 159);
 }
 
-#footer{
-    background-color: #295D77;
+#footer {
+  background-color: #295d77;
 }
 
-#chat-user {
-    background-color: #214B5F;
-     
-     border-radius:10px;
-     box-shadow: 2px 2px rgb(161, 159, 159);
+#chat-right {
+  background-color: #214b5f;
+  max-width: 20vw;
+  border-radius: 10px;
+  box-shadow: 2px 2px rgb(161, 159, 159);
+}
+#chat-right p {
+  color: white !important;
 }
 
-#action_page a{
-  color:black;
+#action_page a {
+  color: black;
 }
 
-#keluhan {
-  /* background-color: #98B7C7; */
 
+#button-his {
+  width: 100%;
 }
 
-#button-his{
-  width:100%;
+.liActive {
+  background-color: rgba(0, 0, 0, 0.2);
+  cursor: default !important;
 }
 
+.pointer {
+  cursor: pointer;
+}
+
+.selectedStatus {
+  border-bottom: 3px solid #76a0b4;
+}

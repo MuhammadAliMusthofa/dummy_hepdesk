@@ -394,15 +394,6 @@
             'reference' => '96c132c7f2f7bc3230723b66e89f8f150b29d5ae',
             'dev_requirement' => false,
         ),
-        'paragonie/sodium_compat' => array(
-            'pretty_version' => 'v1.19.0',
-            'version' => '1.19.0.0',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../paragonie/sodium_compat',
-            'aliases' => array(),
-            'reference' => 'cb15e403ecbe6a6cc515f855c310eb6b1872a933',
-            'dev_requirement' => false,
-        ),
         'phpdocumentor/reflection-common' => array(
             'pretty_version' => '1.0.1',
             'version' => '1.0.1.0',
@@ -528,12 +519,12 @@
             'dev_requirement' => false,
         ),
         'pusher/pusher-php-server' => array(
-            'pretty_version' => 'v3.4.1',
-            'version' => '3.4.1.0',
+            'pretty_version' => '2.6.4',
+            'version' => '2.6.4.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../pusher/pusher-php-server',
             'aliases' => array(),
-            'reference' => 'a5fcdc65efd8d9a8291efbe01d326ec7ef5d5cee',
+            'reference' => '2cf2ba85e7ce3250468a1c42ab7c948a7d43839d',
             'dev_requirement' => false,
         ),
         'ramsey/uuid' => array(
