@@ -58,7 +58,7 @@
         <th>
           <h5>Sisa waktu</h5>
         </th>
-        <td>{{ $tiket->sisa_waktu }}</td>
+        <td>{{ $tiket->kadaluarsa }}</td>
       </tr>
       <tr>
         <th>

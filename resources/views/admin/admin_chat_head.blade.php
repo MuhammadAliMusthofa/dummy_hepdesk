@@ -1,4 +1,4 @@
-<div class="container p-0" style="background-color: #D6E2E9">
+<div class="container p-0 secondary-bg-color">
   <div class="d-flex justify-content-around">
     @php
     $data = ['Antrian', 'Berjalan', 'Tertunda', 'Ditutup'];
@@ -10,7 +10,7 @@
   </div>
   @endfor
 </div>
-<div class="row m-0" style="background-color: #76A0B4">
+<div class="row m-0 third-bg-color">
   <div class="input-group m-3">
     <div class="input-group-prepend">
       <span class="input-group-text bg-light" id="cari-pesan">

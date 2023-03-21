@@ -99,3 +99,35 @@ a:hover {
 .selectedStatus {
   border-bottom: 3px solid #76a0b4;
 }
+
+.primary-color {
+  color: #214b5f;
+}
+
+.primary-bg-color {
+  background-color: #214b5f;
+}
+
+.secondary-color {
+  color: #d6e2e9;
+}
+
+.secondary-bg-color {
+  background-color: #d6e2e9;
+}
+
+.third-color {
+  color: #76a0b4;
+}
+
+.third-bg-color {
+  background-color: #76a0b4;
+}
+
+.four-color {
+  color: #31708f;
+}
+
+.four-bg-color {
+  background-color: #31708f;
+}

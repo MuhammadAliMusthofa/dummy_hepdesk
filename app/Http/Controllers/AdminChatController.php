@@ -19,31 +19,51 @@ class AdminChatController extends Controller
 
     public function admin_chat_main($status)
     {
-        $tikets = Tiket::where('status', $status)->with('pesan')->get();
+        $tikets = Tiket::where([
+            'status' => $status,
+            'id_pengguna_admin' => null
+        ])->with('pesan')->get();
         return view('admin.admin_chat_main', ['tikets' => $tikets]);
     }
 
     public function antrian()
     {
-        $tikets = Tiket::where('status', '=', 0)->get();
+        $tikets = Tiket::where('status', 0)->get();
         $count = count($tikets);
         return view('admin.subcontent.antrian', ['count' => $count]);
     }
 
     public function pesan($id_tiket)
     {
-        $id_pengguna = Auth::id();
-        $tikets = Tiket::where([
+        $tiket = Tiket::where([
             'id_tiket' => $id_tiket,
-            'id_pengguna_admin' => $id_pengguna
-        ])->with('pesanPerTiket')->get()->reverse();
-        // dd($id_pengguna);
+        ])->with('pesanPerTiket')->first();
+        // dd($tikets);
         return view(
             'admin.subcontent.chat_user',
-            ['tikets' => $tikets]
+            ['tiket' => $tiket]
         );
     }
 
+    public function pesanTerima($id_tiket, $id_pengguna)
+    {
+        $tiket = Tiket::where([
+            'id_tiket' => $id_tiket,
+            'id_pengguna_admin' => null
+        ])->get();
+
+        if ($tiket) {
+            Tiket::where([
+                'id_tiket' => $id_tiket,
+            ])->update([
+                'id_pengguna_admin' => $id_pengguna,
+                'status' => 1
+            ]);
+            return response('berhasil menerima data');
+        } else {
+            return response('gagal menerima tiket', 400);;
+        }
+    }
     public function detail($id_tiket)
     {
         $tiket = Tiket::where('id_tiket', $id_tiket)->first();

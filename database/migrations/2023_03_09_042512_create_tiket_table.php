@@ -16,13 +16,12 @@ class CreateTiketTable extends Migration
         Schema::create('tiket', function (Blueprint $table) {
             $table->increments('id_tiket');
             $table->char('id_pengguna_user');
-            $table->char('id_pengguna_admin');
+            $table->char('id_pengguna_admin')->nullable();
             $table->date('tanggal');
             $table->string('nama');
             $table->string('email');
             $table->string('departemen');
-            $table->time('sisa_waktu');
-            $table->string('helpdesk');
+            $table->dateTime('kadaluarsa');
             $table->integer('status')->default(0);
             $table->timestamps();
         });

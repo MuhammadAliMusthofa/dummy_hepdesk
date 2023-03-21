@@ -30,6 +30,6 @@ class CreateSSDsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('s_s_ds');
+        Schema::dropIfExists('ssd');
     }
 }
