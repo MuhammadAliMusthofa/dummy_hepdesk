@@ -26,33 +26,34 @@
                           </div>
                       </li>
 
-                      <li class="media my-4 ">
+                      <li class="media my-4 ml-auto" style="width:35%">
                           
-                          <div id="chat-user" class="media-body d-flex flex-row-reverse">
-                              <p class="mt-0 mb-1 p-2">Halo saya mau nanya cara edit profile gimana ya min? </p>
-                              {{-- <div class="ml-2 d-flex justify-content-end align-items-end mr-2 mt-2"><p>9.00 A.M</p></div> --}}
-                          </div>
+                        <div id="chat-user" class="media-body ">
+                            <p class="mt-0 mb-1 p-2 text-white">Saya ada kendala</p>
+                            
+                            <div class="ml-2 d-flex justify-content-end align-items-end mr-2 mt-2 text-white"><p class="text-white">9.00 A.M</p></div>
+                        </div>
                       </li>
 
                       <li class="media mr-3" style="width:35%">
                          
                           <div id="chat-admin" class="media-body">
-                              <p class="mt-0 mb-1 p-2">Boleh buka menu profile lalu klik icon keranjang kuning</p>
+                              <p class="mt-0 mb-1 p-2 ">Boleh buka menu profile lalu klik icon keranjang kuning</p>
                               
-                              <div class="ml-2 d-flex justify-content-end align-items-end mr-2 mt-2"><p>9.00 A.M</p></div>
+                              <div class="ml-2 d-flex justify-content-end align-items-end mr-2 mt-2 "><p>9.00 A.M</p></div>
                           </div>
                            
                       </li>
 
                       
 
-                      <li class="media my-4 ">
+                      <li class="media my-4 ml-auto" style="width:35%">
                           
-                          <div id="chat-user" class="media-body d-flex flex-row-reverse">
-                              <p class="mt-0 mb-1 p-2">Terimakasih banyak
-                              </p>
-                  
-                          </div>
+                        <div id="chat-user" class="media-body ">
+                            <p class="mt-0 mb-1 p-2 text-white">Terima Kasih</p>
+                            
+                            <div class="ml-2 d-flex justify-content-end align-items-end mr-2 mt-2"><p class="text-white">9.00 A.M</p></div>
+                        </div>
                       </li>
                      
                   </ul>
@@ -64,7 +65,7 @@
                           <input type="text" class="form-control mr-2 ml-2" placeholder="Type your message">
                           <div class="btn" style="font-size:25px"><i class="fas fa-paper-plane"></i></div>
                       </div>
-                  </form>
+                  </form>   
               </div>
           </div>
       </div>

@@ -66,10 +66,9 @@ a:hover {
     background-color: #295D77;
 }
 
-#chat-user p {
+#chat-user {
     background-color: #214B5F;
-     color:white; 
-     width: 45%; 
+     
      border-radius:10px;
      box-shadow: 2px 2px rgb(161, 159, 159);
 }
@@ -82,6 +81,7 @@ a:hover {
   /* background-color: #98B7C7; */
 
 }
+
 #button-his{
   width:100%;
 }

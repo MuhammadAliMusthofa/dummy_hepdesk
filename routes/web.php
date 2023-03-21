@@ -25,6 +25,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/riwayat/data', 'HomeController@getData');
 
 Route::get('/pesan/{id_tiket}', 'TiketController@index')->name('pesan');
 Route::get('/pesan/user/{id_tiket}', 'TiketController@user')->name('pesan.user');
@@ -36,6 +38,9 @@ Route::get('/user_chat', 'HomeController@user_chat')->name('user_chat');
 Route::get('/ssd', 'HomeController@ssd')->name('ssd');
 // Route::controller('users', 'UserController');
 
+Route::get('/search', 'HomeController@search')->name('search');
+// Route::get('/search', 'SearchController@search')->name('search');
+// Route::get('/paginate', 'HomeController@paginate')->name('paginate');
 
 Route::post('/send-message', function (Request $request) {
     event(
