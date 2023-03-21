@@ -353,10 +353,10 @@
           localStorage['status'] = $(this).attr('id');
           status = $(this).attr('id');
           admin_chat_main();
-          if(id_tiket == ''){
-            antrian();
-          }else{
+          if(id_tiket != ''){
             pesan();
+          }else{
+            antrian();
           }
         });
 
@@ -370,6 +370,18 @@
             localStorage['sessionDetail'] = 0;
             pesan();
           }
+        });
+
+        $(document).on('click', '#terimaTiket', function(){
+          return $.ajax({
+          type: 'get',
+          url: '/admin/pesan/terima/' + id_tiket + '/' + id_pengguna,
+          data: '',
+          cache: false,
+          success: function() {
+            admin_chat_main();
+          }
+          });
         });
 
         $(document).on('click', '#back-page', function(){
@@ -412,8 +424,8 @@
       data: '',
       cache: false,
       success: function(data) {
-      $('#subcontent').html(data);
-      },
+        $('#subcontent').html(data);
+      }
       });
     }
 
@@ -443,7 +455,6 @@
       cache: false,
       success: function(data) {
         $('#list-pesan').html(data);
-        
         // removeClass liActive
         $('.user').removeClass('liActive');
 
@@ -454,7 +465,7 @@
               $(this).addClass('liActive');
             }
         });
-      }
+      },
     });
     };
 

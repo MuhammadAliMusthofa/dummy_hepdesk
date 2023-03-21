@@ -29,6 +29,7 @@ Route::get('/admin/admin_chat_head', 'AdminChatController@admin_chat_head');
 Route::get('/admin/admin_chat_main/{status}', 'AdminChatController@admin_chat_main');
 Route::get('/admin/antrian', 'AdminChatController@antrian')->name('antrian');
 Route::get('/admin/pesan/{id_tiket}', 'AdminChatController@pesan');
+Route::get('/admin/pesan/terima/{id_tiket}/{id_pengguna}', 'AdminChatController@pesanTerima');
 Route::get('/admin/detail/{id_tiket}', 'AdminChatController@detail');
 
 

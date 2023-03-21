@@ -1,7 +1,7 @@
 @extends('layouts.dashboard_layout')
 
 @section('content')
-<div class="card h-100" id="subcontent" style="max-height: 100vh">
+<div class="card h-100" id="subcontent" style="min-height: 80vh; max-height: 100vh">
 </div>
 <script>
   var id_tiket = "{{ $tiket->id_tiket }}";
@@ -13,8 +13,7 @@
     var now = new Date().getTime();
     var countdown = $('#countdown');
     
-    if(now < deadline){ 
-      
+    if(now < deadline){   
       var t = deadline - now; 
       var date = new Date(t);
       var minutes=date.getMinutes(); 

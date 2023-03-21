@@ -16,16 +16,15 @@
       </p>
     </div>
     <div class="ml-auto my-3">
+      @if ($tiket->status == 1)
       <div class="d-flex align-items-top p-2">
         <div class="rounded p-1 bg-success text-center">
           <p class="text-light">Sisa Waktu</>
-            @php
-            $time=strtotime($tiket->kadaluarsa);
-            @endphp
-          <p id="countdown" class="text-light font-weight-bold">{{ date("m:i", $time) }}</p>
+          <p id="timerPesan" class="text-light font-weight-bold">00:00</p>
         </div>
       </div>
     </div>
+    @endif
   </div>
 </li>
 @endforeach
