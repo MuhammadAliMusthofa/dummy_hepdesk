@@ -15,12 +15,13 @@
         @endif
       </p>
     </div>
-    <div class="ml-auto my-3">
+    <div class="ml-auto my-1">
       @if ($tiket->status == 1)
       <div class="d-flex align-items-top p-2">
-        <div class="rounded p-1 bg-success text-center">
+        <div id="timerBox" class="rounded p-1 bg-success text-center">
           <p class="text-light">Sisa Waktu</>
           <p id="timerPesan" class="text-light font-weight-bold">00:00</p>
+          <p id="kadaluarsa" hidden>{{ $tiket->kadaluarsa }}</p>
         </div>
       </div>
     </div>

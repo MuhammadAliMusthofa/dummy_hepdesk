@@ -5,7 +5,7 @@
     </div>
   </div>
 </div>
-<div class="container p-5">
+<div class="container pt-4">
   <div class="d-flex justify-content-start align-items-center pb-4">
     <div class="p-2">
       <div class="text-center bg-light rounded-circle d-flex align-items-center justify-content-center"
@@ -14,8 +14,8 @@
       </div>
     </div>
     <div class="p-2">
-      <h5 class="font-weight-bold m-0">{{ $tiket->name }}</h5>
-      <p class="m-0">{{ $tiket->asal_pt }}</p>
+      <h5 class="font-weight-bold m-0">{{ $tiket->nama }}</h5>
+      <p class="m-0">ID Tiket: {{ $tiket->id_tiket }}</p>
     </div>
   </div>
   <table>
@@ -58,7 +58,11 @@
         <th>
           <h5>Sisa waktu</h5>
         </th>
-        <td>{{ $tiket->kadaluarsa }}</td>
+        @if ($tiket->kadaluarsa == null)
+        <td>-</td>
+        @else
+        <td id="sisa_waktu-{{ $tiket->id_tiket }}">00:00</td>
+        @endif
       </tr>
       <tr>
         <th>
@@ -99,7 +103,9 @@
   </table>
   <div class="d-flex justify-content-md-center pt-4">
     <div class="p-2">
-      <button class="btn btn-danger font-weight-bold">Akhiri sesi</button>
+      @if ($tiket->status != 3)
+      <button id="akhiri" class="btn btn-danger font-weight-bold">Akhiri sesi</button>
+      @endif
     </div>
   </div>
 </div>
