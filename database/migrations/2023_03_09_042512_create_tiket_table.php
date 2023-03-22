@@ -21,7 +21,7 @@ class CreateTiketTable extends Migration
             $table->string('nama');
             $table->string('email');
             $table->string('departemen');
-            $table->dateTime('kadaluarsa');
+            $table->dateTime('kadaluarsa')->nullable();
             $table->integer('status')->default(0);
             $table->timestamps();
         });

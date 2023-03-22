@@ -11,14 +11,21 @@
   @endfor
 </div>
 <div class="row m-0 third-bg-color">
-  <div class="input-group m-3">
+  <div class="input-group m-3" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false"
+    aria-controls="collapseExample">
     <div class="input-group-prepend">
       <span class="input-group-text bg-light" id="cari-pesan">
         <i class="fa fa-search" aria-hidden="true"></i>
       </span>
     </div>
-    <input type="text" class="form-control" placeholder="Cari Pesan" aria-label="Cari Pesan"
-      aria-describedby="cari-pesan">
+    <input type="text" class="form-control" placeholder="Cari Pesan">
+  </div>
+</div>
+<div id="collapseOne" class="collapse" aria-expanded="false" aria-controls="collapseExample">
+  <div class="card mx-2">
+    <div class="card-body text-dark">
+      <h6>Nama</h6>
+    </div>
   </div>
 </div>
 <ul class="p-0" style="list-style: none" id="list-pesan">

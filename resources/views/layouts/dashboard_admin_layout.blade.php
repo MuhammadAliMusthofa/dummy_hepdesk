@@ -306,12 +306,22 @@
   {{-- <script src="js/demo/chart-area-demo.js"></script> --}}
   {{-- <script src="js/demo/chart-pie-demo.js"></script> --}}
   <script>
-    var id_pengguna = "{{ Auth::id() }}";
-    var id_tiket = localStorage['id_tiket'];
-    var status = localStorage['status'];
-    var home = localStorage['home'];
-    var sessionDetail = localStorage['sessionDetail'];
-    var isiPesan = '';
+    const id_pengguna = "{{ Auth::id() }}";
+    // mendeklarasikan jika localStorage kosong
+    if(!localStorage['id_tiket']){
+      localStorage['id_tiket'] = 0;
+    }
+    if(!localStorage['status']) {
+      localStorage['status'] = 0;
+    }
+    if(!localStorage['sessionDetail']){
+      localStorage['sessionDetail'] = 0;
+    }
+
+    let id_tiket = localStorage['id_tiket'];
+    let status = localStorage['status'];
+    let sessionDetail = localStorage['sessionDetail'];
+    let isiPesan;
 
     $(document).ready(function () {
       $.ajaxSetup({
@@ -337,10 +347,10 @@
       });
 
       admin_chat_head();
-      if(id_tiket != ''){
-        pesan();
-      }else if(sessionDetail == 1){
+      if(parseInt(sessionDetail)){
         detail();
+      }else if(parseInt(id_tiket)){
+        pesan();
       }else{
         antrian();
       }
@@ -353,14 +363,17 @@
           localStorage['status'] = $(this).attr('id');
           status = $(this).attr('id');
           admin_chat_main();
-          if(id_tiket != ''){
+          if(parseInt(sessionDetail)){
+            detail();
+          }else if(parseInt(id_tiket)){
             pesan();
           }else{
             antrian();
           }
         });
 
-        $(document).on('click', '.user',function(){
+
+        $(document).on('click', '.user', function(){
           $('.user').removeClass('liActive');
           $(this).addClass('liActive');
           
@@ -373,32 +386,30 @@
         });
 
         $(document).on('click', '#terimaTiket', function(){
-          return $.ajax({
-          type: 'get',
-          url: '/admin/pesan/terima/' + id_tiket + '/' + id_pengguna,
-          data: '',
-          cache: false,
-          success: function() {
-            admin_chat_main();
-          }
-          });
+          terimaPesan(id_tiket);
         });
 
         $(document).on('click', '#back-page', function(){
           $('.user').removeClass('liActive');
-          localStorage['id_tiket'] = '';
-          id_tiket = '';
+          localStorage['id_tiket'] = 0;
+          id_tiket = 0;
           antrian();
         });
 
         $(document).on('click', '#detail', function(){
           localStorage['sessionDetail'] = 1;
+          sessionDetail = 1;
           detail();
         });
 
         $(document).on('click', '#back-pesan', function(){
           localStorage['sessionDetail'] = 0;
+          sessionDetail = 0;
           pesan();
+        });
+
+        $(document).on('click', '#akhiri', function(){
+          akhiriPesan();
         });
 
         $(document).on('click', '#kirim', function(){
@@ -450,7 +461,7 @@
     function admin_chat_main(){
       return $.ajax({
       type: 'get',
-      url: '/admin/admin_chat_main/' + status,
+      url: '/admin/admin_chat_main/' + status + '/' + id_pengguna,
       data: '',
       cache: false,
       success: function(data) {
@@ -466,13 +477,57 @@
             }
         });
       },
+      complete: function() {
+        timer();
+      }
     });
     };
 
+    function timer(){
+      $('.user').each(function(i){
+        var obj = $(this);
+        if(obj.find('#kadaluarsa').length != 0){
+          var kadaluarsa = obj.find('#kadaluarsa')[0].innerHTML;
+          var deadline = new Date(kadaluarsa).getTime();
+          var x = setInterval(function () {
+            let now = new Date().getTime();
+            if(now < deadline){
+              let t = deadline - now; 
+              date = new Date(t);
+              minutes = String(date.getMinutes()).padStart(2, "0"); 
+              seconds = String(date.getSeconds()).padStart(2, "0");
+              let countDown = minutes + ':' + seconds;
+              
+              let timerPesan = $('#timerPesan', obj);
+              timerPesan.html(countDown);
+              $('#sisa_waktu-'+ obj.attr('id')).html(countDown); 
+              
+              let timerBox = $('#timerBox', obj);
+              
+              if(minutes < 2){ 
+                timerBox.removeClass('bg-success');
+                timerBox.removeClass('bg-danger');
+                timerBox.removeClass('bg-warning');
+                timerBox.addClass('bg-danger'); 
+              }else if(minutes < 5){
+                timerBox.removeClass('bg-success');
+                timerBox.removeClass('bg-danger');
+                timerBox.removeClass('bg-warning');
+                timerBox.addClass('bg-warning');
+              }
+            }else {
+              akhiriPesan(obj.attr('id'));
+              clearInterval(x);
+            }
+          }, 1000);
+        }
+      });
+    }
+
     function antrian(){
       return $.ajax({
-      type: 'get',
-      url: '/admin/antrian',
+        type: 'get',
+        url: '/admin/pesan/antrian',
       data: '',
       cache: false,
       success: function(data) {
@@ -487,7 +542,7 @@
     function detail(){
       return $.ajax({
       type: 'get',
-      url: '/admin/detail/' + id_tiket,
+      url: '/admin/pesan/detail/' + id_tiket,
       data: '',
       cache: false,
       success: function(data) {
@@ -496,6 +551,42 @@
       });
     }
 
+    function terimaPesan(id_tiket_akhiri){
+      return $.ajax({
+          type: 'get',
+          url: '/admin/pesan/terima/' + id_tiket_akhiri + '/' + id_pengguna,
+          data: '',
+          cache: false,
+          success: function() {
+            admin_chat_main();
+            pesan();
+          },
+          error: function(err){
+            alert(err.responseText);
+            localStorage['id_tiket'] = 0;
+            id_tiket = 0;
+            admin_chat_main();
+            antrian();
+          }
+          });
+    }
+
+    function akhiriPesan(){
+      return $.ajax({
+      type: 'get',
+      url: '/admin/pesan/akhiri/' + id_tiket,
+      data: '',
+      cache: false,
+      success: function(data) {
+        admin_chat_main();
+        if(parseInt(sessionDetail)){
+          detail();
+        }else{
+          pesan();
+        }
+      }
+      });
+    }
 
     function kirim(e){
         var datastr = `id_tiket=${id_tiket}&id_pengguna=${id_pengguna}&pesan=${isiPesan}`;

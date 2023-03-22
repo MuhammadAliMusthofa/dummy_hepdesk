@@ -28,7 +28,6 @@ class UserChatController extends Controller
                 'nama' => $user->user_name,
                 'email' => $user->email,
                 'departemen' => $user->role,
-                'kadaluarsa' => $timeNow->addMinute(30)->format('Y-m-d H:i:s')
             ]);
 
             $tiket = Tiket::where([

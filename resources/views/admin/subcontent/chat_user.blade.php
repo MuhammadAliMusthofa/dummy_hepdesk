@@ -51,7 +51,11 @@
       @endforeach
     </ul>
   </div>
-  @if ($tiket->id_pengguna_admin)
+  @if ($tiket->status == 3)
+  <div class="d-flex justify-content-center">
+    <p class="pb-4">Sesi telah berakhir</p>
+  </div>
+  @elseif ($tiket->id_pengguna_admin)
   <div class="card-footer position-sticky secondary-bg-color">
     <div class="form-group d-flex justify-content-between align-items-center">
       <div class="btn" style="font-size:20px"><i class="fa fa-paperclip "></i></div>

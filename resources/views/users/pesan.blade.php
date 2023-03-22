@@ -27,9 +27,9 @@
         countdown.removeClass('bg-warning');
         countdown.addClass('bg-danger');
       } 
-    }else(
+    }else{
       clearInterval(x)
-    )
+    }
   }
   
   x = setInterval(updateTimer, 1000);
