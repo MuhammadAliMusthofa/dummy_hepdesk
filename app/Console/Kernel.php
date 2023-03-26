@@ -2,6 +2,9 @@
 
 namespace App\Console;
 
+use App\Models\Tiket;
+use Carbon\Carbon;
+use DateTime;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -13,7 +16,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        Commands\AkhiriTiket::class,
+        Commands\ReminderTiket::class,
     ];
 
     /**
@@ -24,8 +28,16 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        $tikets = Tiket::where('status', 1)->get();
+        foreach ($tikets as $tiket) {
+            $kadalurasa = strtotime($tiket->kadaluarsa);
+            $minutes = idate('i', $kadalurasa);
+            $hours =  idate('H', $kadalurasa);
+            $days = idate('d', $kadalurasa);
+            $month = idate('m', $kadalurasa);
+            $schedule->command('akhiri:tiket', [$tiket->id_tiket])->cron($minutes . ' ' . $hours . ' ' . $days . ' ' . $month . ' *');
+            $schedule->command('reminder:tiket', [$tiket->id_tiket])->cron(($minutes - 10) . ' ' . $hours . ' ' . $days . ' ' . $month . ' *');
+        }
     }
 
     /**

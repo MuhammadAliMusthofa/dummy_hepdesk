@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSSDsTable extends Migration
+class CreateAdminHelpdesksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,10 @@ class CreateSSDsTable extends Migration
      */
     public function up()
     {
-        Schema::create('ssd', function (Blueprint $table) {
-            $table->increments('id_ssd');
-            $table->text('pertanyaan');
-            $table->text('jawaban');
-            $table->dateTime('tanggal');
-            $table->string('id_pengguna');
-            $table->string('id_role_pengguna');
+        Schema::create('admin_helpdesk', function (Blueprint $table) {
+            $table->increments('id_admin_helpdesk');
+            $table->string('id_pengguna')->unique();
+            $table->boolean('active');
             $table->timestamps();
         });
     }
@@ -31,6 +28,6 @@ class CreateSSDsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ssd');
+        Schema::dropIfExists('admin_helpdesk');
     }
 }

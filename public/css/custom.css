@@ -131,3 +131,12 @@ a:hover {
 .four-bg-color {
   background-color: #31708f;
 }
+
+.btn-fillter {
+  border: 2px solid black;
+}
+
+.btn-fillter-active {
+  border: 2px solid #214b5f;
+  background-color: #d6e2e9;
+}

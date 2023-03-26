@@ -6,10 +6,12 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'AdminHelpdeskSeeder' => $baseDir . '/database/seeds/AdminHelpdeskSeeder.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Events\\Message' => $baseDir . '/app/Events/Message.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
     'App\\Http\\Controllers\\AdminChatController' => $baseDir . '/app/Http/Controllers/AdminChatController.php',
+    'App\\Http\\Controllers\\AdminHelpdeskController' => $baseDir . '/app/Http/Controllers/AdminHelpdeskController.php',
     'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => $baseDir . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
     'App\\Http\\Controllers\\Auth\\LoginController' => $baseDir . '/app/Http/Controllers/Auth/LoginController.php',
     'App\\Http\\Controllers\\Auth\\RegisterController' => $baseDir . '/app/Http/Controllers/Auth/RegisterController.php',
@@ -28,6 +30,7 @@ return array(
     'App\\Http\\Middleware\\UsersMiddleware' => $baseDir . '/app/Http/Middleware/UsersMiddleware.php',
     'App\\Http\\Middleware\\VerifyCsrfToken' => $baseDir . '/app/Http/Middleware/VerifyCsrfToken.php',
     'App\\Listeners\\getMessage' => $baseDir . '/app/Listeners/getMessage.php',
+    'App\\Models\\AdminHelpdesk' => $baseDir . '/app/Models/AdminHelpdesk.php',
     'App\\Models\\Notifikasi' => $baseDir . '/app/Models/Notifikasi.php',
     'App\\Models\\Pesan' => $baseDir . '/app/Models/Pesan.php',
     'App\\Models\\SSD' => $baseDir . '/app/Models/SSD.php',
@@ -48,6 +51,7 @@ return array(
     'Carbon\\Translator' => $vendorDir . '/nesbot/carbon/src/Carbon/Translator.php',
     'Carbon\\Upgrade' => $vendorDir . '/nesbot/carbon/src/Carbon/Upgrade.php',
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
+    'CreateAdminHelpdesksTable' => $baseDir . '/database/migrations/2023_03_22_150737_create_admin_helpdesks_table.php',
     'CreateNotifikasisTable' => $baseDir . '/database/migrations/2023_03_09_042500_create_notifikasis_table.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
     'CreatePesansTable' => $baseDir . '/database/migrations/2023_03_09_042448_create_pesans_table.php',
