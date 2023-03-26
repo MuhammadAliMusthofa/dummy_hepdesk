@@ -27,7 +27,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/admin', 'AdminChatController@index')->middleware('admin')->name('admin.chat');
 Route::get('/admin/admin_chat_head', 'AdminChatController@admin_chat_head');
 Route::get('/admin/admin_chat_main/{id_pengguna}', 'AdminChatController@admin_chat_main');
-Route::get('/admin/pesan/antrian', 'AdminChatController@antrian')->name('antrian');
+Route::get('/admin/pesan/home', 'AdminChatController@home')->name('home');
 Route::get('/admin/pesan/melayani/{active}', 'AdminChatController@melayani');
 Route::get('/admin/pesan/{id_tiket}', 'AdminChatController@pesan');
 Route::get('/admin/pesan/update/{id_tiket}/{status}', 'AdminChatController@update');

@@ -25,6 +25,21 @@
   <div class="card">
     <div class="card-body text-dark">
       <div class="px-2">
+        <h6 class="font-weight-bold" style="font-size: 14px">Nama</h6>
+      </div>
+      <div id="buttonFillterNama" class="d-flex justify-content-start py-2 mb-2" style="overflow-y: auto">
+        <div class="p-1">
+          <button type="button" class="btn btn-fillter">
+            <p style="font-size: 13px">Nama Dosen</p>
+          </button>
+        </div>
+        <div class="p-1">
+          <button type="button" class="btn btn-fillter">
+            <p style="font-size: 13px">Nama Admin</p>
+          </button>
+        </div>
+      </div>
+      <div class="px-2">
         <h6 class="font-weight-bold" style="font-size: 14px">Waktu</h6>
       </div>
       <div id="buttonFillterWaktu" class="d-flex justify-content-start py-2 mb-2" style="overflow-y: auto">

@@ -62,7 +62,7 @@ class AdminChatController extends Controller
         ]);
     }
 
-    public function antrian()
+    public function home()
     {
         $id_pengguna = Auth::id();
         $adminHelpdesk = AdminHelpdesk::where('id_pengguna', $id_pengguna)->first();
@@ -71,7 +71,7 @@ class AdminChatController extends Controller
             'id_pengguna_admin' => null
         ])->get();
         $count = count($tikets);
-        return view('admin.subcontent.antrian', ['count' => $count, 'adminHelpdesk' => $adminHelpdesk]);
+        return view('admin.subcontent.home', ['count' => $count, 'adminHelpdesk' => $adminHelpdesk]);
     }
 
     public function melayani($active)

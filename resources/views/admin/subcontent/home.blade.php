@@ -10,7 +10,7 @@
 <div class="d-flex align-items-center flex-5olumn justify-content-center h-50"
   style="max-height: 50vh; min-height: 50vh">
   <div class="text-center">
-    <h1 id="antrian">
+    <h1 id="home">
       @if ($count && $adminHelpdesk->active)
       {{ $count }}
       @else

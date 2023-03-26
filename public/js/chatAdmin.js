@@ -14,7 +14,8 @@ let statusChat = localStorage['statusChat'];
 let sessionDetail = localStorage['sessionDetail'];
 let isiPesan;
 
-// variable fillter berdasarkan Waktu
+// variable fillter 
+let fillterNama;
 let fillterWaktu;
 let fillterDepart;
 
@@ -63,7 +64,7 @@ $(document).ready(function () {
       } else if (parseInt(id_tiket)) {
         pesan();
       } else {
-        antrian();
+        home();
       }
     }
   });
@@ -74,7 +75,7 @@ $(document).ready(function () {
   } else if (parseInt(id_tiket)) {
     pesan();
   } else {
-    antrian();
+    home();
   }
 
   // notifikasi
@@ -98,7 +99,7 @@ $(document).ready(function () {
     } else if (parseInt(id_tiket)) {
       pesan();
     } else {
-      antrian();
+      home();
     }
   });
 
@@ -138,7 +139,7 @@ $(document).ready(function () {
     $('.user').removeClass('liActive');
     localStorage['id_tiket'] = 0;
     id_tiket = 0;
-    antrian();
+    home();
   });
 
   $(document).on('click', '#detail', function () {
@@ -260,8 +261,22 @@ function admin_chat_main() {
 
 // toogle button fillter
 function btnFillter() {
+  const btnFillterNama = $(document).find('#buttonFillterNama');
   const btnFillterWaktu = $(document).find('#buttonFillterWaktu');
   const btnFillterDepart = $(document).find('#buttonFillterDepart');
+
+  btnFillterNama.find('button').each(function (i) {
+    $(this).on('click', function () {
+      if ($(this).is('.btn-fillter-active')) {
+        $(this).removeClass('btn-fillter-active');
+        fillterNama = 0;
+      } else {
+        btnFillterNama.find('button').removeClass('btn-fillter-active');
+        $(this).addClass('btn-fillter-active');
+        fillterNama = i + 1;
+      }
+    });
+  });
 
   btnFillterWaktu.find('button').each(function (i) {
     $(this).on('click', function () {
@@ -344,16 +359,16 @@ function timer() {
   });
 }
 
-function antrian() {
+function home() {
   return $.ajax({
     type: 'get',
-    url: '/admin/pesan/antrian',
+    url: '/admin/pesan/home',
     data: '',
     cache: false,
     success: function (data) {
       $('#subcontent').html(data);
       if (statusChat != 0) {
-        $('#antrian').html('Layanan Informasi Helpdesk')
+        $('#home').html('Layanan Informasi Helpdesk')
       }
     }
   });
@@ -367,7 +382,7 @@ function melayani() {
     cache: false,
     success: function (data) {
       admin_chat_main();
-      antrian();
+      home();
     }
   });
 }
