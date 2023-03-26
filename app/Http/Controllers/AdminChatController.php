@@ -27,6 +27,11 @@ class AdminChatController extends Controller
     {
         $adminHelpdesk = AdminHelpdesk::where('id_pengguna', $id_pengguna)->first();
 
+        $tiketsAntrian = 0;
+        $tiketsBerjalan = 0;
+        $tiketsTertunda = 0;
+        $tiketsSelesai = 0;
+
         // jika admin helpdesk sedang aktiv
         if ($adminHelpdesk->active) {
             $tiketsAntrian = Tiket::where([
@@ -47,16 +52,14 @@ class AdminChatController extends Controller
             $tiketsSelesai = Tiket::where([
                 'status' => 3
             ])->orderBy('updated_at')->with('pesan')->get();
-
-            return view('admin.admin_chat_main', [
-                'tiketsAntrian' => $tiketsAntrian,
-                'tiketsBerjalan' => $tiketsBerjalan,
-                'tiketsTertunda' => $tiketsTertunda,
-                'tiketsSelesai' => $tiketsSelesai,
-            ]);
         }
-        // jika admin helpdesk sedang tidak aktif
-        return view('admin.admin_chat_main', ['tikets' => 0]);
+
+        return view('admin.admin_chat_main', [
+            'tiketsAntrian' => $tiketsAntrian,
+            'tiketsBerjalan' => $tiketsBerjalan,
+            'tiketsTertunda' => $tiketsTertunda,
+            'tiketsSelesai' => $tiketsSelesai,
+        ]);
     }
 
     public function antrian()
@@ -74,8 +77,18 @@ class AdminChatController extends Controller
     public function melayani($active)
     {
         $id_pengguna = Auth::id();
-        $adminHelpdesk = AdminHelpdesk::where('id_pengguna', $id_pengguna)->update(['active' => $active]);
-        if ($adminHelpdesk) {
+        $adminHelpdesk = AdminHelpdesk::where('id_pengguna', $id_pengguna);
+
+        if (!$adminHelpdesk->first()) {
+            AdminHelpdesk::create([
+                'id_pengguna' => $id_pengguna,
+            ]);
+            $adminHelpdesk = AdminHelpdesk::where('id_pengguna', $id_pengguna);
+        }
+
+        $update = $adminHelpdesk->update(['active' => $active]);
+
+        if ($update) {
             return response('siap melayani');
         }
         return response('tidak melayani', 400);

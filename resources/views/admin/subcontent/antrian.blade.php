@@ -1,6 +1,6 @@
 <div class="p-2 d-flex justify-content-center secondary-bg-color">
   <div class="p-2">
-    @if ($adminHelpdesk->active)
+    @if ($adminHelpdesk && $adminHelpdesk->active)
     <button id="akhiriMelayani" class="btn btn-danger">Akhiri Melayani</button>
     @else
     <button id="mulaiMelayani" class="btn btn-success">Mulai Melayani</button>
