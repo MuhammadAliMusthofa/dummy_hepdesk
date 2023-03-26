@@ -306,10 +306,12 @@ class ComposerStaticInit0b252705641aefdd59487206f0d51e07
     );
 
     public static $classMap = array (
+        'AdminHelpdeskSeeder' => __DIR__ . '/../..' . '/database/seeds/AdminHelpdeskSeeder.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Events\\Message' => __DIR__ . '/../..' . '/app/Events/Message.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Http\\Controllers\\AdminChatController' => __DIR__ . '/../..' . '/app/Http/Controllers/AdminChatController.php',
+        'App\\Http\\Controllers\\AdminHelpdeskController' => __DIR__ . '/../..' . '/app/Http/Controllers/AdminHelpdeskController.php',
         'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
         'App\\Http\\Controllers\\Auth\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/LoginController.php',
         'App\\Http\\Controllers\\Auth\\RegisterController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/RegisterController.php',
@@ -328,6 +330,7 @@ class ComposerStaticInit0b252705641aefdd59487206f0d51e07
         'App\\Http\\Middleware\\UsersMiddleware' => __DIR__ . '/../..' . '/app/Http/Middleware/UsersMiddleware.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\Listeners\\getMessage' => __DIR__ . '/../..' . '/app/Listeners/getMessage.php',
+        'App\\Models\\AdminHelpdesk' => __DIR__ . '/../..' . '/app/Models/AdminHelpdesk.php',
         'App\\Models\\Notifikasi' => __DIR__ . '/../..' . '/app/Models/Notifikasi.php',
         'App\\Models\\Pesan' => __DIR__ . '/../..' . '/app/Models/Pesan.php',
         'App\\Models\\SSD' => __DIR__ . '/../..' . '/app/Models/SSD.php',
@@ -348,6 +351,7 @@ class ComposerStaticInit0b252705641aefdd59487206f0d51e07
         'Carbon\\Translator' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Translator.php',
         'Carbon\\Upgrade' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Upgrade.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+        'CreateAdminHelpdesksTable' => __DIR__ . '/../..' . '/database/migrations/2023_03_22_150737_create_admin_helpdesks_table.php',
         'CreateNotifikasisTable' => __DIR__ . '/../..' . '/database/migrations/2023_03_09_042500_create_notifikasis_table.php',
         'CreatePasswordResetsTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
         'CreatePesansTable' => __DIR__ . '/../..' . '/database/migrations/2023_03_09_042448_create_pesans_table.php',

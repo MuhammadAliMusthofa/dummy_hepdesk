@@ -2,96 +2,58 @@
 
 @section('content')
 {{-- chat --}}
-
-<div class="row">
-    <div class="col-md-12">
-        <div class="card">
-            <div id="card-header-chat" class="card-header  text-white d-flex justify-content-between" style=" 
-                    ">
-                <div class="d-flex align-items-center">
-
-                    <a href="{{ route('user.riwayat') }}"><i class="fas fa-arrow-left text-white"></i></a>
-
-                </div>
-                <h3 class="text-white">ADMIN 1</h3>
-                <h5 class="my-auto text-white">09/03/2023</h5>
+<div class="card-header d-flex justify-content-between primary-bg-color">
+    <div class="d-flex flex-row align-items-center">
+        <a href="{{ route('user.riwayat') }}">
+            <div class="p-2 text-center">
+                <i class="fa fa-arrow-left text-light" aria-hidden="true"></i>
             </div>
-            <div class="card-body">
-                <ul class="list-unstyled">
-
-                    <li class="media mr-3" style="width:35%">
-
-                        <div id="chat-admin" class="media-body">
-                            <p class="mt-0 mb-1 p-2">Halo, ada yang bisa kami bantu?</p>
-
-                            <div class="ml-2 d-flex justify-content-end align-items-end mr-2 mt-2">
-                                <p>9.00 A.M</p>
-                            </div>
-
-                        </div>
-                    </li>
-
-                    <li class="media my-4 ">
-
-                        <div id="chat-user" class="media-body d-flex flex-row-reverse">
-                            <p class="mt-0 mb-1 p-2">Halo saya mau nanya cara edit profile gimana ya min? </p>
-                            {{-- <div class="ml-2 d-flex justify-content-end align-items-end mr-2 mt-2">
-                                <p>9.00 A.M</p>
-                            </div> --}}
-                        </div>
-                    </li>
-
-                    <li class="media mr-3" style="width:35%">
-
-                        <div id="chat-admin" class="media-body">
-                            <p class="mt-0 mb-1 p-2">Boleh buka menu profile lalu klik icon keranjang kuning</p>
-
-                            <div class="ml-2 d-flex justify-content-end align-items-end mr-2 mt-2">
-                                <p>9.00 A.M</p>
-                            </div>
-                        </div>
-
-                    </li>
-
-                    <li class="media my-4 ">
-
-                        <div id="chat-user" class="media-body d-flex flex-row-reverse">
-                            <p class="mt-0 mb-1 p-2">Baik min, akan saya coba dan praktikkan sesuai petunjuk </p>
-                            {{-- <div class="ml-2 d-flex justify-content-end align-items-end mr-2 mt-2">
-                                <p>9.00 A.M</p>
-                            </div> --}}
-                        </div>
-                    </li>
-
-                    <li class="media my-4 ">
-
-                        <div id="chat-user" class="media-body d-flex flex-row-reverse">
-                            <p class="mt-0 mb-1 p-2">Terimakasih banyak </p>
-
-                        </div>
-                    </li>
-
-                </ul>
-            </div>
-
+        </a>
+    </div>
+    <div class="d-flex flex-row align-items-center text-dark">
+        <div class="p-2 text-center">
+            <h3 class="text-light">{{ $tiket->nama }}</h3>
         </div>
     </div>
+    <div class="d-flex flex-row align-items-center">
+        @php
+        $time=strtotime($tiket->created_at);
+        @endphp
+        <h3 class="text-light">{{ date("Y/m/d", $time) }}</h3>
+    </div>
 </div>
+<div class="card-body h-100 d-flex flex-column-reverse" style="max-height: 80vh; overflow-y: auto;" id="scrolling">
+    <ul class=" list-unstyled">
+        @foreach ($tiket->pesanPerTiket as $pesanPerTiket)
+        @if ($pesanPerTiket->id_pengguna == $tiket->id_pengguna_admin || $pesanPerTiket->id_pengguna == null)
+        <li class="media my-3" style="width:35%">
+            <div id="chat-left" class="media-body">
+                <p class="mt-0 mb-1 p-2">{{ $pesanPerTiket->pesan }}</p>
 
+                <div class="ml-2 d-flex justify-content-end align-items-end mr-2 mt-2">
+                    @php
+                    $time=strtotime($pesanPerTiket->created_at);
+                    @endphp
+                    <p>{{ date("H:i", $time) }}</p>
+                </div>
+            </div>
+        </li>
+        @else
+        <li class="media my-3 d-flex flex-row-reverse">
+            <div id="chat-right" class="media-body">
+                <p class="mt-0 mb-1 p-2">
+                    {{ $pesanPerTiket->pesan }}
+                </p>
+                <div class="mr-2 d-flex justify-content-end mt-auto">
+                    @php
+                    $time=strtotime($pesanPerTiket->created_at);
+                    @endphp
+                    <p>{{ date("H:i", $time) }}</p>
+                </div>
+            </div>
+        </li>
+        @endif
+        @endforeach
+    </ul>
+</div>
 @endsection
-
-
-
-
-
-
-
-
-
-
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-</body>
-
-</html>

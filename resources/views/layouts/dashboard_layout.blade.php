@@ -10,7 +10,9 @@
 
   <!-- CSRF Token -->
   <meta name="csrf-token" content="{{ csrf_token() }}">
-
+  <script>
+    const id_pengguna = '{{ Auth::id() }}';
+  </script>
   <title>Sister</title>
 
   <!-- Custom fonts for this template-->
@@ -289,6 +291,7 @@
     </div>
   </div>
 
+  @include('layouts.popupNotifikasi')
   <!-- Pusher CDN -->
   <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
 
@@ -308,81 +311,7 @@
   <!-- Page level custom scripts -->
   {{-- <script src="js/demo/chart-area-demo.js"></script>
   <script src="js/demo/chart-pie-demo.js"></script> --}}
-  <script>
-    var id_pengguna = '{{ Auth::id() }}';
-    var isiPesan = '';
-
-    $(document).ready(function () {
-      $.ajaxSetup({
-        headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-      });
-      
-      // Enable pusher logging - don't include this in production
-      // Pusher.logToConsole = true;
-      
-      var pusher = new Pusher('3ac5c5980227abf2bc42', {
-        cluster: 'mt1',
-        forceTLS: true
-      });
-      
-      var channel = pusher.subscribe('my-channel');
-      channel.bind('my-event', function (data) {
-        if(data.id_tiket == id_tiket){
-        pesan();
-        }
-      });
-
-      // menampilkan pesan
-      pesan();
-
-      $(document).on('click', '#kirim', function(){
-      isiPesan = $('.query').val();
-      $('.query').val(''); // mengkosongkan formuilr pesan
-      kirim();
-    });
-    
-    $(document).on('keyup', '.query', function(e){
-      isiPesan = $(this).val();
-      
-      if(e.which === 13 && isiPesan != ''){
-        $(this).val(''); // mengkosongkan formuilr pesan
-      kirim(e);
-      }
-      })
-
-    });
-    
-    function pesan(){
-      return $.ajax({
-        type: 'get',
-        url: '/user/pesan/' + id_tiket,
-        data: '',
-        cache: false,
-        success: function(data) {
-          $('#subcontent').html(data);
-      },
-      });
-    }
-
-    function kirim(e){
-    var datastr = `id_tiket=${id_tiket}&id_pengguna=${id_pengguna}&pesan=${isiPesan}`;
-    
-    $.ajax({
-    type: "post",
-    url: "/kirimPesan", // need to create this post route
-    data: datastr,
-    cache: false,
-    success: function (data) {
-      pesan();
-    },
-    error: function (jqXHR, status, err) {
-    },
-    });
-
-  }
-  </script>
+  <script src="{{ asset('js/chatUser.js') }}"></script>
 
 </body>
 

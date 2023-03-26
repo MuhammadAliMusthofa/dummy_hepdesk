@@ -19,11 +19,8 @@
   <table class="table table-striped text-center">
     <thead>
       <tr>
-        <th scope="col">Id Ticket</th>
+        <th scope="col">Id Tiket</th>
         <th scope="col">Tanggal</th>
-        <th scope="col">Nama</th>
-        <th scope="col">Email</th>
-        <th scope="col">Departemen</th>
         <th scope="col">Detail</th>
         <th scope="col">Status</th>
       </tr>
@@ -33,12 +30,13 @@
       <tr>
         <th scope="row">{{ $tiket->id_tiket }}</th>
         <td>{{ $tiket->tanggal }}</td>
-        <td>{{ $tiket->nama }}</td>
-        <td>{{ $tiket->email }}</td>
-        <td>{{ $tiket->departemen }}</td>
-        <td><a href="/user/riwayat/detail/ {{ $tiket->id_tiket }}" class="btn btn-secondary"><i
+        @if ($tiket->status == 2)
+        <td><a href="/user/pesan" class="btn btn-primary"><i class="fas fa-comments"></i></a>
+          @else
+        <td><a href="/user/riwayat/detail/ {{ $tiket->id_tiket }}" class="btn btn-primary"><i
               class="fas fa-search-plus"></i></a>
         </td>
+        @endif
         <td>
           @if ($tiket->status == 0)
           <button id="button-his" class="btn btn-warning">Menunggu</button>
@@ -47,8 +45,6 @@
           @elseif ($tiket->status == 2)
           <button id="button-his" class="btn btn-secondary">Ditunda</button>
           @elseif ($tiket->status == 3)
-          <button id="button-his" class="btn btn-danger">Dibatalkan</button>
-          @else
           <button id="button-his" class="btn btn-success">Selesai</button>
           @endif
         </td>

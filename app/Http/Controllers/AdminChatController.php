@@ -2,13 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AdminHelpdesk;
 use App\Models\Tiket;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class AdminChatController extends Controller
 {
-
+    public $notifikasi;
+    public function __construct()
+    {
+        $this->notifikasi = new NotifikasiController;
+    }
     public function index()
     {
         return view('admin.dashboard');
@@ -18,30 +23,62 @@ class AdminChatController extends Controller
         return view('admin.admin_chat_head');
     }
 
-    public function admin_chat_main($status, $id_pengguna)
+    public function admin_chat_main($id_pengguna)
     {
-        $tikets = Tiket::where([
-            'status' => $status,
-            'id_pengguna_admin' => $id_pengguna
-        ])->with('pesan')->get();
+        $adminHelpdesk = AdminHelpdesk::where('id_pengguna', $id_pengguna)->first();
 
-        if ($status == 0) {
-            $tikets = Tiket::where([
+        // jika admin helpdesk sedang aktiv
+        if ($adminHelpdesk->active) {
+            $tiketsAntrian = Tiket::where([
                 'status' => 0,
                 'id_pengguna_admin' => null
             ])->with('pesan')->get();
+
+            $tiketsBerjalan = Tiket::where([
+                'id_pengguna_admin' => $id_pengguna,
+                'status' => 1
+            ])->orderBy('kadaluarsa')->with('pesan')->get();
+
+            $tiketsTertunda = Tiket::where([
+                'id_pengguna_admin' => $id_pengguna,
+                'status' => 2
+            ])->orderBy('updated_at')->with('pesan')->get();
+
+            $tiketsSelesai = Tiket::where([
+                'status' => 3
+            ])->orderBy('updated_at')->with('pesan')->get();
+
+            return view('admin.admin_chat_main', [
+                'tiketsAntrian' => $tiketsAntrian,
+                'tiketsBerjalan' => $tiketsBerjalan,
+                'tiketsTertunda' => $tiketsTertunda,
+                'tiketsSelesai' => $tiketsSelesai,
+            ]);
         }
-        return view('admin.admin_chat_main', ['tikets' => $tikets]);
+        // jika admin helpdesk sedang tidak aktif
+        return view('admin.admin_chat_main', ['tikets' => 0]);
     }
 
     public function antrian()
     {
+        $id_pengguna = Auth::id();
+        $adminHelpdesk = AdminHelpdesk::where('id_pengguna', $id_pengguna)->first();
         $tikets = Tiket::where([
             'status' => 0,
             'id_pengguna_admin' => null
         ])->get();
         $count = count($tikets);
-        return view('admin.subcontent.antrian', ['count' => $count]);
+        return view('admin.subcontent.antrian', ['count' => $count, 'adminHelpdesk' => $adminHelpdesk]);
+    }
+
+    public function melayani($active)
+    {
+        $id_pengguna = Auth::id();
+        $adminHelpdesk = AdminHelpdesk::where('id_pengguna', $id_pengguna)->update(['active' => $active]);
+        if ($adminHelpdesk) {
+            return response('siap melayani');
+        }
+        return response('tidak melayani', 400);
     }
 
     public function pesan($id_tiket)
@@ -55,6 +92,34 @@ class AdminChatController extends Controller
         );
     }
 
+    public function update($id_tiket, $status)
+    {
+        $time = null;
+        $aksi = 0;
+        if ($status == 1) {
+            $aksi = 'berjalan';
+            $time = Carbon::now()->addMinute(30)->format('Y-m-d H:i:s');
+        } else if ($status == 2) {
+            $aksi = 'ditunda';
+        }
+
+        $tiket = Tiket::where([
+            'id_tiket' => $id_tiket,
+        ]);
+        $tik = $tiket->first();
+        $tiket->update([
+            'status' => $status,
+            'kadaluarsa' => $time
+        ]);
+        if ($tiket) {
+            // kirim notifikasi
+            $this->notifikasi->index($id_tiket, $tik->nama, 'Admin telah merubah status menjadi ' . $aksi, $aksi);
+
+            return response('berhasil merubah status tiket');
+        }
+        return response('gagal merubah status tiket', 400);
+    }
+
     public function pesanTerima($id_tiket, $id_pengguna)
     {
         $tiket = Tiket::where([
@@ -63,18 +128,24 @@ class AdminChatController extends Controller
         ])->first();
 
         if ($tiket) {
-            Tiket::where([
+            $tikets = Tiket::where([
                 'id_tiket' => $id_tiket,
-            ])->update([
+            ]);
+            $tik = $tikets->first();
+            $tikets->update([
                 'id_pengguna_admin' => $id_pengguna,
                 'status' => 1,
                 'kadaluarsa' => Carbon::now()->addMinute(30)->format('Y-m-d H:i:s')
             ]);
+            // kirim notifikasi
+            $this->notifikasi->index($id_tiket, $tik->nama, 'pesan anda diterima', 'diterima');
+
             return response('berhasil menerima data');
         } else {
             return response('gagal menerima tiket karena sudah diterima helpdesk lain', 400);;
         }
     }
+
     public function detail($id_tiket)
     {
         $tiket = Tiket::where('id_tiket', $id_tiket)->first();
@@ -83,14 +154,16 @@ class AdminChatController extends Controller
 
     public function akhiriPesan($id_tiket)
     {
-        $tiket = Tiket::where('id_tiket', $id_tiket)->first();
-        if ($tiket) {
-            Tiket::where([
-                'id_tiket' => $id_tiket,
-            ])->update([
+        $tiket = Tiket::where('id_tiket', $id_tiket);
+        $tik = $tiket->first();
+        if ($tik) {
+            $tiket->update([
                 'status' => 3,
                 'kadaluarsa' => null
             ]);
+            // kirim notifikasi
+            $this->notifikasi->index($id_tiket, $tik->nama,  'Anda telah mengakhiri obrolan ini', 'diakhiri');
+
             return response('pesan diakhiri');
         } else {
             return response('gagal mengakhiri pesan', 400);;

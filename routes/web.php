@@ -26,9 +26,11 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/admin', 'AdminChatController@index')->middleware('admin')->name('admin.chat');
 Route::get('/admin/admin_chat_head', 'AdminChatController@admin_chat_head');
-Route::get('/admin/admin_chat_main/{status}/{id_pengguna}', 'AdminChatController@admin_chat_main');
+Route::get('/admin/admin_chat_main/{id_pengguna}', 'AdminChatController@admin_chat_main');
 Route::get('/admin/pesan/antrian', 'AdminChatController@antrian')->name('antrian');
+Route::get('/admin/pesan/melayani/{active}', 'AdminChatController@melayani');
 Route::get('/admin/pesan/{id_tiket}', 'AdminChatController@pesan');
+Route::get('/admin/pesan/update/{id_tiket}/{status}', 'AdminChatController@update');
 Route::get('/admin/pesan/terima/{id_tiket}/{id_pengguna}', 'AdminChatController@pesanTerima');
 Route::get('/admin/pesan/detail/{id_tiket}', 'AdminChatController@detail');
 Route::get('/admin/pesan/akhiri/{id_tiket}', 'AdminChatController@akhiriPesan');
@@ -37,11 +39,15 @@ Route::get('/admin/pesan/akhiri/{id_tiket}', 'AdminChatController@akhiriPesan');
 //chat user
 Route::get('/user/pesan', 'UserChatController@index')->middleware('users')->name('user.pesan');
 Route::get('/user/pesan/{id_tiket}', 'UserChatController@pesan')->name('user.isi.pesan');
+Route::get('/user/pesan/akhiri/{id_tiket}', 'UserChatController@akhiri');
 Route::get('/user/riwayat', 'UserChatController@riwayat')->name('user.riwayat');
-Route::get('/user/riwayat/detail/{id_tiket}', 'ViewChatController@riwayat_detail')->name('user.riwayat.detail');
+Route::get('/user/riwayat/detail/{id_tiket}', 'UserChatController@detailRiwayat')->name('user.riwayat.detail');
 
 // mengirim pesan
 Route::post('/kirimPesan', 'PesanController@kirimPesan');
+
+// notifikasi
+Route::get('/notifikasi/{id_tiket}/{pesan}/{aksi}', 'NotifikasiController@index');
 
 // SSD user
 Route::get('/ssd', 'SSDController@index')->name('ssd');

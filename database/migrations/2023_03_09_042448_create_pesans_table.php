@@ -16,7 +16,7 @@ class CreatePesansTable extends Migration
         Schema::create('pesan', function (Blueprint $table) {
             $table->increments('id_pesan');
             $table->integer('id_tiket');
-            $table->char('id_pengguna');
+            $table->char('id_pengguna')->default(0);
             $table->text('pesan');
             $table->timestamps();
         });

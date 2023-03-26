@@ -9,18 +9,25 @@ use Illuminate\Http\Request;
 
 class PesanController extends Controller
 {
+    public $notifikasi;
+    public function __construct()
+    {
+        $this->notifikasi = new NotifikasiController;
+    }
     public function kirimPesan(Request $request)
     {
         $id_tiket = $request->id_tiket;
         $id_pengguna = $request->id_pengguna;
         $pesan = $request->pesan;
 
-        $data = new Pesan();
-        $data->id_tiket = $id_tiket;
-        $data->id_pengguna = $id_pengguna;
-        $data->pesan = $pesan;
-        $data->save();
+        $tiket = Tiket::where('id_tiket', $id_tiket)->first();
 
-        event(new Message($id_tiket, $pesan));
+        Pesan::create([
+            'id_tiket' => $id_tiket,
+            'id_pengguna' => $id_pengguna,
+            'pesan' => $pesan
+        ]);
+
+        $this->notifikasi->index($id_tiket, $id_pengguna, $pesan, 'kirim');
     }
 }

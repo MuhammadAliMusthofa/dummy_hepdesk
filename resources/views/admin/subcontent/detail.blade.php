@@ -69,19 +69,20 @@
           <h5>Status</h5>
         </th>
         <td>
+          @if ($tiket->status == 3)
+          <p>Sesi Berakhir</p>
+          @elseif ($tiket->status == 1 || $tiket->status == 2)
           <select name="status" id="status" style="background-color: transparent" class="custom-select border-0">
             @php
-            $data = ['Antrian', 'Berjalan', 'Tertunda', 'Ditutup'];
+            $data = ['Berjalan', 'Tertunda'];
             @endphp
-            @for ($j = 0; $j < count($data); $j++) @if ($tiket->status == $j)
-              <option value="{{ $j }}" selected>{{ $data[$j] }}</option>
-              @elseif($j == 3)
-              <option value="{{ $j }}" disabled>{{ $data[$j] }}</option>
-              @else
-              <option value="{{ $j }}">{{ $data[$j] }}</option>
-              @endif
+            @for ($j = 1; $j < 3; $j++) <option value="{{ $j+1 }}" @if ($tiket->status == $j) selected
+              @endif>{{ $data[$j-1] }}</option>
               @endfor
           </select>
+          @else
+          <p>Dalam Antrian</p>
+          @endif
         </td>
       </tr>
     </tbody>
