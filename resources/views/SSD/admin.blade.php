@@ -49,9 +49,10 @@
                             <button type="button" class="btn btn-primary mr-2" data-toggle="modal" data-target="#exampleModal">
                               <i class="fas fa-search-plus"></i>
                             </button>
-                              <button type="button" class="btn btn-warning mr-2"><i class="fas fa-edit"></i></button>
-                              <button type="button" class="btn btn-danger "><i class="fas fa-trash-alt"></i></button>
+                              <a href="{{ route('edit.ssd', $datas->id_ssd)}} "><button type="button" class="btn btn-warning mr-2"><i class="fas fa-edit"></i></button></a>
+                              <a href="{{ route('delete.ssd', $datas->id_ssd)}}"><button type="button" class="btn btn-danger "><i class="fas fa-trash-alt"></i></button></a>
                           </div>
+                          {{-- ="{{ route('user.riwayat') }}"> --}}
                       </td>
                       <td class="align-middle">{{$datas->created_by}}</td>
                     </tr>
@@ -62,7 +63,7 @@
                 </tbody>
               </table>
 
-              <div class="d-flex justify-content-center">
+              {{-- <div class="d-flex justify-content-center">
                 <nav aria-label="Page navigation example ">
                     <ul class="pagination align-items-center">
                       <li class="page-item nav mr-2">
@@ -82,7 +83,9 @@
                       </li>
                     </ul>
                   </nav>
-              </div>
+              </div> --}}
+
+              {!! $data->appends(request()->query())->links('pagination::bootstrap-4') !!}
               
         </div>
 

@@ -1,3 +1,5 @@
+
+
 @extends('layouts.dashboard_layout')
 
 @section('content')
@@ -20,40 +22,42 @@
         </div>
         
         <div class="card-body text-left">
-          
-          <table class="table table-striped text-left">
-            <thead>
-              <tr class="d-flex">
-                <th class="col-2 text-dark">Kategori</th>
-                <th class="col-10"><div class="form-group">
-                  <select class="form-control" id="exampleFormControlSelect1">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                  </select>
-                </div></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="d-flex">
-                <td class="col-2 font-weight-bold text-dark">Pertanyaan</td>
-                <td class="col-10"><div class="form-group mb-0">
-                  <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" placeholder="Masukkan pertanyaan"></textarea>
-                </div></td>
-              </tr>
-              <tr class="d-flex">
-                <td class="col-2 font-weight-bold text-dark">Jawaban</td>
-                <td class="col-10"><div class="form-group mb-0">
-                  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Masukkan Jawaban"></textarea>
-                </div></td>
-              </tr>
-            </tbody>
-          </table>
-          
-
-          <a href="#" class="btn btn-primary">Simpan</a>
+          <form action="{{ route('update.ssd',$data->id_ssd)}}" method="POST">
+            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+              <table class="table table-striped text-left">
+                <thead>
+                  <tr class="d-flex">
+                    <th class="col-2 text-dark">{{$data->kategori}}</th>
+                    <th class="col-10"><div class="form-group">
+                      <select class="form-control" id="exampleFormControlSelect1">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                      </select>
+                    </div></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="d-flex">
+                    <td class="col-2 font-weight-bold text-dark">Pertanyaan</td>
+                    <td class="col-10"><div class="form-group mb-0">
+                      <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" placeholder="Masukkan pertanyaan">{{$data->pertanyaan}}</textarea>
+                    </div></td>
+                  </tr>
+                  <tr class="d-flex">
+                    <td class="col-2 font-weight-bold text-dark">Jawaban</td>
+                    <td class="col-10"><div class="form-group mb-0">
+                      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Masukkan Jawaban">{{$data->jawaban}}</textarea>
+                    </div></td>
+                  </tr>
+                </tbody>
+              </table>
+              
+    
+              <button type="submit" class="btn btn-primary"> Simpan</button>
+          </form>
         </div>
       </div>
 
