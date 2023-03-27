@@ -152,7 +152,7 @@
         <div class="col-3"><button type="button" class="btn  btn-primary   px-5 py-4 w-100 ">
                 <p class="h4 font-weight-bold text-light">Asesor</p>
             </button></div>
-        <div class="col-3"><button type="button" class="btn  btn-primary   px-5 py-2 w-100 ">
+        <div class="col-3"><button type="button" class="btn  btn-primary   px-5 py-4 w-100 ">
                 <p class="h4 font-weight-bold text-light">Pengelola BKD</p>
             </button></div>
     </div>

@@ -17,6 +17,16 @@ class SSDController extends Controller
         return view('SSD.sdd');
     }
 
+    public function kategori()
+    {
+        return view('SSD.kategori');
+    }
+
+    public function admin()
+    {
+        return view('SSD.admin');
+    }
+
     /**
      * Show the form for creating a new resource.
      *
