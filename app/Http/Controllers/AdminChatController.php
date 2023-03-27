@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AdminHelpdesk;
 use App\Models\Tiket;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AdminChatController extends Controller
@@ -60,6 +61,51 @@ class AdminChatController extends Controller
             'tiketsTertunda' => $tiketsTertunda,
             'tiketsSelesai' => $tiketsSelesai,
         ]);
+    }
+
+    public function showSearch(Request $request)
+    {
+        $query = $request->querySearch;
+        $fillterNama = $request->fillterNama;
+        $fillterWaktu = $request->fillterWaktu;
+        $fillterDepart = $request->fillterDepart;
+        $status = $request->status;
+
+        // $namaDosen = '';
+        // if ($fillterNama == 1) {
+        //     $namaDosen = '';
+        // } else if($fillterNama == 2) {
+        //     $namaDosen = '';
+        // }
+
+        // berdasarkan waktu
+        $to = Carbon::now();
+        switch ($fillterWaktu) {
+            case 1:
+                $to = $to->subDays(7);
+                break;
+            case 2:
+                $to = $to->subDays(30);
+                break;
+            case 3:
+                $to = $to->subDays(365);
+                break;
+            default:
+                $to = '';
+                break;
+        }
+
+
+        $tikets = Tiket::where([
+            'status' => $status,
+            ['nama', 'like', '%' . $query . '%'],
+        ])->orWhere([
+            'status' => $status,
+            ['created_at', '>', $to],
+        ])->with('pesan')->get();
+
+        // dd($tikets);
+        return view('admin.subcontent.search', ['tikets' => $tikets]);
     }
 
     public function home()

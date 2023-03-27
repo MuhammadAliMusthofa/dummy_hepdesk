@@ -12,15 +12,16 @@ if (!localStorage['sessionDetail']) {
 let id_tiket = localStorage['id_tiket'];
 let statusChat = localStorage['statusChat'];
 let sessionDetail = localStorage['sessionDetail'];
+let querySearch;
 let isiPesan;
 
 // variable fillter 
-let fillterNama;
-let fillterWaktu;
-let fillterDepart;
+let fillterNama = 0;
+let fillterWaktu = 0;
+let fillterDepart = 0;
 
 // admin active melayani
-let active;
+let active = 0;
 
 $(document).ready(function () {
   $.ajaxSetup({
@@ -103,7 +104,7 @@ $(document).ready(function () {
     }
   });
 
-
+  // select tiket
   $(document).on('click', '.user', function () {
     $('.user').removeClass('liActive');
     $(this).addClass('liActive');
@@ -116,25 +117,46 @@ $(document).ready(function () {
     }
   });
 
-  $(document).on('click', '#btnApplyFillter', function () {
-    $('#collapseOne').collapse('hide');
+  // searching jika admin sedang melayani saja
+  if ($(document).find('#akhiriMelayani').length) {
+    $('#collapseFillter').attr('hidden', false);
 
-  });
+    $(document).on('keyup', '.querySearch', function (e) {
+      querySearch = $(this).val();
 
+      if (e.which === 13 && querySearch != '') {
+        $('#collapseFillter').collapse('hide');
+        search();
+      }
+    });
+
+    $(document).on('click', '#btnApplyFillter', function () {
+      $('#collapseFillter').collapse('hide');
+      search();
+    });
+  } else {
+    $('#collapseFillter').attr('hidden', true);
+  }
+
+  // melayani
   $(document).on('click', '#mulaiMelayani', function () {
     active = 1;
     melayani();
+    $('#collapseFillter').attr('hidden', false);
   });
 
   $(document).on('click', '#akhiriMelayani', function () {
     active = 0;
     melayani();
+    $('#collapseFillter').attr('hidden', true);
   });
 
+  // menerima pesan
   $(document).on('click', '#terimaTiket', function () {
     terimaPesan(id_tiket);
   });
 
+  // kembali dari obrolan
   $(document).on('click', '#back-page', function () {
     $('.user').removeClass('liActive');
     localStorage['id_tiket'] = 0;
@@ -142,31 +164,37 @@ $(document).ready(function () {
     home();
   });
 
+  // pergi ke detail
   $(document).on('click', '#detail', function () {
     localStorage['sessionDetail'] = 1;
     sessionDetail = 1;
     detail();
   });
 
+  // update status tiket
   $(document).on('change', '#status', function () {
     let statusValue = $(this)[0].selectedIndex + 1;
     updateStatus(statusValue);
   });
 
+  // kembali dari detail ke isi pesan
   $(document).on('click', '#back-pesan', function () {
     localStorage['sessionDetail'] = 0;
     sessionDetail = 0;
     pesan();
   });
 
+  // mengakhiri obrolan atau tiket
   $(document).on('click', '#akhiri', function () {
     akhiriPesan(id_tiket);
   });
 
+  // mengirim pesan dalam tiket jika tombol kirim di tekan
   $(document).on('click', '#kirim', function () {
     kirim();
   });
 
+  // mengirim pesan dalam tiket jika input di enter
   $(document).on('keyup', '.query', function (e) {
     isiPesan = $(this).val();
 
@@ -422,6 +450,21 @@ function akhiriPesan(id_tiket_diakhiri) {
     url: '/admin/pesan/akhiri/' + id_tiket_diakhiri,
     data: '',
     cache: false,
+  });
+}
+
+function search() {
+  let datastr = `querySearch=${querySearch}&fillterNama=${fillterNama}&fillterWaktu=${fillterWaktu}&fillterDepart=${fillterDepart}&status=${statusChat}`;
+
+  $.ajax({
+    type: "post",
+    url: "/admin/pesan/search",
+    data: datastr,
+    cache: false,
+    success: function (data) {
+      $('#list-pesan').html(data);
+      // $('#butoonStatus')
+    },
   });
 }
 

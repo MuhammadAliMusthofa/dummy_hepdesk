@@ -1,5 +1,5 @@
 <div class="container p-0 secondary-bg-color">
-  <div class="d-flex justify-content-around">
+  <div id="butoonStatus" class="d-flex justify-content-around">
     @php
     $data = ['Antrian', 'Berjalan', 'Tertunda', 'Ditutup'];
     @endphp
@@ -11,17 +11,17 @@
   @endfor
 </div>
 <div class="row m-0 third-bg-color">
-  <div class="input-group m-3" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false"
+  <div class="input-group m-3" data-toggle="collapse" data-target="#collapseFillter" aria-expanded="false"
     aria-controls="collapseExample">
     <div class="input-group-prepend">
       <span class="input-group-text bg-light" id="cari-pesan">
         <i class="fa fa-search" aria-hidden="true"></i>
       </span>
     </div>
-    <input type="text" class="form-control" placeholder="Cari Pesan">
+    <input type="text" class="form-control querySearch" placeholder="Cari Pesan">
   </div>
 </div>
-<div id="collapseOne" class="collapse" aria-expanded="false" aria-controls="collapseExample">
+<div id="collapseFillter" class="collapse" aria-expanded="false" aria-controls="collapseExample">
   <div class="card">
     <div class="card-body text-dark">
       <div class="px-2">
