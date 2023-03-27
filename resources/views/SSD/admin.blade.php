@@ -37,99 +37,27 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th scope="row" class="align-middle">001</th>
-                    <td class="align-middle"> <p>Dosen</p> </td>
-                    <td class="align-middle"> <p>Bagaimana Cara dosen</p> </td>
-                    <td class="align-middle"> <p>Untuk mengubah agar dosen bisa melakukan</p> </td>
-                    <td class="align-middle">07/12/2022</td>
-                    <td class="align-middle">
-                        <div class="d-flex">
-                          <button type="button" class="btn btn-primary mr-2" data-toggle="modal" data-target="#exampleModal">
-                            <i class="fas fa-search-plus"></i>
-                          </button>
-                            <button type="button" class="btn btn-warning mr-2"><i class="fas fa-edit"></i></button>
-                            <button type="button" class="btn btn-danger "><i class="fas fa-trash-alt"></i></button>
-                        </div>
-                    </td>
-                    <td class="align-middle">Admin 1</td>
-                  </tr>
-                  <tr>
-                    <th scope="row" class="align-middle">001</th>
-                    <td class="align-middle"> <p>Dosen</p> </td>
-                    <td class="align-middle"> <p>Bagaimana Cara dosen</p> </td>
-                    <td class="align-middle"> <p>Untuk mengubah agar dosen bisa melakukan</p> </td>
-                    <td class="align-middle">07/12/2022</td>
-                    <td class="align-middle">
-                        <div class="d-flex">
-                            <button type="button" class="btn btn-primary mr-2"><i class="fas fa-search-plus"></i></button>
-                            <button type="button" class="btn btn-warning mr-2"><i class="fas fa-edit"></i></button>
-                            <button type="button" class="btn btn-danger "><i class="fas fa-trash-alt"></i></button>
-                        </div>
-                    </td>
-                    <td class="align-middle">Admin 1</td>
-                  </tr>
-                  <tr>
-                    <th scope="row" class="align-middle">001</th>
-                    <td class="align-middle"> <p>Dosen</p> </td>
-                    <td class="align-middle"> <p>Bagaimana Cara dosen</p> </td>
-                    <td class="align-middle"> <p>Untuk mengubah agar dosen bisa melakukan</p> </td>
-                    <td class="align-middle">07/12/2022</td>
-                    <td class="align-middle">
-                        <div class="d-flex">
-                            <button type="button" class="btn btn-primary mr-2"><i class="fas fa-search-plus"></i></button>
-                            <button type="button" class="btn btn-warning mr-2"><i class="fas fa-edit"></i></button>
-                            <button type="button" class="btn btn-danger "><i class="fas fa-trash-alt"></i></button>
-                        </div>
-                    </td>
-                    <td class="align-middle">Admin 1</td>
-                  </tr>
-                  <tr>
-                    <th scope="row" class="align-middle">001</th>
-                    <td class="align-middle"> <p>Dosen</p> </td>
-                    <td class="align-middle"> <p>Bagaimana Cara dosen</p> </td>
-                    <td class="align-middle"> <p>Untuk mengubah agar dosen bisa melakukan</p> </td>
-                    <td class="align-middle">07/12/2022</td>
-                    <td class="align-middle">
-                        <div class="d-flex">
-                            <button type="button" class="btn btn-primary mr-2"><i class="fas fa-search-plus"></i></button>
-                            <button type="button" class="btn btn-warning mr-2"><i class="fas fa-edit"></i></button>
-                            <button type="button" class="btn btn-danger "><i class="fas fa-trash-alt"></i></button>
-                        </div>
-                    </td>
-                    <td class="align-middle">Admin 1</td>
-                  </tr>
-                  <tr>
-                    <th scope="row" class="align-middle">001</th>
-                    <td class="align-middle"> <p>Dosen</p> </td>
-                    <td class="align-middle"> <p>Bagaimana Cara dosen</p> </td>
-                    <td class="align-middle"> <p>Untuk mengubah agar dosen bisa melakukan</p> </td>
-                    <td class="align-middle">07/12/2022</td>
-                    <td class="align-middle">
-                        <div class="d-flex">
-                            <button type="button" class="btn btn-primary mr-2"><i class="fas fa-search-plus"></i></button>
-                            <button type="button" class="btn btn-warning mr-2"><i class="fas fa-edit"></i></button>
-                            <button type="button" class="btn btn-danger "><i class="fas fa-trash-alt"></i></button>
-                        </div>
-                    </td>
-                    <td class="align-middle">Admin 1</td>
-                  </tr>
-                  <tr>
-                    <th scope="row" class="align-middle">001</th>
-                    <td class="align-middle"> <p>Dosen</p> </td>
-                    <td class="align-middle"> <p>Bagaimana Cara dosen</p> </td>
-                    <td class="align-middle"> <p>Untuk mengubah agar dosen bisa melakukan</p> </td>
-                    <td class="align-middle">07/12/2022</td>
-                    <td class="align-middle">
-                        <div class="d-flex">
-                            <button type="button" class="btn btn-primary mr-2"><i class="fas fa-search-plus"></i></button>
-                            <button type="button" class="btn btn-warning mr-2"><i class="fas fa-edit"></i></button>
-                            <button type="button" class="btn btn-danger "><i class="fas fa-trash-alt"></i></button>
-                        </div>
-                    </td>
-                    <td class="align-middle">Admin 1</td>
-                  </tr>
-
+                    @foreach ($data as $datas )
+                    <tr>
+                      <th scope="row" class="align-middle">{{$datas->id_ssd}}</th>
+                      <td class="align-middle"> <p>{{$datas->kategori}}</p> </td>
+                      <td class="align-middle"> <p>{{$datas->pertanyaan}}</p> </td>
+                      <td class="align-middle"> <p>{{$datas->jawaban}}</p> </td>
+                      <td class="align-middle">{{$datas->tanggal}}</td>
+                      <td class="align-middle">
+                          <div class="d-flex">
+                            <button type="button" class="btn btn-primary mr-2" data-toggle="modal" data-target="#exampleModal">
+                              <i class="fas fa-search-plus"></i>
+                            </button>
+                              <button type="button" class="btn btn-warning mr-2"><i class="fas fa-edit"></i></button>
+                              <button type="button" class="btn btn-danger "><i class="fas fa-trash-alt"></i></button>
+                          </div>
+                      </td>
+                      <td class="align-middle">{{$datas->created_by}}</td>
+                    </tr>
+                        
+                    @endforeach
+             
                   
                 </tbody>
               </table>
