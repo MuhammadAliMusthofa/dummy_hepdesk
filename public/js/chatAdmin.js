@@ -149,6 +149,7 @@ $(document).ready(function () {
     active = 0;
     melayani();
     $('#collapseFillter').attr('hidden', true);
+    $('#collapseFillter').collapse('hide');
   });
 
   // menerima pesan

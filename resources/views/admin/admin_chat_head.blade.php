@@ -21,7 +21,7 @@
     <input type="text" class="form-control querySearch" placeholder="Cari Pesan">
   </div>
 </div>
-<div id="collapseFillter" class="collapse" aria-expanded="false" aria-controls="collapseExample">
+<div id="collapseFillter" class="collapse" aria-expanded="false" aria-controls="collapseExample" hidden>
   <div class="card">
     <div class="card-body text-dark">
       <div class="px-2">
