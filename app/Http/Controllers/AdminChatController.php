@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AdminHelpdesk;
 use App\Models\Tiket;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AdminChatController extends Controller
@@ -27,6 +28,11 @@ class AdminChatController extends Controller
     {
         $adminHelpdesk = AdminHelpdesk::where('id_pengguna', $id_pengguna)->first();
 
+        $tiketsAntrian = 0;
+        $tiketsBerjalan = 0;
+        $tiketsTertunda = 0;
+        $tiketsSelesai = 0;
+
         // jika admin helpdesk sedang aktiv
         if ($adminHelpdesk->active) {
             $tiketsAntrian = Tiket::where([
@@ -47,19 +53,62 @@ class AdminChatController extends Controller
             $tiketsSelesai = Tiket::where([
                 'status' => 3
             ])->orderBy('updated_at')->with('pesan')->get();
-
-            return view('admin.admin_chat_main', [
-                'tiketsAntrian' => $tiketsAntrian,
-                'tiketsBerjalan' => $tiketsBerjalan,
-                'tiketsTertunda' => $tiketsTertunda,
-                'tiketsSelesai' => $tiketsSelesai,
-            ]);
         }
-        // jika admin helpdesk sedang tidak aktif
-        return view('admin.admin_chat_main', ['tikets' => 0]);
+
+        return view('admin.admin_chat_main', [
+            'tiketsAntrian' => $tiketsAntrian,
+            'tiketsBerjalan' => $tiketsBerjalan,
+            'tiketsTertunda' => $tiketsTertunda,
+            'tiketsSelesai' => $tiketsSelesai,
+        ]);
     }
 
-    public function antrian()
+    public function showSearch(Request $request)
+    {
+        $query = $request->querySearch;
+        $fillterNama = $request->fillterNama;
+        $fillterWaktu = $request->fillterWaktu;
+        $fillterDepart = $request->fillterDepart;
+        $status = $request->status;
+
+        // $namaDosen = '';
+        // if ($fillterNama == 1) {
+        //     $namaDosen = '';
+        // } else if($fillterNama == 2) {
+        //     $namaDosen = '';
+        // }
+
+        // berdasarkan waktu
+        $to = Carbon::now();
+        switch ($fillterWaktu) {
+            case 1:
+                $to = $to->subDays(7);
+                break;
+            case 2:
+                $to = $to->subDays(30);
+                break;
+            case 3:
+                $to = $to->subDays(365);
+                break;
+            default:
+                $to = '';
+                break;
+        }
+
+
+        $tikets = Tiket::where([
+            'status' => $status,
+            ['nama', 'like', '%' . $query . '%'],
+        ])->orWhere([
+            'status' => $status,
+            ['created_at', '>', $to],
+        ])->with('pesan')->get();
+
+        // dd($tikets);
+        return view('admin.subcontent.search', ['tikets' => $tikets]);
+    }
+
+    public function home()
     {
         $id_pengguna = Auth::id();
         $adminHelpdesk = AdminHelpdesk::where('id_pengguna', $id_pengguna)->first();
@@ -68,14 +117,24 @@ class AdminChatController extends Controller
             'id_pengguna_admin' => null
         ])->get();
         $count = count($tikets);
-        return view('admin.subcontent.antrian', ['count' => $count, 'adminHelpdesk' => $adminHelpdesk]);
+        return view('admin.subcontent.home', ['count' => $count, 'adminHelpdesk' => $adminHelpdesk]);
     }
 
     public function melayani($active)
     {
         $id_pengguna = Auth::id();
-        $adminHelpdesk = AdminHelpdesk::where('id_pengguna', $id_pengguna)->update(['active' => $active]);
-        if ($adminHelpdesk) {
+        $adminHelpdesk = AdminHelpdesk::where('id_pengguna', $id_pengguna);
+
+        if (!$adminHelpdesk->first()) {
+            AdminHelpdesk::create([
+                'id_pengguna' => $id_pengguna,
+            ]);
+            $adminHelpdesk = AdminHelpdesk::where('id_pengguna', $id_pengguna);
+        }
+
+        $update = $adminHelpdesk->update(['active' => $active]);
+
+        if ($update) {
             return response('siap melayani');
         }
         return response('tidak melayani', 400);
