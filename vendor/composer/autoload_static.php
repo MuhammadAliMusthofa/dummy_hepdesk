@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit0b252705641aefdd59487206f0d51e07
+class ComposerStaticInit69d646e5101b6e137fd2a36982538c44
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
@@ -307,6 +307,8 @@ class ComposerStaticInit0b252705641aefdd59487206f0d51e07
 
     public static $classMap = array (
         'AdminHelpdeskSeeder' => __DIR__ . '/../..' . '/database/seeds/AdminHelpdeskSeeder.php',
+        'App\\Console\\Commands\\AkhiriTiket' => __DIR__ . '/../..' . '/app/Console/Commands/AkhiriTiket.php',
+        'App\\Console\\Commands\\ReminderTiket' => __DIR__ . '/../..' . '/app/Console/Commands/ReminderTiket.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Events\\Message' => __DIR__ . '/../..' . '/app/Events/Message.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
@@ -318,6 +320,7 @@ class ComposerStaticInit0b252705641aefdd59487206f0d51e07
         'App\\Http\\Controllers\\Auth\\ResetPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ResetPasswordController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\HomeController' => __DIR__ . '/../..' . '/app/Http/Controllers/HomeController.php',
+        'App\\Http\\Controllers\\NotifikasiController' => __DIR__ . '/../..' . '/app/Http/Controllers/NotifikasiController.php',
         'App\\Http\\Controllers\\PesanController' => __DIR__ . '/../..' . '/app/Http/Controllers/PesanController.php',
         'App\\Http\\Controllers\\SSDController' => __DIR__ . '/../..' . '/app/Http/Controllers/SSDController.php',
         'App\\Http\\Controllers\\TiketController' => __DIR__ . '/../..' . '/app/Http/Controllers/TiketController.php',
@@ -3481,16 +3484,17 @@ class ComposerStaticInit0b252705641aefdd59487206f0d51e07
         'phpDocumentor\\Reflection\\Types\\String_' => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src/Types/String_.php',
         'phpDocumentor\\Reflection\\Types\\This' => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src/Types/This.php',
         'phpDocumentor\\Reflection\\Types\\Void_' => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src/Types/Void_.php',
+        'ssdSeeder' => __DIR__ . '/../..' . '/database/seeds/ssdSeeder.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit0b252705641aefdd59487206f0d51e07::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit0b252705641aefdd59487206f0d51e07::$prefixDirsPsr4;
-            $loader->fallbackDirsPsr4 = ComposerStaticInit0b252705641aefdd59487206f0d51e07::$fallbackDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit0b252705641aefdd59487206f0d51e07::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit0b252705641aefdd59487206f0d51e07::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit69d646e5101b6e137fd2a36982538c44::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit69d646e5101b6e137fd2a36982538c44::$prefixDirsPsr4;
+            $loader->fallbackDirsPsr4 = ComposerStaticInit69d646e5101b6e137fd2a36982538c44::$fallbackDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit69d646e5101b6e137fd2a36982538c44::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit69d646e5101b6e137fd2a36982538c44::$classMap;
 
         }, null, ClassLoader::class);
     }

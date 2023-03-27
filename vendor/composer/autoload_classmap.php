@@ -7,6 +7,8 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'AdminHelpdeskSeeder' => $baseDir . '/database/seeds/AdminHelpdeskSeeder.php',
+    'App\\Console\\Commands\\AkhiriTiket' => $baseDir . '/app/Console/Commands/AkhiriTiket.php',
+    'App\\Console\\Commands\\ReminderTiket' => $baseDir . '/app/Console/Commands/ReminderTiket.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Events\\Message' => $baseDir . '/app/Events/Message.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
@@ -18,6 +20,7 @@ return array(
     'App\\Http\\Controllers\\Auth\\ResetPasswordController' => $baseDir . '/app/Http/Controllers/Auth/ResetPasswordController.php',
     'App\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
     'App\\Http\\Controllers\\HomeController' => $baseDir . '/app/Http/Controllers/HomeController.php',
+    'App\\Http\\Controllers\\NotifikasiController' => $baseDir . '/app/Http/Controllers/NotifikasiController.php',
     'App\\Http\\Controllers\\PesanController' => $baseDir . '/app/Http/Controllers/PesanController.php',
     'App\\Http\\Controllers\\SSDController' => $baseDir . '/app/Http/Controllers/SSDController.php',
     'App\\Http\\Controllers\\TiketController' => $baseDir . '/app/Http/Controllers/TiketController.php',
@@ -3181,4 +3184,5 @@ return array(
     'phpDocumentor\\Reflection\\Types\\String_' => $vendorDir . '/phpdocumentor/type-resolver/src/Types/String_.php',
     'phpDocumentor\\Reflection\\Types\\This' => $vendorDir . '/phpdocumentor/type-resolver/src/Types/This.php',
     'phpDocumentor\\Reflection\\Types\\Void_' => $vendorDir . '/phpdocumentor/type-resolver/src/Types/Void_.php',
+    'ssdSeeder' => $baseDir . '/database/seeds/ssdSeeder.php',
 );
