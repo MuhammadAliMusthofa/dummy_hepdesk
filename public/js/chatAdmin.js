@@ -119,24 +119,23 @@ $(document).ready(function () {
 
   // searching jika admin sedang melayani saja
   if ($(document).find('#akhiriMelayani').length) {
-    $('#collapseFillter').attr('hidden', false);
-
-    $(document).on('keyup', '.querySearch', function (e) {
-      querySearch = $(this).val();
-
-      if (e.which === 13 && querySearch != '') {
-        $('#collapseFillter').collapse('hide');
-        search();
-      }
-    });
-
-    $(document).on('click', '#btnApplyFillter', function () {
-      $('#collapseFillter').collapse('hide');
-      search();
-    });
-  } else {
     $('#collapseFillter').attr('hidden', true);
   }
+  $('#collapseFillter').attr('hidden', false);
+
+  $(document).on('keyup', '.querySearch', function (e) {
+    querySearch = $(this).val();
+
+    if (e.which === 13 && querySearch != '') {
+      $('#collapseFillter').collapse('hide');
+      search();
+    }
+  });
+
+  $(document).on('click', '#btnApplyFillter', function () {
+    $('#collapseFillter').collapse('hide');
+    search();
+  });
 
   // melayani
   $(document).on('click', '#mulaiMelayani', function () {
