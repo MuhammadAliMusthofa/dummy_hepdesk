@@ -27,6 +27,11 @@ class SSDController extends Controller
         return view('SSD.admin');
     }
 
+    public function form()
+    {
+        return view('SSD.form');
+    }
+
     /**
      * Show the form for creating a new resource.
      *

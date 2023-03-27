@@ -58,6 +58,7 @@ Route::get('/notifikasi/{id_tiket}/{pesan}/{aksi}', 'NotifikasiController@index'
 Route::get('/ssd', 'SSDController@index')->name('ssd');
 Route::get('/ssd/kategori', 'SSDController@kategori')->name('ssd');
 Route::get('/ssd/admin', 'SSDController@admin')->name('ssd');
+Route::get('/ssd/form', 'SSDController@form')->name('ssd');
 Route::get('/ssd/search/{query}', 'SSDController@show')->name('ssd.search');
 
 // SSD admin
