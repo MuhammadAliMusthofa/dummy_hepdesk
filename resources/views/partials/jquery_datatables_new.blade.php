@@ -10,3 +10,6 @@
 <script type="text/javascript" src="{{ asset('/plugins/datatables_new/pdfmake.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('/plugins/datatables_new/vfs_fonts.js') }}"></script>
 <script type="text/javascript" src="{{ asset('/plugins/datatables_new/buttons.html5.min.js') }}"></script>
+
+<script type="text/javascript" src="{{ asset('/datatab/js/jquery-3.5.1.js') }}"></script>
+    <script  type="text/javascript" src="{{ asset('/datatab/js/datatables.min.js') }}"></script>

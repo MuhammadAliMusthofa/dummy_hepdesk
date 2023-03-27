@@ -15,12 +15,13 @@ class CreateTiketTable extends Migration
     {
         Schema::create('tiket', function (Blueprint $table) {
             $table->increments('id_tiket');
-            $table->dateTime('tanggal');
+            $table->date('tanggal');
             $table->string('nama');
             $table->string('email');
             $table->string('departemen');
             $table->time('experied');
             $table->string('helpdesk');
+            $table->string('status');
             $table->timestamps();
         });
     }

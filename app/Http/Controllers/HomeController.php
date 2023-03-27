@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 // use Yajra\Datatables\Datatables;
 use DataTables;
+use DB;
 
 class HomeController extends Controller
 {
@@ -29,6 +30,8 @@ class HomeController extends Controller
      */
     public function index()
     {
+
+        $user = User::all();
         if (
             Auth::user()->role == 0 
         ) {
@@ -37,7 +40,7 @@ class HomeController extends Controller
 
         } elseif (Auth::user()->role == 1) {
             // role 1 adalah user
-            return view('user.sdid');
+            return view('user.sdid', compact('user'));
         }
         
         Auth::logout();
@@ -72,10 +75,56 @@ class HomeController extends Controller
     ->orWhere('tanggal', 'LIKE', "%$query%")
     ->orWhere('nama', 'LIKE', "%$query%")
     ->orWhere('email', 'LIKE', "%$query%")
+    ->orWhere('departemen', 'LIKE', "%$query%")
+    ->orWhere('status', 'LIKE', "%$query%")
     ->get();
     return view('users.riwayat_search', compact('datas', 'query'));
 
     }
 
+    // public function search(Request $request)
+    // {
+    //     $query = $request->get('query');
+    //     $posts = Tiket::where('nama', 'LIKE', '%' . $query . '%')->get();
+
+    //     return response()->json($posts);
+    // }
+
+    // public function loadData(Request $request)
+    // {
+    //     if ($request->has('q')) {
+    //         $cari = $request->q;
+    //         $data = Tiket::where('nama', 'LIKE', '%$cari%')->get();
+    //         return response()->json($data);
+    //     }
+    // }
+
+    // public function indexAjax(Request $request)
+    // {
+    //     try {
+    //         $param['draw'] = $request->input('draw');
+    //         $start = $request->input('start');
+    //         $length = $request->input('length');
+    //         $searchValue = $request->input('search.value');
+
+    //         $model          = new Tiket();
+    //         $data           = $model->searchAndDisplay($searchValue, $start, $length);
+    //         $totalCount     = $model->searchAndDisplay($searchValue);
+
+    //         $jsonData = [
+    //             'draw'              => intval($param['draw']),
+    //             'recordsTotal'      => count($totalCount),
+    //             'recordsFiltered'   => count($totalCount),
+    //             'data'              => $data
+    //         ];
+
+    //         return response()->json($jsonData);
+    //     } catch (\Throwable $th) {
+    //         return $this->fail($th->getMessage());
+    //     }
+    // }
+
+
+   
 
 }

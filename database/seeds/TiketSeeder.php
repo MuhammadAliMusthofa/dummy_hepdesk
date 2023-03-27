@@ -25,19 +25,21 @@ class TiketSeeder extends Seeder
         $randomDate = Carbon::createFromTimestamp(rand(1640995200, time()));
         // $randomDate->format('Y-m-d H:i:s');
         // Format tanggal sebagai YYYY-MM-DD
-        $randomDate->format('Y-m-d H:i:s');
+        $randomDate->format('Y-m-d');
         //
         $faker = Faker::create();
 
         // Generate dummy data for users table
-        for ($i=0; $i < 50; $i++) { 
+        for ($i=0; $i < 5; $i++) { 
             DB::table('tiket')->insert([
                 'nama' => $faker->name,
                 'tanggal' => $randomDate,
                 'email' => $faker->email,
-                'departemen' => 'dosen',
+                'departemen' => 'Assesor',
                 'experied' => $randomDate,
-                'helpdesk' => 'admin',
+                'helpdesk' => 'helpdesk 1',
+                'status' => 'Berjalan',
+                
                 // 'created_at' => $randomDateString,
                 // 'updated_at' => $randomDateString,
             ]);

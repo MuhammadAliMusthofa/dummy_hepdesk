@@ -128,4 +128,35 @@
     <a href="{{route('user_chat')}}" class="btn btn-success px-5 py-2 my-3">Chat dengan Helpdesk</a>
 </div>
 
+
+<!-- Modal Filtering -->
+
+{{-- <div class="row">
+    <div class="col-md-6 mb-3">
+      <form action="#" method="GET">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Cari produk" name="search" value="{{ request('search') }}">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="submit">Cari</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="col-md-6 mb-3">
+      <form action="#" method="GET">
+        <div class="input-group">
+          <select class="custom-select" name="category_id">
+            <option value="">-- Pilih Kategori --</option>
+            @foreach($user as $category)
+              <option value="{{ $category->id }}" {{ request('category_oid') == $category->id ? 'selected' : '' }}>{{ $category->user_name }}</option>
+            @endforeach
+          </select>
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="submit">Filter</button>
+          </div>
+        </div>
+      </form>
+    </div>
+</div> --}}
+
 @endsection

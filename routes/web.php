@@ -38,8 +38,8 @@ Route::get('/user_chat', 'HomeController@user_chat')->name('user_chat');
 Route::get('/ssd', 'HomeController@ssd')->name('ssd');
 // Route::controller('users', 'UserController');
 
+// Route::get('/search', 'HomeController@loadData')->name('search');
 Route::get('/search', 'HomeController@search')->name('search');
-// Route::get('/search', 'SearchController@search')->name('search');
 // Route::get('/paginate', 'HomeController@paginate')->name('paginate');
 
 Route::post('/send-message', function (Request $request) {
