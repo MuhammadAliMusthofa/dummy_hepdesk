@@ -62,3 +62,7 @@ Route::get('/ssd/form', 'SSDController@form')->name('ssd');
 Route::get('/ssd/search/{query}', 'SSDController@show')->name('ssd.search');
 
 // SSD admin
+Route::post('/ssd/add/{id_ssd}', 'SSDController@create')->name('add.ssd');
+Route::get('/ssd/delete/{id_ssd}', 'SSDController@destroy')->name('delete.ssd');
+Route::get('/ssd/update_page/{id_ssd}', 'SSDController@edit')->name('edit.ssd');
+Route::post('/ssd/update/{id_ssd}', 'SSDController@update')->name('update.ssd');

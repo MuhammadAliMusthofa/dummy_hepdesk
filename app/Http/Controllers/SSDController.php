@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\SSD;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+
 
 class SSDController extends Controller
 {
@@ -14,22 +17,16 @@ class SSDController extends Controller
      */
     public function index()
     {
-        return view('SSD.sdd');
-    }
+        if (Auth::user()->role == 0 ) {
+            $data = SSD::paginate(10);
+            return view('SSD.ssd_admin', compact('data'));
 
-    public function kategori()
-    {
-        return view('SSD.kategori');
-    }
+        } else if (Auth::user()->role == 1) {
 
-    public function admin()
-    {
-        return view('SSD.admin');
-    }
-
-    public function form()
-    {
-        return view('SSD.form');
+            return view('SSD.sdd');
+        }
+        Auth::logout();
+        return redirect('/login');
     }
 
     /**
@@ -37,9 +34,20 @@ class SSDController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+
+            $date = Carbon::now()->format('d-m-Y'); 
+            $data = new SSD();
+            $data->kategori = $request->kategori;
+            $data->pertanyaan = $request->pertanyaan;
+            $data->jawaban = $request->jawaban;
+            
+            $data->tanggal = $date;
+            $data->save();
+    
+            return redirect()->back();
+       
     }
 
     /**
@@ -72,7 +80,9 @@ class SSDController extends Controller
      */
     public function edit(SSD $sSD)
     {
-        //
+        $data=SSD::find($id);
+        
+        return view('SSD.edit',compact('data'));
     }
 
     /**
@@ -84,7 +94,14 @@ class SSDController extends Controller
      */
     public function update(Request $request, SSD $sSD)
     {
-        //
+        $data=SSD::find($sSD);
+        $data->kategori = $request->kategori;
+        $data->pertanyaan = $request->pertanyaan;
+        $data->kategori = $request->kategori;
+        
+        $data->save();
+
+        return redirect()->back();
     }
 
     /**
@@ -95,6 +112,11 @@ class SSDController extends Controller
      */
     public function destroy(SSD $sSD)
     {
-        //
+       
+            $data=SSD::find($sSD);
+            $data->delete();
+    
+            return redirect()->back();
+     
     }
 }
