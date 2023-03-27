@@ -16,7 +16,7 @@ class CreateAdminHelpdesksTable extends Migration
         Schema::create('admin_helpdesk', function (Blueprint $table) {
             $table->increments('id_admin_helpdesk');
             $table->string('id_pengguna')->unique();
-            $table->boolean('active');
+            $table->boolean('active')->default(0);
             $table->timestamps();
         });
     }

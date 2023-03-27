@@ -12,14 +12,16 @@ if (!localStorage['sessionDetail']) {
 let id_tiket = localStorage['id_tiket'];
 let statusChat = localStorage['statusChat'];
 let sessionDetail = localStorage['sessionDetail'];
+let querySearch;
 let isiPesan;
 
-// variable fillter berdasarkan Waktu
-let fillterWaktu;
-let fillterDepart;
+// variable fillter 
+let fillterNama = 0;
+let fillterWaktu = 0;
+let fillterDepart = 0;
 
 // admin active melayani
-let active;
+let active = 0;
 
 $(document).ready(function () {
   $.ajaxSetup({
@@ -63,7 +65,7 @@ $(document).ready(function () {
       } else if (parseInt(id_tiket)) {
         pesan();
       } else {
-        antrian();
+        home();
       }
     }
   });
@@ -74,7 +76,7 @@ $(document).ready(function () {
   } else if (parseInt(id_tiket)) {
     pesan();
   } else {
-    antrian();
+    home();
   }
 
   // notifikasi
@@ -98,11 +100,11 @@ $(document).ready(function () {
     } else if (parseInt(id_tiket)) {
       pesan();
     } else {
-      antrian();
+      home();
     }
   });
 
-
+  // select tiket
   $(document).on('click', '.user', function () {
     $('.user').removeClass('liActive');
     $(this).addClass('liActive');
@@ -115,57 +117,84 @@ $(document).ready(function () {
     }
   });
 
-  $(document).on('click', '#btnApplyFillter', function () {
-    $('#collapseOne').collapse('hide');
+  // searching jika admin sedang melayani saja
+  if ($(document).find('#akhiriMelayani').length) {
+    $('#collapseFillter').attr('hidden', false);
 
-  });
+    $(document).on('keyup', '.querySearch', function (e) {
+      querySearch = $(this).val();
 
+      if (e.which === 13 && querySearch != '') {
+        $('#collapseFillter').collapse('hide');
+        search();
+      }
+    });
+
+    $(document).on('click', '#btnApplyFillter', function () {
+      $('#collapseFillter').collapse('hide');
+      search();
+    });
+  } else {
+    $('#collapseFillter').attr('hidden', true);
+  }
+
+  // melayani
   $(document).on('click', '#mulaiMelayani', function () {
     active = 1;
     melayani();
+    $('#collapseFillter').attr('hidden', false);
   });
 
   $(document).on('click', '#akhiriMelayani', function () {
     active = 0;
     melayani();
+    $('#collapseFillter').attr('hidden', true);
   });
 
+  // menerima pesan
   $(document).on('click', '#terimaTiket', function () {
     terimaPesan(id_tiket);
   });
 
+  // kembali dari obrolan
   $(document).on('click', '#back-page', function () {
     $('.user').removeClass('liActive');
     localStorage['id_tiket'] = 0;
     id_tiket = 0;
-    antrian();
+    home();
   });
 
+  // pergi ke detail
   $(document).on('click', '#detail', function () {
     localStorage['sessionDetail'] = 1;
     sessionDetail = 1;
     detail();
   });
 
+  // update status tiket
   $(document).on('change', '#status', function () {
     let statusValue = $(this)[0].selectedIndex + 1;
     updateStatus(statusValue);
   });
 
+  // kembali dari detail ke isi pesan
   $(document).on('click', '#back-pesan', function () {
     localStorage['sessionDetail'] = 0;
     sessionDetail = 0;
     pesan();
   });
 
+  // mengakhiri obrolan atau tiket
   $(document).on('click', '#akhiri', function () {
     akhiriPesan(id_tiket);
   });
 
+  // mengirim pesan dalam tiket jika tombol kirim di tekan
   $(document).on('click', '#kirim', function () {
     kirim();
   });
 
+  // mengirim pesan dalam tiket jika input di enter
   $(document).on('keyup', '.query', function (e) {
     isiPesan = $(this).val();
 
@@ -260,8 +289,22 @@ function admin_chat_main() {
 
 // toogle button fillter
 function btnFillter() {
+  const btnFillterNama = $(document).find('#buttonFillterNama');
   const btnFillterWaktu = $(document).find('#buttonFillterWaktu');
   const btnFillterDepart = $(document).find('#buttonFillterDepart');
+
+  btnFillterNama.find('button').each(function (i) {
+    $(this).on('click', function () {
+      if ($(this).is('.btn-fillter-active')) {
+        $(this).removeClass('btn-fillter-active');
+        fillterNama = 0;
+      } else {
+        btnFillterNama.find('button').removeClass('btn-fillter-active');
+        $(this).addClass('btn-fillter-active');
+        fillterNama = i + 1;
+      }
+    });
+  });
 
   btnFillterWaktu.find('button').each(function (i) {
     $(this).on('click', function () {
@@ -344,16 +387,16 @@ function timer() {
   });
 }
 
-function antrian() {
+function home() {
   return $.ajax({
     type: 'get',
-    url: '/admin/pesan/antrian',
+    url: '/admin/pesan/home',
     data: '',
     cache: false,
     success: function (data) {
       $('#subcontent').html(data);
       if (statusChat != 0) {
-        $('#antrian').html('Layanan Informasi Helpdesk')
+        $('#home').html('Layanan Informasi Helpdesk')
       }
     }
   });
@@ -367,7 +410,7 @@ function melayani() {
     cache: false,
     success: function (data) {
       admin_chat_main();
-      antrian();
+      home();
     }
   });
 }
@@ -407,6 +450,21 @@ function akhiriPesan(id_tiket_diakhiri) {
     url: '/admin/pesan/akhiri/' + id_tiket_diakhiri,
     data: '',
     cache: false,
+  });
+}
+
+function search() {
+  let datastr = `querySearch=${querySearch}&fillterNama=${fillterNama}&fillterWaktu=${fillterWaktu}&fillterDepart=${fillterDepart}&status=${statusChat}`;
+
+  $.ajax({
+    type: "post",
+    url: "/admin/pesan/search",
+    data: datastr,
+    cache: false,
+    success: function (data) {
+      $('#list-pesan').html(data);
+      // $('#butoonStatus')
+    },
   });
 }
 
