@@ -67,9 +67,10 @@ class SSDController extends Controller
      * @param  \App\SSD  $sSD
      * @return \Illuminate\Http\Response
      */
-    public function show(SSD $sSD)
+    public function show(Request $request, SSD $sSD)
     {
-        //
+        $data=SSD::where('id_ssd','like', $request->keluhan)->get();
+        return view('SSD.kategori', compact('data'));
     }
 
     /**

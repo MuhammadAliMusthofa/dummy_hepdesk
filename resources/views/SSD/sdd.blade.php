@@ -6,14 +6,18 @@
     <div class="col-8">
         <h4 class=" font-weight-bold mt-2">Halo Dummy Dosen 1 ! Butuh bantuan ?</h4>
 
-        <div class="input-group my-4">
-            <input type="text" class="form-control p-4" placeholder="Cari Keluhan" aria-label="Username"
-                aria-describedby="basic-addon1">
-            <div class="input-group-append border-right-0">
-                <span class="input-group-text bg-white border-left-0" id="basic-addon1"><i
-                        class="fas fa-search"></i></span>
+        <form action="ssd/search" method="post">
+            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+            <div class="input-group my-4">
+                <input type="text" class="form-control p-4" placeholder="Cari Keluhan" aria-label="Username"
+                    aria-describedby="basic-addon1" name="keluhan">
+                <div class="input-group-append border-right-0">
+                    <span class="input-group-text bg-white border-left-0" id="basic-addon1"><i
+                            class="fas fa-search"></i></span>
+                </div>
             </div>
-        </div>
+        </form>
+        
 
         <div class="sdid">
             <p class="font-weight-bold h5  mt-5 mb-3">Pertanyaan yang sering muncul</p>

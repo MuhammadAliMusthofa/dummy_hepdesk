@@ -34,41 +34,15 @@
         
 
         <div class="sdid-search">
+            @foreach ($data as $ssd)
             <div class="border-bottom border-dark pb-3 mb-3">
                 <h4 class="font-weight-bold mb-3">Kenapa saya tidak bisa mengubah riwayat pengabdian?</h4>
                 <p class="h5 mb-2">Lorem ipsum dolor sit amet consectetur. Platea vestibulum lectus nibh pretium pharetra interdum in. Interdum eget elit egestas nullam semper. Gravida morbi malesuada mauris a adipiscing.</p>
                 <p>10/03/2023</p>
             </div>
-            <div class="border-bottom border-dark pb-3 mb-3">
-                <h4 class="font-weight-bold mb-3">Kenapa saya tidak bisa mengubah riwayat pengabdian?</h4>
-                <p class="h5 mb-2">Lorem ipsum dolor sit amet consectetur. Platea vestibulum lectus nibh pretium pharetra interdum in. Interdum eget elit egestas nullam semper. Gravida morbi malesuada mauris a adipiscing.</p>
-                <p>10/03/2023</p>
-            </div>
-            <div class="border-bottom border-dark pb-3 mb-3">
-                <h4 class="font-weight-bold mb-3">Kenapa saya tidak bisa mengubah riwayat pengabdian?</h4>
-                <p class="h5 mb-2">Lorem ipsum dolor sit amet consectetur. Platea vestibulum lectus nibh pretium pharetra interdum in. Interdum eget elit egestas nullam semper. Gravida morbi malesuada mauris a adipiscing.</p>
-                <p>10/03/2023</p>
-            </div>
-            <div class="border-bottom border-dark pb-3 mb-3">
-                <h4 class="font-weight-bold mb-3">Kenapa saya tidak bisa mengubah riwayat pengabdian?</h4>
-                <p class="h5 mb-2">Lorem ipsum dolor sit amet consectetur. Platea vestibulum lectus nibh pretium pharetra interdum in. Interdum eget elit egestas nullam semper. Gravida morbi malesuada mauris a adipiscing.</p>
-                <p>10/03/2023</p>
-            </div>
-            <div class="border-bottom border-dark pb-3 mb-3">
-                <h4 class="font-weight-bold mb-3">Kenapa saya tidak bisa mengubah riwayat pengabdian?</h4>
-                <p class="h5 mb-2">Lorem ipsum dolor sit amet consectetur. Platea vestibulum lectus nibh pretium pharetra interdum in. Interdum eget elit egestas nullam semper. Gravida morbi malesuada mauris a adipiscing.</p>
-                <p>10/03/2023</p>
-            </div>
-            <div class="border-bottom border-dark pb-3 mb-3">
-                <h4 class="font-weight-bold mb-3">Kenapa saya tidak bisa mengubah riwayat pengabdian?</h4>
-                <p class="h5 mb-2">Lorem ipsum dolor sit amet consectetur. Platea vestibulum lectus nibh pretium pharetra interdum in. Interdum eget elit egestas nullam semper. Gravida morbi malesuada mauris a adipiscing.</p>
-                <p>10/03/2023</p>
-            </div>
-            <div class="border-bottom border-dark pb-3 mb-3">
-                <h4 class="font-weight-bold mb-3">Kenapa saya tidak bisa mengubah riwayat pengabdian?</h4>
-                <p class="h5 mb-2">Lorem ipsum dolor sit amet consectetur. Platea vestibulum lectus nibh pretium pharetra interdum in. Interdum eget elit egestas nullam semper. Gravida morbi malesuada mauris a adipiscing.</p>
-                <p>10/03/2023</p>
-            </div>
+            @endforeach
+            
+            
         </div>
 
         
