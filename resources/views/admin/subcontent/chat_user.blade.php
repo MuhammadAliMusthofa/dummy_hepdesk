@@ -1,6 +1,17 @@
 @if ($tiket)
 <div class="card h-100" style="min-height: 80vh; max-height: 80vh">
-  <div class="card-header  text-white d-flex justify-content-between" style="background-color: #D6E2E9">
+  <div id="formSearch" class="card-header  text-white d-flex justify-content-between secondary-bg-color">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text bg-light">
+          <i class="fa fa-search" aria-hidden="true"></i>
+        </span>
+      </div>
+      <input type="text" class="form-control querySearchIsiPesan" placeholder="Cari Pesan">
+    </div>
+    <div id="batalCari" class="primary-color p-2 pointer">Batal</div>
+  </div>
+  <div id="formDefault" class="card-header  text-white d-flex justify-content-between secondary-bg-color">
     <div class="d-flex flex-row align-items-center text-dark pointer" id="back-page">
       <div class="p-2">
         <i class="fa fa-arrow-left" aria-hidden="true"></i>
@@ -11,7 +22,7 @@
     </div>
     <div class="d-flex flex-row align-items-center">
       <div class="p-2">
-        <a href="#search" class="h5"><i class="fa fa-search" aria-hidden="true"></i></a>
+        <div id="serachIsiPesan" class="h5 pointer"><i class="fa fa-search" aria-hidden="true"></i></div>
       </div>
       <div class="p-2 text-dark pointer" id="detail">
         <i class="fa fa-ellipsis-v" aria-hidden="true"></i>

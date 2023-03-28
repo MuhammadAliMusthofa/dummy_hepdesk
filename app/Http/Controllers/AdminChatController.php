@@ -71,13 +71,6 @@ class AdminChatController extends Controller
         $fillterDepart = $request->fillterDepart;
         $status = $request->status;
 
-        // $namaDosen = '';
-        // if ($fillterNama == 1) {
-        //     $namaDosen = '';
-        // } else if($fillterNama == 2) {
-        //     $namaDosen = '';
-        // }
-
         // berdasarkan waktu
         $to = Carbon::now();
         switch ($fillterWaktu) {
@@ -95,14 +88,41 @@ class AdminChatController extends Controller
                 break;
         }
 
+        $tiketsAll = Tiket::where('status', $status)->with(['pengguna_user', 'pengguna_admin'])->get();
+        $tikets = [];
 
-        $tikets = Tiket::where([
-            'status' => $status,
-            ['nama', 'like', '%' . $query . '%'],
-        ])->orWhere([
-            'status' => $status,
-            ['created_at', '>', $to],
-        ])->with('pesan')->get();
+        switch ($fillterNama) {
+            case 1:
+                foreach ($tiketsAll as $key => $tiket) {
+                    $user_name = $tiket->pengguna_user->user_name;
+
+                    if (str_contains($user_name, $query) && $query != '') {
+                        $result = Tiket::where([
+                            'id_tiket' => $tiket->id_tiket,
+                        ])->with('pesan')->first();
+                        $tikets[$key] = $result;
+                    }
+                }
+                break;
+            case 2:
+                foreach ($tiketsAll as $key => $tiket) {
+                    $user_name = $tiket->pengguna_admin->user_name;
+
+                    if (str_contains($user_name, $query) && $query != '') {
+                        $result = Tiket::where('id_tiket', $tiket->id_tiket)->with('pesan')->first();
+                        $tikets[$key] = $result;
+                    }
+                }
+                break;
+            default:
+                $tikets = Tiket::where([
+                    'status' => $status,
+                    ['created_at', '>', $to],
+                    ['nama', 'like', '%' . $query . '%'],
+                ])->with('pesan')->get();
+                break;
+        }
+
 
         // dd($tikets);
         return view('admin.subcontent.search', ['tikets' => $tikets]);
