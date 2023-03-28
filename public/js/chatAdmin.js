@@ -8,11 +8,15 @@ if (!localStorage['statusChat']) {
 if (!localStorage['sessionDetail']) {
   localStorage['sessionDetail'] = 0;
 }
+if (!localStorage['active']) {
+  localStorage['active'] = 0;
+}
 
 let id_tiket = localStorage['id_tiket'];
 let statusChat = localStorage['statusChat'];
 let sessionDetail = localStorage['sessionDetail'];
-let querySearch;
+let querySearch = '';
+let listPesan;
 let isiPesan;
 
 // variable fillter 
@@ -21,7 +25,7 @@ let fillterWaktu = 0;
 let fillterDepart = 0;
 
 // admin active melayani
-let active = 0;
+let active = localStorage['active'];
 
 $(document).ready(function () {
   $.ajaxSetup({
@@ -92,7 +96,7 @@ $(document).ready(function () {
     $('.status').prop('disabled', false);
     $(this).addClass('selectedStatus');
     $(this).prop('disabled', true);
-    localStorage['status'] = $(this).attr('id');
+    localStorage['statusChat'] = $(this).attr('id');
     statusChat = $(this).attr('id');
     admin_chat_main();
     if (parseInt(sessionDetail)) {
@@ -117,38 +121,74 @@ $(document).ready(function () {
     }
   });
 
-  // searching jika admin sedang melayani saja
-  if ($(document).find('#akhiriMelayani').length) {
-    $('#collapseFillter').attr('hidden', false);
+  // searching list pesan jika admin sedang melayani saja
+  $(document).on('keyup', '.querySearch', function (e) {
+    querySearch = $(this).val();
 
-    $(document).on('keyup', '.querySearch', function (e) {
-      querySearch = $(this).val();
-
-      if (e.which === 13 && querySearch != '') {
-        $('#collapseFillter').collapse('hide');
-        search();
-      }
-    });
-
-    $(document).on('click', '#btnApplyFillter', function () {
+    if (e.which === 13 && querySearch != '') {
       $('#collapseFillter').collapse('hide');
       search();
-    });
-  } else {
-    $('#collapseFillter').attr('hidden', true);
-  }
+    }
+  });
+
+  $(document).on('click', '#btnApplyFillter', function () {
+    $('#collapseFillter').collapse('hide');
+    if (querySearch || fillterNama || fillterWaktu || fillterDepart) {
+      search();
+    }
+  });
+
+  $(document).on('click', '#backSearch', function () {
+    $('#btnStatus').removeClass('d-none');
+    $('#btnStatus').addClass('d-flex');
+    $('#backSearch').removeClass('d-flex');
+    $('#backSearch').addClass('d-none');
+    $('.querySearch').val('');
+
+    $('#collapseFillter').collapse('hide');
+    $('#collapseFillter').find('.card-body').find('button').removeClass('btn-fillter-active');
+    admin_chat_main();
+  });
+
+  // searching isi pesan 
+  $(document).on('click', '#serachIsiPesan', function () {
+    $('#formDefault').removeClass('d-flex');
+    $('#formDefault').addClass('d-none');
+    $('#formSearch').removeClass('d-none');
+    $('#formSearch').addClass('d-flex');
+  });
+
+  // query search isi pesan
+  $(document).on('keyup', '.querySearchIsiPesan', function () {
+    isiPesan = $(this).val();
+    searchIsiPesan();
+  });
+
+  // batal search isi pesan
+  $(document).on('click', '#batalCari', function () {
+    $('#formDefault').removeClass('d-none');
+    $('#formDefault').addClass('d-flex');
+    $('#formSearch').removeClass('d-flex');
+    $('#formSearch').addClass('d-none');
+    $('.querySearchIsiPesan').val('');
+    isiPesan = '';
+    searchIsiPesan();
+  });
 
   // melayani
   $(document).on('click', '#mulaiMelayani', function () {
+    localStorage['active'] = 1;
     active = 1;
     melayani();
     $('#collapseFillter').attr('hidden', false);
   });
 
   $(document).on('click', '#akhiriMelayani', function () {
+    localStorage['active'] = 0;
     active = 0;
     melayani();
     $('#collapseFillter').attr('hidden', true);
+    $('#collapseFillter').collapse('hide');
   });
 
   // menerima pesan
@@ -196,9 +236,9 @@ $(document).ready(function () {
 
   // mengirim pesan dalam tiket jika input di enter
   $(document).on('keyup', '.query', function (e) {
-    isiPesan = $(this).val();
+    listPesan = $(this).val();
 
-    if (e.which === 13 && isiPesan != '') {
+    if (e.which === 13 && listPesan != '') {
       $(this).val(''); // mengkosongkan formuilr pesan
       kirim(e);
     }
@@ -213,8 +253,18 @@ function pesan() {
     cache: false,
     success: function (data) {
       $('#subcontent').html(data);
-      $(document).find('.query').val(isiPesan);
+      $(document).find('.query').val(listPesan);
+      $('#formSearch').removeClass('d-flex');
+      $('#formSearch').addClass('d-none');
     },
+  });
+}
+
+function searchIsiPesan() {
+  const pesan = $(document).find('#scrolling').find('li').find('p.mt-0');
+  pesan.each(function () {
+    let innerHTML = $(this)[0].innerHTML.replaceAll(/\<span class\=\"highlight\"\>(.*?)\<\/span\>/gi, "$1").replaceAll(isiPesan, '<span class="highlight">' + isiPesan + "</span>");
+    $(this).html(innerHTML);
   });
 }
 
@@ -248,6 +298,9 @@ function admin_chat_head() {
     },
     complete: function () {
       btnFillter();
+      if (!active) {
+        $('#collapseFillter').attr('hidden', true);
+      }
     }
   });
 }
@@ -281,7 +334,6 @@ function admin_chat_main() {
       }
     },
     complete: function () {
-      $(sessionDetail)
       timer();
     }
   });
@@ -395,6 +447,7 @@ function home() {
     cache: false,
     success: function (data) {
       $('#subcontent').html(data);
+
       if (statusChat != 0) {
         $('#home').html('Layanan Informasi Helpdesk')
       }
@@ -463,13 +516,16 @@ function search() {
     cache: false,
     success: function (data) {
       $('#list-pesan').html(data);
-      // $('#butoonStatus')
+      $('#btnStatus').removeClass('d-flex')
+      $('#btnStatus').addClass('d-none')
+      $('#backSearch').removeClass('d-none')
+      $('#backSearch').addClass('d-flex')
     },
   });
 }
 
 function kirim(e) {
-  let datastr = `id_tiket=${id_tiket}&id_pengguna=${id_pengguna}&pesan=${isiPesan}`;
+  let datastr = `id_tiket=${id_tiket}&id_pengguna=${id_pengguna}&pesan=${listPesan}`;
 
   $.ajax({
     type: "post",
@@ -477,7 +533,7 @@ function kirim(e) {
     data: datastr,
     cache: false,
     success: function (data) {
-      isiPesan = ''; // mengkosongkan formuilr pesan
+      listPesan = ''; // mengkosongkan formuilr pesan
     },
   });
 }

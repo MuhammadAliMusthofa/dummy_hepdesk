@@ -20,8 +20,6 @@ class PesanController extends Controller
         $id_pengguna = $request->id_pengguna;
         $pesan = $request->pesan;
 
-        $tiket = Tiket::where('id_tiket', $id_tiket)->first();
-
         Pesan::create([
             'id_tiket' => $id_tiket,
             'id_pengguna' => $id_pengguna,

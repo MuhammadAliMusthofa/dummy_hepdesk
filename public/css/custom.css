@@ -140,3 +140,7 @@ a:hover {
   border: 2px solid #214b5f;
   background-color: #d6e2e9;
 }
+
+.highlight {
+  background-color: grey;
+}

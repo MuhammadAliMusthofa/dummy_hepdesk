@@ -18,7 +18,8 @@ class CreateSSDsTable extends Migration
             $table->text('pertanyaan');
             $table->text('jawaban');
             $table->dateTime('tanggal');
-            $table->string('id_pengguna');
+            $table->string('created_by');
+            $table->string('edited_by');
             $table->string('id_role_pengguna');
             $table->timestamps();
         });
