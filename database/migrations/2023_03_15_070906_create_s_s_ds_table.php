@@ -18,12 +18,14 @@ class CreateSSDsTable extends Migration
             $table->text('pertanyaan');
             $table->text('jawaban');
             $table->dateTime('tanggal');
-            $table->string('created_by');
-            $table->string('updated_by');
+            $table->unsignedBigInteger('created_by');
+            $table->unsignedBigInteger('updated_by');
             $table->string('id_role_pengguna');
             $table->string('kategori');
             $table->string('status');
             $table->timestamps();
+            $table->foreign('created_by')->references('id_pengguna')->on('users')->onDelete('cascade');
+            $table->foreign('updated_by')->references('id_pengguna')->on('users')->onDelete('cascade');
         });
     }
 

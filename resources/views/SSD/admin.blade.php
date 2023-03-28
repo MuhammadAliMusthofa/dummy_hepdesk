@@ -1,6 +1,29 @@
 @extends('layouts.dashboard_layout')
 
+@push('head')
+<!-- Scripts -->
+<script src="{{ asset('js/index.js')}}"></script>
+@endpush
+
 @section('content')
+
+@if (Session::has('success'))
+    <div class="alert alert-success alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert">
+            <i class="fa fa-times"></i>
+        </button>
+        <strong>Success !</strong> {{ session('success') }}
+    </div>
+@endif
+
+@if (Session::has('error'))
+    <div class="alert alert-danger alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert">
+            <i class="fa fa-times"></i>
+        </button>
+        <strong>Error !</strong> {{ session('error') }}
+    </div>
+@endif
 
 <div class="row justify-content-center text-center">
     <h4 class=" font-weight-bold mt-2">Halo Admin 1 ! Semangat Selalu ihiww!</h4>
@@ -14,7 +37,7 @@
     </div>
 
     <div class="d-flex col-12 justify-content-between">
-        <button type="button" class="btn btn-success p-2"><i class="fas fa-plus-circle mr-1"></i>Tambah SSD</button>
+        <a href="/ssd/form"><button type="button" class="btn btn-success p-2"><i class="fas fa-plus-circle mr-1"></i>Tambah SSD</button></a>
         <button type="button" class="btn btn-primary">Tampilkan list</button>
         
     </div>
@@ -49,7 +72,7 @@
                             <button type="button" class="btn btn-primary mr-2" data-toggle="modal" data-target="#exampleModal">
                               <i class="fas fa-search-plus"></i>
                             </button>
-                              <a href="{{ route('edit.ssd', $datas->id_ssd)}} "><button type="button" class="btn btn-warning mr-2"><i class="fas fa-edit"></i></button></a>
+                              <a href="{{ route('updateForm.ssd', $datas->id_ssd)}} "><button type="button" class="btn btn-warning mr-2"><i class="fas fa-edit"></i></button></a>
                               <a href="{{ route('delete.ssd', $datas->id_ssd)}}"><button type="button" class="btn btn-danger "><i class="fas fa-trash-alt"></i></button></a>
                           </div>
                           {{-- ="{{ route('user.riwayat') }}"> --}}
