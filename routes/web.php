@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SSDController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -62,7 +63,21 @@ Route::get('/ssd/form', 'SSDController@form')->name('ssd');
 Route::get('/ssd/search/{query}', 'SSDController@show')->name('ssd.search');
 
 // SSD admin
-Route::post('/ssd/add/{id_ssd}', 'SSDController@create')->name('add.ssd');
-Route::get('/ssd/delete/{id_ssd}', 'SSDController@destroy')->name('delete.ssd');
-Route::get('/ssd/update_page/{id}', 'SSDController@edit')->name('edit.ssd');
-Route::post('/ssd/update/{id}', 'SSDController@update')->name('update.ssd');
+// Route::post('/ssd/add/{id_ssd}', 'SSDController@create')->name('add.ssd');
+// Route::get('/ssd/delete/{id_ssd}', 'SSDController@destroy')->name('delete.ssd');
+// Route::get('/ssd/{post}/edit', 'SSDController@edit')->name('edit.ssd');
+
+// Route::post('/ssd/update/{id}', 'SSDController@update')->name('update.ssd');
+// Route::resource('/ssdx', 'SSDController');
+Route::get('/ssd/admin', 'test@index')->name('ssd.admin');
+Route::get('/ssd/admin/add_view', 'test@add_form')->name('ssd.add_form');
+Route::post('/ssd/admin/add', 'test@add')->name('ssd.add');
+route::get('/ssd/admin/edit/{id}','test@edit')->name('ssd.edit');
+route::post('/ssd/admin/update/{id}','test@update')->name('ssd.update');
+route::get('/ssd/admin/destroy/{id}','test@delete')->name('ssd.delete');
+route::get('/ssd/admin/detail/{id}','test@detail_ssd')->name('ssd.view');
+
+
+// Route::get('/ssd/update_page/{id}', 'SSDController@edit')->name('edit.ssd');
+// Route::post('/ssd/update/{id}', 'SSDController@update')->name('update.ssd');
+// Route::resource('ssdd', 'SSDDController');

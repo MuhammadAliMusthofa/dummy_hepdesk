@@ -1,5 +1,3 @@
-
-
 @extends('layouts.dashboard_layout')
 
 @section('content')
@@ -22,7 +20,8 @@
         </div>
         
         <div class="card-body text-left">
-          <form action="{{ route('update.ssd',$data->id_ssd)}}" method="POST">
+          <form action="{{url('/ssd/admin/update',$data->id_ssd)}}" method="POST">
+            {{-- {{ csrf_token() }} --}}
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
               <table class="table table-striped text-left">
                 <thead>
@@ -43,20 +42,23 @@
                   <tr class="d-flex">
                     <td class="col-2 font-weight-bold text-dark">Pertanyaan</td>
                     <td class="col-10"><div class="form-group mb-0">
-                      <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" placeholder="Masukkan pertanyaan">{{$data->pertanyaan}}</textarea>
+                      <input type="text" class="form-control" name="pertanyaan" id="pertanyaan" >
+                      {{-- <textarea name="pertanyaan" class="form-control" id="exampleFormControlTextarea1" rows="2" placeholder="Masukkan pertanyaan">{{$data->pertanyaan}}</textarea> --}}
                     </div></td>
                   </tr>
                   <tr class="d-flex">
                     <td class="col-2 font-weight-bold text-dark">Jawaban</td>
                     <td class="col-10"><div class="form-group mb-0">
-                      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Masukkan Jawaban">{{$data->jawaban}}</textarea>
+                      {{-- <textarea name="jawaban" class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Masukkan Jawaban">{{$data->jawaban}}</textarea> --}}
+                      <input type="text" class="form-control" name="jawaban" id="jawaban">
+                    
                     </div></td>
                   </tr>
                 </tbody>
               </table>
               
     
-              <button type="submit" class="btn btn-primary"> Simpan</button>
+              <input type="Submit" class="btn btn-primary" value="Simpan">
           </form>
         </div>
       </div>

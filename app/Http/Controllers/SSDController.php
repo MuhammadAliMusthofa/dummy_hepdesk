@@ -1,15 +1,21 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\SSD;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use  Illuminate\Database\Eloquent\Builder;
-// use Illuminate\Http\Request;
+
 
 class SSDController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
         if (Auth::user()->role == 0 ) {
@@ -24,20 +30,70 @@ class SSDController extends Controller
         return redirect('/login');
     }
 
-
-    public function edit( $id)
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create(Request $request)
     {
-        $data=SSD::where('id_ssd','=', $id)->first();
-        // $data=
-        // $data=new SSD();
-        // $data->find($id);
-        
-        return view('SSD.form',compact('data'));
-        // echo $data;
+
+            $date = Carbon::now()->format('d-m-Y'); 
+            $data = new SSD();
+            $data->kategori = $request->kategori;
+            $data->pertanyaan = $request->pertanyaan;
+            $data->jawaban = $request->jawaban;
+            
+            $data->tanggal = $date;
+            $data->save();
+    
+            return redirect()->back();
+       
     }
 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        //
+    }
 
-    public function update(Request $request, $id)
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\SSD  $sSD
+     * @return \Illuminate\Http\Response
+     */
+    public function show(SSD $sSD)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\SSD  $sSD
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(SSD $id_ssd)
+    {
+        $data=SSD::where('id_ssd','=', $id)->first();
+        
+        return view('SSD.form',compact('data'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\SSD  $sSD
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, SSD $id_ssd)
     {
         $data=SSD::where('id_ssd','=', $id)->first();
         $data->kategori = $request->kategori;
@@ -47,5 +103,21 @@ class SSDController extends Controller
         $data->save();
 
         return redirect()->back();
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\SSD  $sSD
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(SSD $sSD)
+    {
+       
+            $data=SSD::find($sSD);
+            $data->delete();
+    
+            return redirect()->back();
+     
     }
 }
