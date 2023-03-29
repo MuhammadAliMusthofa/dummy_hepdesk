@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Events\Message;
 use App\Models\Pesan;
 use App\Models\Tiket;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class PesanController extends Controller
@@ -20,11 +21,24 @@ class PesanController extends Controller
         $id_pengguna = $request->id_pengguna;
         $pesan = $request->pesan;
 
+        $tiket = Tiket::where([
+            'id_tiket' => $id_tiket,
+            'status' => 2,
+        ]);
+
         Pesan::create([
             'id_tiket' => $id_tiket,
             'id_pengguna' => $id_pengguna,
             'pesan' => $pesan
         ]);
+
+        if ($tiket->get()) {
+            $time = Carbon::now()->addMinute(30)->format('Y-m-d H:i:s');
+            $tiket->update([
+                'status' => 1,
+                'kadaluarsa' => $time
+            ]);
+        }
 
         $this->notifikasi->index($id_tiket, $id_pengguna, $pesan, 'kirim');
     }

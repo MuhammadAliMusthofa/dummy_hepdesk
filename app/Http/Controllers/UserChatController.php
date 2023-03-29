@@ -89,7 +89,7 @@ class UserChatController extends Controller
         $tikets = Tiket::where([
             'id_pengguna_user' => $id_pengguna,
             'status' => 3
-        ])->orWhere('status', 2)->get();
+        ])->orWhere('status', 2)->paginate(10);
         return view('users.riwayat_keluhan', [
             'tikets' => $tikets
         ]);
@@ -103,5 +103,21 @@ class UserChatController extends Controller
             'id_pengguna_user' => $id_pengguna
         ])->with('pesan')->first();
         return view('users.riwayat_detail', ['tiket' => $tiket]);
+    }
+
+
+
+    public function search(Request $request)
+    {
+
+        $query = $request->input('query');
+        $tikets = Tiket::where('id_tiket', 'LIKE', "%$query%")
+            ->orWhere('tanggal', 'LIKE', "%$query%")
+            ->orWhere('nama', 'LIKE', "%$query%")
+            ->orWhere('email', 'LIKE', "%$query%")
+            ->orWhere('departemen', 'LIKE', "%$query%")
+            ->orWhere('status', 'LIKE', "%$query%")
+            ->get();
+        return view('users.riwayat_search', compact('tikets', 'query'));
     }
 }
