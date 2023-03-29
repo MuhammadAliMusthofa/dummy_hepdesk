@@ -19,7 +19,7 @@
         @php
         $time=strtotime($tiket->created_at);
         @endphp
-        <h3 class="text-light">{{ date("Y/m/d", $time) }}</h3>
+        <h3 class="text-light">{{ date("d M Y", $time) }}</h3>
     </div>
 </div>
 <div class="card-body h-100 d-flex flex-column-reverse" style="max-height: 80vh; overflow-y: auto;" id="scrolling">
