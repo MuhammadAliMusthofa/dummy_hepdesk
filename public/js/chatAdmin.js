@@ -27,6 +27,11 @@ let fillterDepart = 0;
 // admin active melayani
 let active = localStorage['active'];
 
+// select isi pesan yang dicari
+let selectPesan = [];
+let isSelected = '';
+let selectCount = 0;
+
 $(document).ready(function () {
   $.ajaxSetup({
     headers: {
@@ -156,12 +161,47 @@ $(document).ready(function () {
     $('#formDefault').addClass('d-none');
     $('#formSearch').removeClass('d-none');
     $('#formSearch').addClass('d-flex');
+    $('#upDown').attr('hidden', false);
+    $('#kirimPesan').attr('hidden', true);
+    $('.querySearchIsiPesan').focus();
   });
 
   // query search isi pesan
   $(document).on('keyup', '.querySearchIsiPesan', function () {
     isiPesan = $(this).val();
     searchIsiPesan();
+  });
+
+  // select result search to up
+  $(document).on('click', '.fa-angle-up', function () {
+    const scrolling = $(document).find('#scrolling');
+    if (selectPesan.length != 0) {
+      scrolling.find('li').removeClass('third-bg-color');
+      if (selectCount < selectPesan.length) {
+        isSelected -= 1;
+        selectCount += 1;
+      }
+      $('#selectCount').html(selectCount);
+      scrolling.find('li:eq(' + selectPesan[isSelected] + ')').addClass('third-bg-color');
+    }
+    const selectElement = scrolling.find('.third-bg-color')[0].offsetTop;
+    scrolling[0].scrollTop = selectElement - 100;
+  });
+
+  // select result search to down
+  $(document).on('click', '.fa-angle-down', function () {
+    const scrolling = $(document).find('#scrolling');
+    if (selectPesan.length != 0) {
+      scrolling.find('li').removeClass('third-bg-color');
+      if (isSelected < (selectPesan.length - 1)) {
+        isSelected += 1;
+        selectCount -= 1;
+      }
+      $('#selectCount').html(selectCount);
+      scrolling.find('li:eq(' + selectPesan[isSelected] + ')').addClass('third-bg-color');
+    }
+    const selectElement = scrolling.find('.third-bg-color')[0].offsetTop;
+    scrolling[0].scrollTop = selectElement - 100;
   });
 
   // batal search isi pesan
@@ -171,6 +211,8 @@ $(document).ready(function () {
     $('#formSearch').removeClass('d-flex');
     $('#formSearch').addClass('d-none');
     $('.querySearchIsiPesan').val('');
+    $('#upDown').attr('hidden', true);
+    $('#kirimPesan').attr('hidden', false);
     isiPesan = '';
     searchIsiPesan();
   });
@@ -212,9 +254,8 @@ $(document).ready(function () {
   });
 
   // update status tiket
-  $(document).on('change', '#status', function () {
-    let statusValue = $(this)[0].selectedIndex + 1;
-    updateStatus(statusValue);
+  $(document).on('click', '#tunda', function () {
+    updateStatus(2);
   });
 
   // kembali dari detail ke isi pesan
@@ -240,7 +281,7 @@ $(document).ready(function () {
 
     if (e.which === 13 && listPesan != '') {
       $(this).val(''); // mengkosongkan formuilr pesan
-      kirim(e);
+      kirim();
     }
   });
 });
@@ -261,11 +302,41 @@ function pesan() {
 }
 
 function searchIsiPesan() {
-  const pesan = $(document).find('#scrolling').find('li').find('p.mt-0');
+  const scrolling = $(document).find('#scrolling');
+  const pesan = scrolling.find('p.mt-0');
   pesan.each(function () {
     let innerHTML = $(this)[0].innerHTML.replaceAll(/\<span class\=\"highlight\"\>(.*?)\<\/span\>/gi, "$1").replaceAll(isiPesan, '<span class="highlight">' + isiPesan + "</span>");
     $(this).html(innerHTML);
   });
+
+  scrolling.find('li').removeClass('third-bg-color');
+
+  if (isiPesan == '') {
+    $('#count').html('0');
+    scrolling.find('li').find('span').remove();
+    isSelected = '';
+    selectCount = 0;
+  }
+
+
+
+  let selectLi = [];
+  scrolling.find('li').each(function (index) {
+    const spanHighlight = $(this).find('.highlight');
+    if (spanHighlight.length != 0) {
+      selectLi.push(index);
+    }
+  });
+  selectPesan = selectLi;
+
+  if (selectPesan.length != 0) {
+    scrolling.find('li:eq(' + selectPesan.slice(-1) + ')').addClass('third-bg-color');
+    isSelected = selectPesan.length - 1;
+    selectCount = (selectPesan.length + 1) - selectPesan.length;
+  }
+
+  $('#selectCount').html(selectCount);
+  $('#count').html(selectPesan.length);
 }
 
 function pesanMain() {
@@ -524,7 +595,7 @@ function search() {
   });
 }
 
-function kirim(e) {
+function kirim() {
   let datastr = `id_tiket=${id_tiket}&id_pengguna=${id_pengguna}&pesan=${listPesan}`;
 
   $.ajax({

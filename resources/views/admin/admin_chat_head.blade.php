@@ -4,7 +4,7 @@
       <i class="fa fa-arrow-left" aria-hidden="true"></i>
     </div>
     <div class="p-2 text-center">
-      <h5 class="m-0">Kembali</h5>
+      <h5 class="m-0">Hasil Pencarian</h5>
     </div>
   </div>
   <div id="btnStatus" class="d-flex justify-content-around">

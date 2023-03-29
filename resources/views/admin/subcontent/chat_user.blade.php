@@ -47,7 +47,7 @@
         </div>
       </li>
       @else
-      <li class="media my-3" style="width:35%">
+      <li class="media my-3">
         <div id="chat-left" class="media-body">
           <p class="mt-0 mb-1 p-2">{{ $pesanPerTiket->pesan }}</p>
 
@@ -67,12 +67,8 @@
   <div class="d-flex justify-content-center">
     <p class="pb-4">Sesi telah berakhir</p>
   </div>
-  @elseif ($tiket->status == 2)
-  <div class="d-flex justify-content-center">
-    <p class="pb-4">Anda telah mengubah status obrolan menjadi tertunda</p>
-  </div>
-  @elseif ($tiket->id_pengguna_admin)
-  <div class="card-footer position-sticky secondary-bg-color">
+  @elseif ($tiket->status == 2 || $tiket->status == 1)
+  <div id="kirimPesan" class="card-footer position-sticky secondary-bg-color">
     <div class="form-group d-flex justify-content-between align-items-center m-0">
       <input type="text" class="form-control mr-2 ml-2 query" placeholder="Type your message">
       <div class="btn" style="font-size:20px" id="kirim"><i class="fa fa-paper-plane"></i></div>
@@ -83,6 +79,20 @@
     <button id="terimaTiket" class="btn four-bg-color text-light">Terima</button>
   </div>
   @endif
+  <div id="upDown" class="card-footer position-sticky secondary-bg-color" hidden>
+    <div class="d-flex justify-content-between">
+      <div class="d-flex px-2">
+        <i class="fa fa-angle-up fa-2x mx-2 pointer" aria-hidden="true"></i>
+        <i class="fa fa-angle-down fa-2x mx-2 mr-5 pointer" aria-hidden="true"></i>
+      </div>
+      <div id="countResult" class="d-flex justify-content-center">
+        <h5 id="selectCount" class="px-1">0</h5>
+        <h5 class="px-1">dari</h5>
+        <h5 id="count" class="px-1">0</h5>
+        <h5 class="px-1">sesuai</h5>
+      </div>
+    </div>
+  </div>
 </div>
 @else
 <script>

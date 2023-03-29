@@ -11,7 +11,7 @@
   style="max-height: 50vh; min-height: 50vh">
   <div class="text-center">
     <h1 id="home">
-      @if ($count || $adminHelpdesk->active)
+      @if ($count && $adminHelpdesk->active)
       {{ $count }} Antrian Menunggu
       @else
       Layanan Informasi Helpdesk

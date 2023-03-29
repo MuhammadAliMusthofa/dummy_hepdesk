@@ -17,10 +17,11 @@ class CreateSSDsTable extends Migration
             $table->increments('id_ssd');
             $table->text('pertanyaan');
             $table->text('jawaban');
-            $table->dateTime('tanggal');
-            $table->string('created_by');
-            $table->string('edited_by');
+            $table->date('tanggal');
+            $table->string('created_by')->nullable();
+            $table->string('edited_by')->nullable();
             $table->string('id_role_pengguna');
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }

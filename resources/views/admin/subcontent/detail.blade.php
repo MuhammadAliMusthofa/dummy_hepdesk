@@ -1,7 +1,12 @@
 <div class="p-4" style="background-color: #D6E2E9">
   <div class="d-flex flex-row justify-content-start">
-    <div class="p-2 text-dark pointer" id="back-pesan">
-      <i class="fa fa-arrow-left pr-2" aria-hidden="true"></i> kembali
+    <div class="p-2 text-dark d-flex flex-row align-content-center pointer" id="back-pesan">
+      <div class="p-2">
+        <i class="fa fa-arrow-left" aria-hidden="true"></i>
+      </div>
+      <div class="p-2 text-center">
+        <h5 class="m-0">Kembali</h5>
+      </div>
     </div>
   </div>
 </div>
@@ -72,37 +77,30 @@
           @if ($tiket->status == 3)
           <p>Sesi Berakhir</p>
           @elseif ($tiket->status == 1 || $tiket->status == 2)
-          <select name="status" id="status" style="background-color: transparent" class="custom-select border-0">
-            @php
-            $data = ['Berjalan', 'Tertunda'];
-            @endphp
-            @for ($j = 1; $j < 3; $j++) <option value="{{ $j+1 }}" @if ($tiket->status == $j) selected
-              @endif>{{ $data[$j-1] }}</option>
-              @endfor
-          </select>
-          @else
-          <p>Dalam Antrian</p>
-          @endif
+          @php
+          $data = ['Berjalan', 'Tertunda'];
+          @endphp
+          @for ($j = 1; $j < 3; $j++) @if ($tiket->status == $j)
+            <p>{{ $data[$j-1] }}</p>
+            @endif
+            @endfor
+            @else
+            <p>Dalam Antrian</p>
+            @endif
         </td>
       </tr>
     </tbody>
   </table>
-  <hr>
-  <table>
-    <tbody>
-      <tr>
-        <th>
-          <h5>Catatan</h5>
-        </th>
-      </tr>
-      <tr>
-        <th>
-          <a href="#" style="color: blue !important">Tambahkan catatan</a>
-        </th>
-      </tr>
-    </tbody>
-  </table>
   <div class="d-flex justify-content-md-center pt-4">
+    <div class="p-2">
+      @if ($tiket->status != 3)
+      <button id="tunda" class="btn btn-warning font-weight-bold" @if ($tiket->status == 2)
+        disabled style="background-color: grey; color: white; border: 0px grey"
+        @endif
+        style="color: black;"
+        >Tunda sesi</button>
+      @endif
+    </div>
     <div class="p-2">
       @if ($tiket->status != 3)
       <button id="akhiri" class="btn btn-danger font-weight-bold">Akhiri sesi</button>
