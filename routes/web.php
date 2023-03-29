@@ -22,7 +22,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'SSDController@index')->name('home');
 
 // chat admin
 Route::get('/admin', 'AdminChatController@index')->middleware('admin')->name('admin.chat');
@@ -57,6 +57,17 @@ Route::get('/notifikasi/{id_tiket}/{pesan}/{aksi}', 'NotifikasiController@index'
 
 // SSD user
 Route::get('/ssd', 'SSDController@index')->name('ssd');
-Route::get('/ssd/search/{query}', 'SSDController@show')->name('ssd.search');
+Route::get('/ssd/kategori', 'SSDController@kategori')->name('ssd');
+Route::get('/ssd/admin', 'SSDController@admin')->name('ssd');
+
+Route::post('/ssd/search', 'SSDController@show')->name('ssd.search');
 
 // SSD admin
+Route::post('/ssd/add/{id_ssd}', 'SSDController@create')->name('add.ssd');
+Route::post('/ssd/save', 'SSDController@create')->name('create.ssd');
+Route::post('/ssd/visibility/hide/{id}', 'SSDController@create')->name('hide.ssd');
+Route::get('/ssd/form', 'SSDController@addForm')->name('ssd');
+Route::get('/ssd/edit/{id}', 'SSDController@editForm')->name('updateForm.ssd');
+Route::get('/ssd/delete/{id}', 'SSDController@destroy')->name('delete.ssd');
+Route::get('/ssd/update_page/{id}', 'SSDController@edit')->name('edit.ssd');
+Route::post('/ssd/update/{id}', 'SSDController@update')->name('update.ssd');
