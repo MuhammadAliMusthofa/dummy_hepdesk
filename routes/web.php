@@ -23,7 +23,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'SSDController@index')->name('home');
 
 // chat admin
 Route::get('/admin', 'AdminChatController@index')->middleware('admin')->name('admin.chat');
@@ -59,25 +59,17 @@ Route::get('/notifikasi/{id_tiket}/{pesan}/{aksi}', 'NotifikasiController@index'
 Route::get('/ssd', 'SSDController@index')->name('ssd');
 Route::get('/ssd/kategori', 'SSDController@kategori')->name('ssd');
 Route::get('/ssd/admin', 'SSDController@admin')->name('ssd');
-Route::get('/ssd/form', 'SSDController@form')->name('ssd');
-Route::get('/ssd/search/{query}', 'SSDController@show')->name('ssd.search');
+
+Route::post('/ssd/search/{kategori?}', 'SSDController@show')->name('ssd.search');
+Route::get('/ssd/search_kategori', 'SSDController@search_kategori')->name('ssd.search.kategori');
+
 
 // SSD admin
-// Route::post('/ssd/add/{id_ssd}', 'SSDController@create')->name('add.ssd');
-// Route::get('/ssd/delete/{id_ssd}', 'SSDController@destroy')->name('delete.ssd');
-// Route::get('/ssd/{post}/edit', 'SSDController@edit')->name('edit.ssd');
-
-// Route::post('/ssd/update/{id}', 'SSDController@update')->name('update.ssd');
-// Route::resource('/ssdx', 'SSDController');
-Route::get('/ssd/admin', 'test@index')->name('ssd.admin');
-Route::get('/ssd/admin/add_view', 'test@add_form')->name('ssd.add_form');
-Route::post('/ssd/admin/add', 'test@add')->name('ssd.add');
-route::get('/ssd/admin/edit/{id}','test@edit')->name('ssd.edit');
-route::post('/ssd/admin/update/{id}','test@update')->name('ssd.update');
-route::get('/ssd/admin/destroy/{id}','test@delete')->name('ssd.delete');
-route::get('/ssd/admin/detail/{id}','test@detail_ssd')->name('ssd.view');
-
-
-// Route::get('/ssd/update_page/{id}', 'SSDController@edit')->name('edit.ssd');
-// Route::post('/ssd/update/{id}', 'SSDController@update')->name('update.ssd');
-// Route::resource('ssdd', 'SSDDController');
+Route::post('/ssd/add/{id_ssd}', 'SSDController@create')->name('add.ssd');
+Route::post('/ssd/save', 'SSDController@create')->name('create.ssd');
+Route::post('/ssd/visibility/hide/{id}', 'SSDController@create')->name('hide.ssd');
+Route::get('/ssd/form', 'SSDController@addForm')->name('ssd');
+Route::get('/ssd/edit/{id}', 'SSDController@editForm')->name('updateForm.ssd');
+Route::get('/ssd/delete/{id}', 'SSDController@destroy')->name('delete.ssd');
+Route::get('/ssd/update_page/{id}', 'SSDController@edit')->name('edit.ssd');
+Route::post('/ssd/update/{id}', 'SSDController@update')->name('update.ssd');
