@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '4de62c8d80a4fdbb7f1b24f89090c6b98ab14301',
+        'reference' => 'c4ef056c35b45fa8d2082f299d649f142f665a94',
         'name' => 'laravel/laravel',
         'dev' => true,
     ),
@@ -49,6 +49,12 @@
             'reference' => '8e884e78f9f0eb1329e445619e04456e64d8051d',
             'dev_requirement' => true,
         ),
+        'ergebnis/faker' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => '1.9.2',
+            ),
+        ),
         'erusev/parsedown' => array(
             'pretty_version' => '1.7.4',
             'version' => '1.7.4.0',
@@ -58,14 +64,20 @@
             'reference' => 'cb17b6477dfff935958ba01325f2e8a2bfa6dab3',
             'dev_requirement' => false,
         ),
-        'fzaninotto/faker' => array(
+        'fakerphp/faker' => array(
             'pretty_version' => 'v1.9.2',
             'version' => '1.9.2.0',
             'type' => 'library',
-            'install_path' => __DIR__ . '/../fzaninotto/faker',
+            'install_path' => __DIR__ . '/../fakerphp/faker',
             'aliases' => array(),
-            'reference' => '848d8125239d7dbf8ab25cb7f054f1a630e68c2e',
-            'dev_requirement' => true,
+            'reference' => '84220cf137a9344acffb10374e781fed785ff307',
+            'dev_requirement' => false,
+        ),
+        'fzaninotto/faker' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => '1.9.2',
+            ),
         ),
         'hamcrest/hamcrest-php' => array(
             'pretty_version' => 'v1.2.2',
@@ -298,7 +310,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '4de62c8d80a4fdbb7f1b24f89090c6b98ab14301',
+            'reference' => 'c4ef056c35b45fa8d2082f299d649f142f665a94',
             'dev_requirement' => false,
         ),
         'laravel/tinker' => array(

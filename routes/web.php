@@ -48,6 +48,7 @@ Route::get('/user/pesan/{id_tiket}', 'UserChatController@pesan')->name('user.isi
 Route::get('/user/pesan/akhiri/{id_tiket}', 'UserChatController@akhiri');
 Route::get('/user/riwayat', 'UserChatController@riwayat')->name('user.riwayat');
 Route::get('/user/riwayat/detail/{id_tiket}', 'UserChatController@detailRiwayat')->name('user.riwayat.detail');
+Route::get('/riwayat/search', 'UserChatController@search')->name('search.riwayat');
 
 // mengirim pesan
 Route::post('/kirimPesan', 'PesanController@kirimPesan');
