@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class SSD extends Model
 {
-    protected $table = 'SSD';
+    protected $table = 'ssd';
     protected $guarded = ['id_ssd'];
     protected $primaryKey = 'id_ssd';
 

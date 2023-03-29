@@ -10,14 +10,14 @@ use  Illuminate\Database\Eloquent\Builder;
 
 class SSDController extends Controller
 {
-    public function index()
+    public function index(Request $request, $page = null)
     {
         if (Auth::user()->role == 0 ) {
-            $data = SSD::paginate(10);
+            $data = SSD::paginate(!$page ? 10 : $page);
             return view('SSD.admin', compact('data'));
 
         } else if (Auth::user()->role == 1) {
-            $data = SSD::paginate(10);
+            $data = SSD::paginate($page);
             return view('SSD.sdd', compact('data'));
         }
         Auth::logout();
@@ -80,6 +80,26 @@ class SSDController extends Controller
         $data->save();
 
         return redirect('/ssd')->with('success', 'SSD berhasil diupdate');
+    }
+
+    public function hide(Request $request, $id)
+    {
+        $data=SSD::where('id_ssd','=', $id)->first();
+        $data->status = false;
+        
+        $data->save();
+
+        return redirect('/ssd')->with('success_hide', 'Data SSD dinonaktifkan');
+    }
+
+    public function visible(Request $request, $id)
+    {
+        $data=SSD::where('id_ssd','=', $id)->first();
+        $data->status = true;
+        
+        $data->save();
+
+        return redirect('/ssd')->with('success_visible', 'Data SSD diaktifkan');
     }
 
     public function destroy(Request $request, $id)
