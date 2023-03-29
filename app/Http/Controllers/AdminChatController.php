@@ -34,7 +34,7 @@ class AdminChatController extends Controller
         $tiketsSelesai = 0;
 
         // jika admin helpdesk sedang aktiv
-        if ($adminHelpdesk->active) {
+        if ($adminHelpdesk && $adminHelpdesk->active) {
             $tiketsAntrian = Tiket::where([
                 'status' => 0,
                 'id_pengguna_admin' => null

@@ -335,8 +335,13 @@ function searchIsiPesan() {
     selectCount = (selectPesan.length + 1) - selectPesan.length;
   }
 
+  if (selectPesan.length == 0) {
+    selectCount = 0;
+  }
   $('#selectCount').html(selectCount);
   $('#count').html(selectPesan.length);
+  const selectElement = scrolling.find('.third-bg-color')[0].offsetTop;
+  scrolling[0].scrollTop = selectElement - 100;
 }
 
 function pesanMain() {

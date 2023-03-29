@@ -57,7 +57,10 @@
         <th>
           <h5>Dibuat</h5>
         </th>
-        <td>{{ $tiket->tanggal }}</td>
+        @php
+        $time=strtotime($tiket->tanggal);
+        @endphp
+        <td>{{ date("d M Y", $time) }}</td>
       </tr>
       <tr>
         <th>

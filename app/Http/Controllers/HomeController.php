@@ -28,7 +28,7 @@ class HomeController extends Controller
         if (Auth::user()->role == 0) {
             return redirect('/admin');
         } else if (Auth::user()->role == 1) {
-            return view('SSD.sdd');
+            return redirect(('/ssd'));
         }
         Auth::logout();
         return redirect('/login');
