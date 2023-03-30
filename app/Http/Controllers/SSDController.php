@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\SSD;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -12,32 +13,32 @@ class SSDController extends Controller
 {
     public function index()
     {
-        if (Auth::user()->role == 0 ) {
+        if (Auth::user()->role == 0) {
             $data = SSD::paginate(10);
             return view('SSD.admin', compact('data'));
-
         } else if (Auth::user()->role == 1) {
             $data = SSD::paginate(10);
-            return view('SSD.sdd', compact('data'));
+            return view('SSD.ssd', compact('data'));
         }
         Auth::logout();
         return redirect('/login');
     }
 
-    public function addForm(){
+    public function addForm()
+    {
         $data = false;
         return view('SSD.form', compact('data'));
     }
 
 
     public function editForm(Request $request, $id)
-    
+
     {
-        $data = SSD::where('id_ssd','=',$id)->first();
+        $data = SSD::where('id_ssd', '=', $id)->first();
         return view('SSD.form', compact('data'));
     }
 
-    
+
     public function create(Request $request, SSD $sSD)
 
     {
@@ -64,19 +65,19 @@ class SSDController extends Controller
      */
     public function show(Request $request, SSD $sSD)
     {
-        $data=SSD::where('pertanyaan','like', $request->keluhan)->get();
+        $data = SSD::where('pertanyaan', 'like', $request->keluhan)->get();
         return view('SSD.kategori', compact('data'));
     }
 
 
     public function update(Request $request, $id)
     {
-        $data=SSD::where('id_ssd','=', $id)->first();
+        $data = SSD::where('id_ssd', '=', $id)->first();
         $data->kategori = $request->kategori;
         $data->pertanyaan = $request->pertanyaan;
         $data->jawaban = $request->jawaban;
         $data->updated_by = Auth::user()->id_pengguna;
-        
+
         $data->save();
 
         return redirect('/ssd')->with('success', 'SSD berhasil diupdate');
@@ -84,8 +85,8 @@ class SSDController extends Controller
 
     public function destroy(Request $request, $id)
     {
-        $data=SSD::where('id_ssd','=', $id)->first();
-        
+        $data = SSD::where('id_ssd', '=', $id)->first();
+
         $data->delete();
 
         return redirect('/ssd')->with('success', 'SSD berhasil dihapus');

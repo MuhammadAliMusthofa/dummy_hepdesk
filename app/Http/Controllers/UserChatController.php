@@ -46,6 +46,12 @@ class UserChatController extends Controller
                 'pesan' => 'Selamat datang di layanan informasi Sistem Terintegrasi BKD Silakan tuliskan pertanyaan anda'
             ]);
 
+            Pesan::create([
+                'id_tiket' => $tiket->id_tiket,
+                'pesan' => 'Silahkan Melengkapi informasi berikut:<br />Nama:<br /> NIDN:<br /> Instansi:<br /> Versi SISTER:<br /> Keluhan:'
+            ]);
+
+
             $this->notifikasi->index($tiket->id_tiket, $user->user_name, 'Antrian baru', 'membuat tiket');
         }
 
@@ -101,7 +107,7 @@ class UserChatController extends Controller
         $tiket = Tiket::where([
             'id_tiket' => $id_tiket,
             'id_pengguna_user' => $id_pengguna
-        ])->with('pesan')->first();
+        ])->with(['pesan', 'pengguna_admin'])->first();
         return view('users.riwayat_detail', ['tiket' => $tiket]);
     }
 

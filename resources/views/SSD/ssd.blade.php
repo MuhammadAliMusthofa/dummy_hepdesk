@@ -4,7 +4,7 @@
 
 <div class="row justify-content-center text-center">
     <div class="col-8">
-        <h4 class=" font-weight-bold mt-2">Halo Dummy Dosen 1 ! Butuh bantuan ?</h4>
+        <h4 class=" font-weight-bold mt-2">Halo {{ Auth::user()->user_name }} ! Butuh bantuan ?</h4>
 
         <form action="ssd/search" method="post">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -17,7 +17,7 @@
                 </div>
             </div>
         </form>
-        
+
 
         <div class="sdid">
             <p class="font-weight-bold h5  mt-5 mb-3">Pertanyaan yang sering muncul</p>
@@ -30,14 +30,16 @@
                         id="headingOne">
                         <p class="text-left font-weight-bold ">{{$ssd->pertanyaan}}</p>
 
-                        <a class="btn btn-link" data-toggle="collapse" data-target={{"#collapse_".$ssd->id_ssd}} aria-expanded="true"
+                        <a class="btn btn-link" data-toggle="collapse" data-target={{"#collapse_".$ssd->id_ssd}}
+                            aria-expanded="true"
                             aria-controls="collapseFour">
                             <i class="fas fa-chevron-down"></i>
                         </a>
 
                     </div>
 
-                    <div id="collapse_{{$ssd->id_ssd}}" class="collapse " aria-labelledby="headingOne" data-parent="#accordion">
+                    <div id="collapse_{{$ssd->id_ssd}}" class="collapse " aria-labelledby="headingOne"
+                        data-parent="#accordion">
                         <div class="card-body mt-3 rounded text-left px-4 py-3">
                             <p class="font-weight-bold">
                                 {{$ssd->jawaban}}
@@ -46,7 +48,7 @@
                         </div>
                     </div>
                 </div>
-                    
+
                 @endforeach
 
             </div>

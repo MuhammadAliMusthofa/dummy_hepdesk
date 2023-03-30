@@ -1,6 +1,6 @@
 @if ($tiket)
 <div class="card h-100" style="min-height: 80vh; max-height: 80vh">
-  <div id="formSearch" class="card-header  text-white d-flex justify-content-between secondary-bg-color">
+  <div id="formSearch" class="card-header text-white d-flex justify-content-between secondary-bg-color">
     <div class="input-group">
       <div class="input-group-prepend">
         <span class="input-group-text bg-light">
@@ -11,7 +11,7 @@
     </div>
     <div id="batalCari" class="primary-color p-2 pointer">Batal</div>
   </div>
-  <div id="formDefault" class="card-header  text-white d-flex justify-content-between secondary-bg-color">
+  <div id="formDefault" class="card-header text-white d-flex justify-content-between secondary-bg-color">
     <div class="d-flex flex-row align-items-center text-dark pointer" id="back-page">
       <div class="p-2">
         <i class="fa fa-arrow-left" aria-hidden="true"></i>
@@ -36,7 +36,7 @@
       <li class="media my-3 d-flex flex-row-reverse">
         <div id="chat-right" class="media-body">
           <p class="mt-0 mb-1 p-2">
-            {{ $pesanPerTiket->pesan }}
+            {!! nl2br($pesanPerTiket->pesan) !!}
           </p>
           <div class="mr-2 d-flex justify-content-end mt-auto">
             @php
@@ -49,7 +49,7 @@
       @else
       <li class="media my-3">
         <div id="chat-left" class="media-body">
-          <p class="mt-0 mb-1 p-2">{{ $pesanPerTiket->pesan }}</p>
+          <p class="mt-0 mb-1 p-2">{!! nl2br($pesanPerTiket->pesan) !!}</p>
 
           <div class="ml-2 d-flex justify-content-end align-items-end mr-2 mt-2">
             @php
@@ -70,7 +70,7 @@
   @elseif ($tiket->status == 2 || $tiket->status == 1)
   <div id="kirimPesan" class="card-footer position-sticky secondary-bg-color">
     <div class="form-group d-flex justify-content-between align-items-center m-0">
-      <input type="text" class="form-control mr-2 ml-2 query" placeholder="Type your message">
+      <textarea name="query" id="query" class="form-control mr-2 ml-2" placeholder="Ketik pesan disini"></textarea>
       <div class="btn" style="font-size:20px" id="kirim"><i class="fa fa-paper-plane"></i></div>
     </div>
   </div>

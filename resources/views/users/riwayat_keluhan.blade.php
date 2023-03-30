@@ -23,9 +23,7 @@
         <tr>
           <th scope="col">Id Ticket</th>
           <th scope="col">Tanggal</th>
-          <th scope="col">Nama</th>
-          <th scope="col">Email</th>
-          <th scope="col">Departemen</th>
+          <th scope="col">Peran</th>
           <th scope="col">Detail</th>
           <th scope="col">Status</th>
         </tr>
@@ -36,26 +34,24 @@
         <tr>
           <th scope="row">{{ $tiket->id_tiket }}</th>
           <td>{{$tiket->tanggal}}</td>
-          <td>{{ $tiket->nama }}</td>
-          <td>{{ $tiket->email }}</td>
           <td>{{ $tiket->departemen }}</td>
 
           @if ($tiket->status == 3)
-          <td><a href="{{ route('user.riwayat.detail', $tiket->id_tiket) }}"><i
-                class="fas fa-file  btn btn-secondary"></i></a>
+          <td><a href="{{ route('user.riwayat.detail', $tiket->id_tiket) }}" class="btn btn-primary text-light"><i
+                class="fa fa-search-plus"></i></a>
           </td>
-          <td> <button id="button-his" class="btn btn-success"> Selesai</button></td>
+          <td> <button id="button-his" class="btn btn-success text-light">Selesai</button></td>
 
 
           @elseif ($tiket->status == 2)
           <td>
-            <a href="{{ route('user.pesan') }}"><i class="fas fa-file btn btn-secondary"></i></a>
+            <a href="{{ route('user.pesan') }}" class="btn btn-primary text-light"><i class="fa fa-search-plus"></i></a>
           </td>
-          <td> <button id="button-his" class="btn btn-warning"> Tertunda</button></td>
+          <td> <button id="button-his" class="btn btn-warning text-light">Tertunda</button></td>
 
           @elseif ($tiket->status == 1)
-          <td> <button id="button-his" class="btn btn-primary" style="color:white !important"> Berjalan</button></td>
-
+          <td> <button id="button-his" class="btn btn-primary text-light">
+              Berjalan</button></td>
           @endif
         </tr>
 

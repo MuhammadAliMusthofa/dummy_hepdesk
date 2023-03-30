@@ -95,12 +95,16 @@
     </tbody>
   </table>
   <div class="d-flex justify-content-md-center pt-4">
+    @if ($tiket->status == 0)
+    <div class="card-footer position-sticky d-flex justify-content-center">
+      <button id="terimaTiket" class="btn four-bg-color text-light">Terima</button>
+    </div>
+    @else
     <div class="p-2">
       @if ($tiket->status != 3)
-      <button id="tunda" class="btn btn-warning font-weight-bold" @if ($tiket->status == 2)
+      <button id="tunda" class="btn btn-outline-warning font-weight-bold" @if ($tiket->status == 2)
         disabled style="background-color: grey; color: white; border: 0px grey"
         @endif
-        style="color: black;"
         >Tunda sesi</button>
       @endif
     </div>
@@ -109,5 +113,6 @@
       <button id="akhiri" class="btn btn-danger font-weight-bold">Akhiri sesi</button>
       @endif
     </div>
+    @endif
   </div>
 </div>

@@ -54,6 +54,6 @@ class AkhiriTiket extends Command
         ]);
 
         $notifikasi = new NotifikasiController;
-        $notifikasi->index($id_tiket, $tik->nama, 'Waktu obrolan sudah habis', 'waktu habis');
+        $notifikasi->index($id_tiket, $tik->nama, 'Waktu obrolan sudah habis.', 'waktu habis');
     }
 }

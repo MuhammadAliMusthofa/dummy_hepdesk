@@ -6,7 +6,7 @@
 
 
 <!-- Button trigger modal -->
-<button id="notifikasi" type="button" class="btn btn-primary" data-toggle="modal" data-target="#popupNotifikasi" hidden>
+<button id="notifikasi" type="button" class="btn btn-primary" data-toggle="modal" data-target="#popupNotifikasi">
   Launch demo modal
 </button>
 
@@ -18,10 +18,11 @@
       <div class="modal-body d-flex justify-content-center my-4">
         <div class="p-2 d-flex align-items-center flex-column">
           <i class="fa fa-exclamation-triangle fa-7x m-2" aria-hidden="true" style="color: red"></i>
-          <div class="m-2 font-weight-bold text-center">
-            <h3 id="pesanPengingat"></h3>
+          <div class="m-2 text-center">
+            <h3 id="pesanPengingat" class="font-weight-bold">Waktu obrolan sudah habis.</h3>
+            <p>jika masih ada pertanyaan yang belum terjawab silahkan kembali mengantri.</p>
           </div>
-          <a type="button" class="m-2" data-dismiss="modal">Tutup</a>
+          <a id="btn-alert" type="button" class="m-2 h4" data-dismiss="modal" style="color: blue"></a>
         </div>
       </div>
     </div>

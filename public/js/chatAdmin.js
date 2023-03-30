@@ -31,6 +31,7 @@ let active = localStorage['active'];
 let selectPesan = [];
 let isSelected = '';
 let selectCount = 0;
+const dataPesan = [];
 
 $(document).ready(function () {
   $.ajaxSetup({
@@ -276,12 +277,19 @@ $(document).ready(function () {
   });
 
   // mengirim pesan dalam tiket jika input di enter
-  $(document).on('keyup', '.query', function (e) {
+  $(document).on('keyup', '#query', function (e) {
     listPesan = $(this).val();
+    $(this).attr('style', 'height: auto'); // default height
+    const heightQuery = parseInt($(this)[0].scrollHeight);
+    $(this).attr('style', ('height: ' + heightQuery + "px"));
 
-    if (e.which === 13 && listPesan != '') {
+    if (listPesan == '') {
+      $(this).attr('style', 'height: auto'); // default height
+    }
+
+    if (e.ctrlKey && e.which === 13 && listPesan != '') {
       $(this).val(''); // mengkosongkan formuilr pesan
-      kirim();
+      kirim(e);
     }
   });
 });
@@ -304,31 +312,53 @@ function pesan() {
 function searchIsiPesan() {
   const scrolling = $(document).find('#scrolling');
   const pesan = scrolling.find('p.mt-0');
-  pesan.each(function () {
-    let innerHTML = $(this)[0].innerHTML.replaceAll(/\<span class\=\"highlight\"\>(.*?)\<\/span\>/gi, "$1").replaceAll(isiPesan, '<span class="highlight">' + isiPesan + "</span>");
-    $(this).html(innerHTML);
+  const mark = pesan.find('mark');
+
+  mark.each(function () {
+    $(this).replaceWith($(this).text());
+  });
+
+  // Membuat regex untuk mencari teks yang cocok
+  var regex = new RegExp(isiPesan, 'gi');
+
+  pesan.each(function (i) {
+    // menambahkan isi pesan kedalam dataPesan jika panjangnya kurang dari panjang pesan
+    if (dataPesan.length < pesan.length) {
+      dataPesan[i] = $(this).html();
+    }
+    // Mendapatkan teks dari li pesan
+    var liText = $(this).html();
+
+    // Mengubah teks yang cocok dengan regex menjadi highlight
+    $(this).html(liText.replace(regex, function (match) {
+      return '<mark>' + match + '</mark>';
+    }));
   });
 
   scrolling.find('li').removeClass('third-bg-color');
 
+  // jika isi pesan yang dicari kosong
   if (isiPesan == '') {
     $('#count').html('0');
-    scrolling.find('li').find('span').remove();
+    mark.remove();
+    pesan.each(function (i) {
+      $(this).html(dataPesan[i]);
+    });
     isSelected = '';
     selectCount = 0;
   }
 
-
-
+  // menentukan jumlah pesan yang dicari
   let selectLi = [];
   scrolling.find('li').each(function (index) {
-    const spanHighlight = $(this).find('.highlight');
+    const spanHighlight = $(this).find('mark');
     if (spanHighlight.length != 0) {
       selectLi.push(index);
     }
   });
   selectPesan = selectLi;
 
+  // mengisi jumlah hasil yang dicari dan pesan keberapa yang di pilih
   if (selectPesan.length != 0) {
     scrolling.find('li:eq(' + selectPesan.slice(-1) + ')').addClass('third-bg-color');
     isSelected = selectPesan.length - 1;
@@ -340,8 +370,12 @@ function searchIsiPesan() {
   }
   $('#selectCount').html(selectCount);
   $('#count').html(selectPesan.length);
-  const selectElement = scrolling.find('.third-bg-color')[0].offsetTop;
-  scrolling[0].scrollTop = selectElement - 100;
+
+  // otomatis scroll jika pesan terpilih
+  if (isiPesan != '' && selectCount != 0) {
+    const selectElement = scrolling.find('.third-bg-color')[0].offsetTop;
+    scrolling[0].scrollTop = selectElement - 100;
+  }
 }
 
 function pesanMain() {
