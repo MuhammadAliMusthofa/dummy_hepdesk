@@ -72,21 +72,36 @@ class SSDController extends Controller
     {
         // $kategori = $request->kategori;
         if($kategori){
-            
-            $data=SSD::where('pertanyaan','like','%'. $request->keluhan .'%')
-            ->where('kategori', '=', $kategori )
-            ->get();
-            return view('SSD.kategori', compact('data', 'kategori'));
+
+            // $keyword = $request->keluhan;
+            $query = SSD::query();
+            $querys = $request->input('keluhan');
+
+            $query->where('pertanyaan','like','%'. $querys .'%');
+            if($kategori != 'all'){
+                $query->where('kategori', '=', $kategori );
+            }else{
+            }
+            // ->orWhere('kategori', '=', 'all')
+            $data = $query->get();
+
+            return view('SSD.kategori', compact('data', 'kategori', 'querys'));
 
         }else {
             $data=SSD::where('pertanyaan','like','%'. $request->keluhan .'%')->get();
-            return view('SSD.kategori', compact('data', 'kategori'));
-
-        }
-        
+            return view('SSD.kategori', compact('data', 'kategori', 'querys'));
+        }  
         
     }
 
+    // $query = $request->input('query');
+    // $datas = Tiket::where('id_tiket', 'LIKE', "%$query%")
+    // ->orWhere('tanggal', 'LIKE', "%$query%")
+    // ->orWhere('nama', 'LIKE', "%$query%")
+    // ->orWhere('email', 'LIKE', "%$query%")
+    // ->orWhere('departemen', 'LIKE', "%$query%")
+    // ->orWhere('status', 'LIKE', "%$query%")
+    // ->get();
     public function search_kategori(Request $request, SSD $sSD)
     {
         $query = SSD::query();
@@ -147,6 +162,7 @@ class SSDController extends Controller
      */
     public function update(Request $request, SSD $id_ssd)
     {
+        
         $data=SSD::where('id_ssd','=', $id)->first();
         $data->kategori = $request->kategori;
         $data->pertanyaan = $request->pertanyaan;

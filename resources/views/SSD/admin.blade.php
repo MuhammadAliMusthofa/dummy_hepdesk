@@ -28,6 +28,7 @@
 <div class="row justify-content-center text-center">
     <h4 class=" font-weight-bold mt-2">Halo Admin 1 ! Semangat Selalu ihiww!</h4>
     <div class="col-8">
+      
         <div class="input-group my-4">
             <input type="text" class="form-control p-4" placeholder="Cari SSD" aria-label="Username" aria-describedby="basic-addon1">
             <div class="input-group-append border-right-0">

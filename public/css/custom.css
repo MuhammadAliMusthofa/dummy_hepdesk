@@ -150,3 +150,8 @@ a:hover {
 .highlight {
   background-color: yellowgreen;
 }
+
+#btn-back{
+  background:#eaecf4;
+  border:0.2px solid #d1d3e2;
+}
