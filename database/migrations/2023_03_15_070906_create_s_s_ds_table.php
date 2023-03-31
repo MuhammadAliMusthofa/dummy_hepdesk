@@ -22,7 +22,7 @@ class CreateSSDsTable extends Migration
             $table->unsignedBigInteger('updated_by');
             $table->string('id_role_pengguna');
             $table->string('kategori');
-            $table->string('status');
+            $table->string('status')->nullable();
             $table->timestamps();
             $table->foreign('created_by')->references('id_pengguna')->on('users')->onDelete('cascade');
             $table->foreign('updated_by')->references('id_pengguna')->on('users')->onDelete('cascade');

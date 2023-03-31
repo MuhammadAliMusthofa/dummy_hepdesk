@@ -1,5 +1,13 @@
-<div class="container p-0 secondary-bg-color">
-  <div id="butoonStatus" class="d-flex justify-content-around">
+<div class="container p-2 secondary-bg-color">
+  <div id="backSearch" class="d-none text-dark pointer">
+    <div class="p-2">
+      <i class="fa fa-arrow-left" aria-hidden="true"></i>
+    </div>
+    <div class="p-2 text-center">
+      <h5 class="m-0">Hasil Pencarian</h5>
+    </div>
+  </div>
+  <div id="btnStatus" class="d-flex justify-content-around">
     @php
     $data = ['Antrian', 'Berjalan', 'Tertunda', 'Ditutup'];
     @endphp
@@ -9,6 +17,7 @@
       </button>
   </div>
   @endfor
+</div>
 </div>
 <div class="row m-0 third-bg-color">
   <div class="input-group m-3" data-toggle="collapse" data-target="#collapseFillter" aria-expanded="false"
@@ -62,7 +71,7 @@
       <div class="px-2">
         <h6 class="font-weight-bold" style="font-size: 14px">Departemen</h6>
       </div>
-      <div id="buttonFillterDepart" class="d-flex justify-content-start py-2" style="overflow-y: auto">
+      <div id="buttonFillterDepart" class="d-flex justify-content-start py-2" style="overflow-x: auto">
         <div class="p-1">
           <button type="button" class="btn btn-fillter">
             <p style="font-size: 13px">Departemen 1</p>
@@ -71,6 +80,11 @@
         <div class="p-1">
           <button type="button" class="btn btn-fillter">
             <p style="font-size: 13px">Departemen 2</p>
+          </button>
+        </div>
+        <div class="p-1">
+          <button type="button" class="btn btn-fillter">
+            <p style="font-size: 13px">Departemen 3</p>
           </button>
         </div>
         <div class="p-1">

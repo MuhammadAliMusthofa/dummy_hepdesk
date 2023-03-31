@@ -1,7 +1,9 @@
-
-
 @extends('layouts.dashboard_layout')
 
+
+@php
+    // dd($data->users()->user_name)
+@endphp
 @section('content')
 
 <div class="row justify-content-center text-center">
@@ -12,8 +14,15 @@
       @if ($data)
       <div class="card">
         <div class="d-flex justify-content-between align-items-center border-bottom px-3 py-2">
+          @if ($page == "detail")
+          <h6 class=" font-weight-bold text-dark">Detail SSD</h6>
+          @elseif($page == "edit")
+          <h6 class=" font-weight-bold text-dark">Edit SSD</h6>
+          @elseif($page == "tambah")
           <h6 class=" font-weight-bold text-dark">Form Tambah SSD</h6>
-          <button type="button" class="btn btn-light font-weight-bold"><- Kembali</button>
+          @endif
+          
+          <a href="{{ URL::previous() }}"><button type="button" class="btn btn-light font-weight-bold"><i class="fas fa-arrow-left"></i> Kembali</button></a>
         </div>
         
         <div class="card-body text-left">
@@ -24,7 +33,9 @@
                   <tr class="d-flex">
                     <th class="col-2 text-dark">Kategori</th>
                     <th class="col-10"><div class="form-group">
-                      <select class="form-control" id="exampleFormControlSelect1" name="kategori">
+                      <select class="form-control" id="exampleFormControlSelect1" name="kategori" @php
+                          echo $page == "detail" ? "disabled" : "";
+                      @endphp >
                         <option @php
                             echo $data->kategori == "LLDIKTI" ? "selected" : ""
                         @endphp>LLDIKTI</option>
@@ -43,22 +54,67 @@
                 </thead>
                 <tbody>
                   <tr class="d-flex">
-                    <td class="col-2 font-weight-bold text-dark">Pertanyaan</td>
+                    <td class="col-2 font-weight-bold text-dark" >Pertanyaan</td>
                     <td class="col-10"><div class="form-group mb-0">
-                      <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" placeholder="Masukkan pertanyaan" name="pertanyaan">{{$data->pertanyaan}}</textarea>
+
+
+                      {{-- <textarea name="pertanyaan" class="form-control" id="exampleFormControlTextarea1" rows="2" placeholder="Masukkan pertanyaan">{{$data->pertanyaan}}</textarea> --}}
+
+                      <textarea id="messageArea" name="pertanyaan" rows="7" class="form-control ckeditor" placeholder="Masukkan Pertanyaan.." @php
+                      echo $page == "detail" ? "readonly" : "";
+                  @endphp>{{$data->pertanyaan}}</textarea>
+
+{{-- <script>
+  ClassicEditor
+          .create( document.querySelector( '#editor' ) )
+          .then( editor => {
+                  console.log( editor );
+          } )
+          .catch( error => {
+                  console.error( error );
+          } );
+</script> --}}
                     </div></td>
                   </tr>
                   <tr class="d-flex">
                     <td class="col-2 font-weight-bold text-dark">Jawaban</td>
                     <td class="col-10"><div class="form-group mb-0">
-                      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Masukkan Jawaban" name="jawaban">{{$data->jawaban}}</textarea>
+
+                      {{-- <textarea name="jawaban" class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Masukkan Jawaban">{{$data->jawaban}}</textarea> --}}
+
+                    
+                      
+
+<textarea id="messageArea" name="jawaban" rows="7" class="form-control ckeditor" placeholder="Masukkan Pertanyaan.." @php
+echo $page == "detail" ? "readonly" : "";
+@endphp>{{$data->jawaban}}</textarea>
+
+                      
+
+                    </div></td>
+                  </tr>
+                  <tr class="d-flex">
+                    <td class="col-2 font-weight-bold text-dark">Dibuat oleh</td>
+                    <td class="col-10"><div class="form-group mb-0">
+
+                      <textarea name="updated_by" class="form-control" id="exampleFormControlTextarea1" rows="3" readonly>{{$data->users->user_name}}</textarea>
+
+                    
+
+                       
                     </div></td>
                   </tr>
                 </tbody>
               </table>
               
+              @if ($page == "detail")
+              <a href="{{ route('updateForm.ssd', $data->id_ssd)}} "><button type="button" class="btn btn-warning mr-2"><i class="fas fa-edit"></i> Edit</button></a>
+              @else
+              <input type="Submit" class="btn btn-primary" value="Simpan">
+              @endif
     
-              <button type="submit" class="btn btn-primary"> Simpan</button>
+             
+             
           </form>
         </div>
       </div>
@@ -69,7 +125,7 @@
       <div class="card">
         <div class="d-flex justify-content-between align-items-center border-bottom px-3 py-2">
           <h6 class=" font-weight-bold text-dark">Form Tambah SSD</h6>
-          <button type="button" class="btn btn-light font-weight-bold"><- Kembali</button>
+          <a href="{{ URL::previous() }}"><button type="button" class="btn btn-light font-weight-bold"><i class="fas fa-arrow-left"></i> Kembali</button></a>
         </div>
         
         <div class="card-body text-left">
@@ -117,6 +173,8 @@
       
     </div>
 
+    
+
      
 
     
@@ -128,4 +186,15 @@
 
 
 
+@endsection
+
+@section('script')<script src="//cdn.ckeditor.com/4.14.0/standard/ckeditor.js"></script>
+<script type="text/javascript">
+  CKEDITOR.replace( 'messageArea',
+  {
+   customConfig : 'config.js',
+   toolbar : 'simple'
+   })
+</script> 
+    
 @endsection

@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '4de62c8d80a4fdbb7f1b24f89090c6b98ab14301',
+        'reference' => '18b88bb918b582b4b2ebfcaac93783c7674d21ea',
         'name' => 'laravel/laravel',
         'dev' => true,
     ),
@@ -49,6 +49,21 @@
             'reference' => '8e884e78f9f0eb1329e445619e04456e64d8051d',
             'dev_requirement' => true,
         ),
+        'dompdf/dompdf' => array(
+            'pretty_version' => 'v0.6.2',
+            'version' => '0.6.2.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../dompdf/dompdf',
+            'aliases' => array(),
+            'reference' => 'cc06008f75262510ee135b8cbb14e333a309f651',
+            'dev_requirement' => false,
+        ),
+        'ergebnis/faker' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => '1.9.2',
+            ),
+        ),
         'erusev/parsedown' => array(
             'pretty_version' => '1.7.4',
             'version' => '1.7.4.0',
@@ -58,14 +73,20 @@
             'reference' => 'cb17b6477dfff935958ba01325f2e8a2bfa6dab3',
             'dev_requirement' => false,
         ),
-        'fzaninotto/faker' => array(
+        'fakerphp/faker' => array(
             'pretty_version' => 'v1.9.2',
             'version' => '1.9.2.0',
             'type' => 'library',
-            'install_path' => __DIR__ . '/../fzaninotto/faker',
+            'install_path' => __DIR__ . '/../fakerphp/faker',
             'aliases' => array(),
-            'reference' => '848d8125239d7dbf8ab25cb7f054f1a630e68c2e',
-            'dev_requirement' => true,
+            'reference' => '84220cf137a9344acffb10374e781fed785ff307',
+            'dev_requirement' => false,
+        ),
+        'fzaninotto/faker' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => '1.9.2',
+            ),
         ),
         'hamcrest/hamcrest-php' => array(
             'pretty_version' => 'v1.2.2',
@@ -268,6 +289,15 @@
             'reference' => '9f7a229a69d52506914b4bc61bfdb199d90c5547',
             'dev_requirement' => false,
         ),
+        'jeremeamia/superclosure' => array(
+            'pretty_version' => '2.4.0',
+            'version' => '2.4.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../jeremeamia/superclosure',
+            'aliases' => array(),
+            'reference' => '5707d5821b30b9a07acfb4d76949784aaa0e9ce9',
+            'dev_requirement' => false,
+        ),
         'kodova/hamcrest-php' => array(
             'dev_requirement' => true,
             'replaced' => array(
@@ -298,7 +328,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '4de62c8d80a4fdbb7f1b24f89090c6b98ab14301',
+            'reference' => '18b88bb918b582b4b2ebfcaac93783c7674d21ea',
             'dev_requirement' => false,
         ),
         'laravel/tinker' => array(
@@ -310,6 +340,15 @@
             'reference' => 'ad571aacbac1539c30d480908f9d0c9614eaf1a7',
             'dev_requirement' => false,
         ),
+        'laravelcollective/html' => array(
+            'pretty_version' => 'v5.4.9',
+            'version' => '5.4.9.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../laravelcollective/html',
+            'aliases' => array(),
+            'reference' => 'f04965dc688254f4c77f684ab0b42264f9eb9634',
+            'dev_requirement' => false,
+        ),
         'league/flysystem' => array(
             'pretty_version' => '1.0.70',
             'version' => '1.0.70.0',
@@ -317,6 +356,24 @@
             'install_path' => __DIR__ . '/../league/flysystem',
             'aliases' => array(),
             'reference' => '585824702f534f8d3cf7fab7225e8466cc4b7493',
+            'dev_requirement' => false,
+        ),
+        'league/fractal' => array(
+            'pretty_version' => '0.19.2',
+            'version' => '0.19.2.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../league/fractal',
+            'aliases' => array(),
+            'reference' => '06dc15f6ba38f2dde2f919d3095d13b571190a7c',
+            'dev_requirement' => false,
+        ),
+        'maatwebsite/excel' => array(
+            'pretty_version' => '2.1.30',
+            'version' => '2.1.30.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../maatwebsite/excel',
+            'aliases' => array(),
+            'reference' => 'f5540c4ba3ac50cebd98b09ca42e61f926ef299f',
             'dev_requirement' => false,
         ),
         'mockery/mockery' => array(
@@ -382,6 +439,15 @@
             'reference' => '96c132c7f2f7bc3230723b66e89f8f150b29d5ae',
             'dev_requirement' => false,
         ),
+        'phenx/php-font-lib' => array(
+            'pretty_version' => '0.2.2',
+            'version' => '0.2.2.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../phenx/php-font-lib',
+            'aliases' => array(),
+            'reference' => 'c30c7fc00a6b0d863e9bb4c5d5dd015298b2dc82',
+            'dev_requirement' => false,
+        ),
         'phpdocumentor/reflection-common' => array(
             'pretty_version' => '1.0.1',
             'version' => '1.0.1.0',
@@ -408,6 +474,15 @@
             'aliases' => array(),
             'reference' => '9c977708995954784726e25d0cd1dddf4e65b0f7',
             'dev_requirement' => true,
+        ),
+        'phpoffice/phpexcel' => array(
+            'pretty_version' => '1.8.2',
+            'version' => '1.8.2.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../phpoffice/phpexcel',
+            'aliases' => array(),
+            'reference' => '1441011fb7ecdd8cc689878f54f8b58a6805f870',
+            'dev_requirement' => false,
         ),
         'phpspec/prophecy' => array(
             'pretty_version' => 'v1.10.3',
@@ -493,8 +568,8 @@
         'psr/log-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '1.0',
-                1 => '1.0.0',
+                0 => '1.0.0',
+                1 => '1.0',
             ),
         ),
         'psy/psysh' => array(
@@ -797,6 +872,15 @@
             'reference' => 'c42125b83a4fa63b187fdf29f9c93cb7733da30c',
             'dev_requirement' => false,
         ),
+        'unisharp/laravel-ckeditor' => array(
+            'pretty_version' => '4.7.2',
+            'version' => '4.7.2.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../unisharp/laravel-ckeditor',
+            'aliases' => array(),
+            'reference' => '5c75f3f9128ec8567955913074795deee5869c5c',
+            'dev_requirement' => false,
+        ),
         'vlucas/phpdotenv' => array(
             'pretty_version' => 'v2.6.9',
             'version' => '2.6.9.0',
@@ -814,6 +898,15 @@
             'aliases' => array(),
             'reference' => 'bafc69caeb4d49c39fd0779086c03a3738cbb389',
             'dev_requirement' => true,
+        ),
+        'yajra/laravel-datatables-oracle' => array(
+            'pretty_version' => 'v6.0.0',
+            'version' => '6.0.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../yajra/laravel-datatables-oracle',
+            'aliases' => array(),
+            'reference' => 'e56a526d53e7dd907edc736d68c65319a632663e',
+            'dev_requirement' => false,
         ),
     ),
 );

@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SSDController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -47,6 +48,7 @@ Route::get('/user/pesan/{id_tiket}', 'UserChatController@pesan')->name('user.isi
 Route::get('/user/pesan/akhiri/{id_tiket}', 'UserChatController@akhiri');
 Route::get('/user/riwayat', 'UserChatController@riwayat')->name('user.riwayat');
 Route::get('/user/riwayat/detail/{id_tiket}', 'UserChatController@detailRiwayat')->name('user.riwayat.detail');
+Route::get('/riwayat/search', 'UserChatController@search')->name('search.riwayat');
 
 // mengirim pesan
 Route::post('/kirimPesan', 'PesanController@kirimPesan');
@@ -55,11 +57,14 @@ Route::post('/kirimPesan', 'PesanController@kirimPesan');
 Route::get('/notifikasi/{id_tiket}/{pesan}/{aksi}', 'NotifikasiController@index');
 
 // SSD user
-Route::get('/ssd', 'SSDController@index')->name('ssd');
+Route::get('/ssd', 'SSDController@index')->name('ssd.adminSearch');
 Route::get('/ssd/kategori', 'SSDController@kategori')->name('ssd');
 Route::get('/ssd/admin', 'SSDController@admin')->name('ssd');
 
-Route::post('/ssd/search', 'SSDController@show')->name('ssd.search');
+Route::post('/ssd/search/{kategori?}', 'SSDController@show')->name('ssd.search');
+Route::get('/ssd/admin/search/{page?}', 'SSDController@adminShow')->name('ssd.adminSearch');
+Route::get('/ssd/search_kategori', 'SSDController@search_kategori')->name('ssd.search.kategori');
+
 
 // SSD admin
 Route::post('/ssd/add/{id_ssd}', 'SSDController@create')->name('add.ssd');
@@ -70,4 +75,5 @@ Route::get('/ssd/form', 'SSDController@addForm')->name('ssd');
 Route::get('/ssd/edit/{id}', 'SSDController@editForm')->name('updateForm.ssd');
 Route::get('/ssd/delete/{id}', 'SSDController@destroy')->name('delete.ssd');
 Route::get('/ssd/update_page/{id}', 'SSDController@edit')->name('edit.ssd');
+Route::get('/ssd/detail/{id}', 'SSDController@findOne')->name('detail.ssd');
 Route::post('/ssd/update/{id}', 'SSDController@update')->name('update.ssd');

@@ -1,20 +1,22 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use Carbon\Carbon;
 use App\Models\SSD;
 use Illuminate\Http\Request;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use  Illuminate\Database\Eloquent\Builder;
-// use Illuminate\Http\Request;
+use Yajra\Datatables\Datatables;
+
 
 class SSDController extends Controller
 {
     public function index(Request $request, $page = null)
     {
         if (Auth::user()->role == 0 ) {
-            $data = SSD::paginate(!$page ? 10 : $page);
-            return view('SSD.admin', compact('data'));
+            $data = SSD::with('users')->paginate(!$page ? 10 : $page);
+            return redirect('/ssd/admin/search');
 
         } else if (Auth::user()->role == 1) {
             $data = SSD::paginate($page);
@@ -33,8 +35,9 @@ class SSDController extends Controller
     public function editForm(Request $request, $id)
     
     {
-        $data = SSD::where('id_ssd','=',$id)->first();
-        return view('SSD.form', compact('data'));
+        $data = SSD::with('users')->where('id_ssd','=',$id)->first();
+        $page = "edit";
+        return view('SSD.form', compact('data', 'page'));
     }
 
     
@@ -62,14 +65,131 @@ class SSDController extends Controller
      * @param  \App\SSD  $sSD
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, SSD $sSD)
+    public function show(Request $request, SSD $sSD, $kategori = null)
     {
-        $data=SSD::where('pertanyaan','like', $request->keluhan)->get();
-        return view('SSD.kategori', compact('data'));
+        // $kategori = $request->kategori;
+        if($kategori){
+            
+            $data=SSD::where('pertanyaan','like','%'. $request->keluhan .'%')
+            ->where('kategori', '=', $kategori )
+            ->get();
+            return view('SSD.kategori', compact('data', 'kategori'));
+
+        }else {
+            $data=SSD::where('pertanyaan','like','%'. $request->keluhan .'%')->get();
+            return view('SSD.kategori', compact('data', 'kategori'));
+
+        }
+        
+        
     }
 
 
-    public function update(Request $request, $id)
+
+    public function adminShow(Request $request, SSD $sSD, $page = null)
+    {
+        $departemen = array(
+            $request->lldikti,
+        $request->dosen,
+            $request->asesor,
+        $request->perguruan_tinggi,
+        );
+
+
+        $query = SSD::query();
+
+        
+
+        $query->with('Users');
+
+        foreach($departemen as $d){
+            if($d){
+                $query->orWhere("kategori", "=", $d);
+            }    
+        };
+
+        if($request->status != NULL){
+            $query->where("status","=", $request->status);
+        };
+
+        if($request->keluhan){
+            $query->where("pertanyaan","=", $request->keluhan);
+        }
+
+        $query->orderBy('id_ssd','DESC');
+
+        if($page){
+            $data = $query->paginate($page);
+        } else {
+            $data = $query->paginate(10);
+        }
+
+
+        return view('SSD.admin', compact('data','kategori'));
+
+        
+    }
+
+    public function search_kategori(Request $request, SSD $sSD)
+    {
+        $query = SSD::query();
+
+        if ($request->has('kategori')) {
+            $kategori=$request->kategori;
+            
+            if($kategori== 'all'){
+                $query = SSD::paginate(10);      
+            }else{   
+                $query= SSD::where('kategori', $kategori)->get();
+            }             
+        
+         }
+        $data = $query;
+        return view('SSD.kategori', compact('data','kategori', 'items'));
+    }
+
+  
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\SSD  $sSD
+     * @return \Illuminate\Http\Response
+     */
+    
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\SSD  $sSD
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(SSD $id_ssd)
+    {
+        $data=SSD::where('id_ssd','=', $id_ssd)->first();
+        $page = "edit";
+        
+        return view('SSD.form',compact('data', 'page'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\SSD  $sSD
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, SSD $sSd, $id )
     {
         $data=SSD::where('id_ssd','=', $id)->first();
         $data->kategori = $request->kategori;
@@ -110,4 +230,24 @@ class SSDController extends Controller
 
         return redirect('/ssd')->with('success', 'SSD berhasil dihapus');
     }
+
+    public function findOne(Request $request, SSD $sSD, $id)
+    {
+            
+            $data=SSD::with('users')->where('id_ssd','=',$id)
+            ->first();
+
+            $page = "detail";
+            // return view('SSD.form', compact('data','page'));
+            dd($data);
+
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\SSD  $sSD
+     * @return \Illuminate\Http\Response
+     */
+    
 }
