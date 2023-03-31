@@ -12,11 +12,12 @@
                 <input type="text" class="form-control p-4" placeholder="Cari Keluhan" aria-label="Username"
                     aria-describedby="basic-addon1" name="keluhan">
                 <div class="input-group-append border-right-0">
-                    <span class="input-group-text bg-white border-left-0" id="basic-addon1"><i
-                            class="fas fa-search"></i></span>
+                    <button type="submit" style="background:#eaecf4; border:0.2px solid #d1d3e2" class="btn "><i
+                        class="fas fa-search"></i></button>
                 </div>
             </div>
         </form>
+        
         
 
         <div class="sdid">
@@ -58,9 +59,9 @@
     <h4 class="font-weight-bold mt-4 mb-4">Kategori</h4>
 
     <div class="row">
-        <div class="col-3"><button type="button" class="btn  btn-primary   px-5 py-4 w-100 ">
+        <div class="col-3"><a href="{{ url('/ssd/search_kategori?kategori=lldikti') }}"><button type="button" class="btn  btn-primary   px-5 py-4 w-100 ">
                 <p class="h4 font-weight-bold text-light">LLDIKTI</p>
-            </button></div>
+            </button></a></div>
         <div class="col-3"><button type="button" class="btn  btn-primary   px-5 py-4 w-100 ">
                 <p class="h4 font-weight-bold text-light">Dosen</p>
             </button></div>

@@ -103,6 +103,12 @@
 </form>
         
     </div>
+            <button type="submit" class="btn btn-primary w-100">Selesai</button>
+          </div>
+</div>
+</form>
+        
+    </div>
 
     <div class="d-flex col-12 justify-content-between">
         <a href="/ssd/form"><button type="button" class="btn btn-success p-2"><i class="fas fa-plus-circle mr-1"></i>Tambah SSD</button></a>

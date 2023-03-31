@@ -2,26 +2,31 @@
 
 @section('content')
 
+
+
+
+
 <div class="row align-items-center">
     <div class="col-3 my-5 px-4 d-flex justify-content-end">
-        <button type="button" class="btn btn-secondary p-3"><- Kembali</button>
+        <a href="{{ url('/ssd/search_kategori?kategori=all') }}" class="btn btn-outline-secondary text-dark" id="btn-back"><i class="fa fa-arrow-left text-dark pr-1"></i>Kembali</a>
     </div>
 
-    <form action="/ssd/search/{{$kategori}}" method="post">
-    <div class="input-group my-5 col-6 px-0">
+    <form action="/ssd/search/{{$kategori}}" method="post" class="col-6">
+    <div class="input-group my-5  px-0">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
             
-            <input type="text" class="form-control p-4" name="keluhan" placeholder="Cari Keluhan" aria-label="Username" aria-describedby="basic-addon1">
+            <input type="text" class="form-control p-4 rounded-left" name="keluhan" placeholder="Cari Keluhan" aria-label="Username" aria-describedby="basic-addon1">
             <div class="input-group-append border-right-0">
-                <span class="input-group-text bg-white border-left-0" id="basic-addon1"><i class="fas fa-search">
-                </i>
+               
+                <button type="submit" style="background:#eaecf4; border:0.2px solid #d1d3e2" class="btn "><i
+                    class="fas fa-search"></i></button>
                 
-                </span>
+                
             </div>
         </div>
     </div>
     </form>
-
+    
 
 <div class="row sdid-kategori">
     <div class="col-3 px-4">
@@ -84,6 +89,10 @@
     </div>
     <div class="col-9">
         
+        @if ($data->isEmpty())
+            <h1>Hasil pencarian untuk "{{ $querys }}"</h1>
+            <p>Tidak ditemukan hasil pencarian untuk "{{ $querys }}".</p>
+        @else
         <div class="sdid-search">
             @foreach ($data as $ssd)
             <div class="border-bottom border-dark pb-3 mb-3">
@@ -95,15 +104,17 @@
             
             
         </div>
-       
-    </div>
 
+        
+    </div>
+    
     
 
     
     
 </div>
 
+@endif
 
 
 <div class="text-center mt-5">
