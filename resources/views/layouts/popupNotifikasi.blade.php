@@ -6,7 +6,7 @@
 
 
 <!-- Button trigger modal -->
-<button id="notifikasi" type="button" class="btn btn-primary" data-toggle="modal" data-target="#popupNotifikasi">
+<button id="notifikasi" type="button" class="btn btn-primary" data-toggle="modal" data-target="#popupNotifikasi" hidden>
   Launch demo modal
 </button>
 
