@@ -155,3 +155,7 @@ a:hover {
   background:#eaecf4;
   border:0.2px solid #d1d3e2;
 }
+
+.basis-5{
+  flex-basis: 20%;
+}

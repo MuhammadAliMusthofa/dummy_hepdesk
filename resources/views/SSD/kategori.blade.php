@@ -5,27 +5,26 @@
 
 
 
-
 <div class="row align-items-center">
     <div class="col-3 my-5 px-4 d-flex justify-content-end">
-        <a href="{{ url('/ssd/search_kategori?kategori=all') }}" class="btn btn-outline-secondary text-dark" id="btn-back"><i class="fa fa-arrow-left text-dark pr-1"></i>Kembali</a>
+        <a href="{{ URL::previous() }}" class="btn btn-outline-secondary text-dark" id="btn-back"><i class="fa fa-arrow-left text-dark pr-1"></i>Kembali</a>
     </div>
 
     <form action="/ssd/search/{{$kategori}}" method="post" class="col-6">
-    <div class="input-group my-5  px-0">
-            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+        <div class="input-group my-5  px-0">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
             
-            <input type="text" class="form-control p-4 rounded-left" name="keluhan" placeholder="Cari Keluhan" aria-label="Username" aria-describedby="basic-addon1">
-            <div class="input-group-append border-right-0">
-               
-                <button type="submit" style="background:#eaecf4; border:0.2px solid #d1d3e2" class="btn "><i
-                    class="fas fa-search"></i></button>
+                <input type="text" class="form-control p-4 rounded-left" name="keluhan" placeholder="Cari Keluhan" aria-label="Username" aria-describedby="basic-addon1">
+                <div class="input-group-append border-right-0">
                 
-                
-            </div>
+                    <button type="submit" style="background:#eaecf4; border:0.2px solid #d1d3e2" class="btn "><i
+                        class="fas fa-search"></i></button>
+                    
+                    
+                </div>
         </div>
-    </div>
     </form>
+</div>
     
 
 <div class="row sdid-kategori">
@@ -39,7 +38,9 @@
                         "font-weight-bold mb-3  bg-primary text-light rounded px-2 pt-1 pb-1"     
                     @else
                         "font-weight-bold mb-3"     
-                    @endif>LLDIKTI
+                    @endif>
+                    LLDIKTI 
+
                 </h5>
             </a>
            
@@ -49,29 +50,33 @@
                         "font-weight-bold mb-3  bg-primary text-light rounded px-2 pt-1 pb-1"     
                     @else
                         "font-weight-bold mb-3 "     
-                    @endif>Dosen
+                    @endif>Dosen  
                 </h5>
             </a>
             
             <a href="{{ url('/ssd/search_kategori?kategori=asesor') }}">
+                {{-- @if ()
+                    
+                @endif --}}
                 <h5 class=
                     @if ($kategori == "asesor")
                         "font-weight-bold mb-3  bg-primary text-light rounded px-2 pt-1 pb-1"     
                     @else
                         "font-weight-bold mb-3"     
                     @endif>
-                    Asesor
+                    Asesor   
                 </h5>
             </a>
             
             <a href="{{ url('/ssd/search_kategori?kategori=pengelola-bkd') }}">
                 <h5 class=
                 @if ($kategori == "pengelola-bkd")
-                        "font-weight-bold mb-3  bg-primary text-light rounded px-2 pt-1 pb-1"     
-                    @else
+                        "font-weight-bold mb-3  bg-primary text-light rounded px-2 pt-1 pb-1" 
+                        @else
                         "font-weight-bold mb-3"     
-                    @endif>
-                    Pengelola
+                        @endif>
+                      {{-- Admin PT --}}
+                    Admin PT   
                 </h5>
             </a>
             
@@ -82,16 +87,18 @@
                     @else
                         "font-weight-bold mb-3"     
                     @endif>
-                    Semua
+                    Semua 
                 </h5>
             </a>
         </div>
     </div>
+    
+
     <div class="col-9">
         
         @if ($data->isEmpty())
-            <h1>Hasil pencarian untuk "{{ $querys }}"</h1>
-            <p>Tidak ditemukan hasil pencarian untuk "{{ $querys }}".</p>
+            <h1>Hasil pencarian untuk "<b>{{ $querys }}</b>"</h1>
+            <p>Tidak ditemukan hasil pencarian untuk " <b>{{ $querys }}</b>".</p>
         @else
         <div class="sdid-search">
             @foreach ($data as $ssd)

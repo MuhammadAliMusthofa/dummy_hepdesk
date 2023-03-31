@@ -76,20 +76,22 @@ class SSDController extends Controller
             // $keyword = $request->keluhan;
             $query = SSD::query();
             $querys = $request->input('keluhan');
+            // session(['keluhan' => $querys]);
 
             $query->where('pertanyaan','like','%'. $querys .'%');
             if($kategori != 'all'){
                 $query->where('kategori', '=', $kategori );
+                // $count = $query->where('kategori', '=', $kategori )->count();
             }else{
             }
             // ->orWhere('kategori', '=', 'all')
             $data = $query->get();
-
-            return view('SSD.kategori', compact('data', 'kategori', 'querys'));
+            return view('SSD.kategori', compact('data', 'kategori', 'querys', 'count'));
 
         }else {
             $data=SSD::where('pertanyaan','like','%'. $request->keluhan .'%')->get();
-            return view('SSD.kategori', compact('data', 'kategori', 'querys'));
+      
+            return view('SSD.kategori', compact('data', 'kategori', 'querys', 'count'));
         }  
         
     }
@@ -105,18 +107,25 @@ class SSDController extends Controller
     public function search_kategori(Request $request, SSD $sSD)
     {
         $query = SSD::query();
+        $items = count($query);
 
+        
         if ($request->has('kategori')) {
             $kategori=$request->kategori;
+            // session(['keluhan' => $kategori]);
+            
             
             if($kategori== 'all'){
-                $query = SSD::paginate(10);      
+                $query = SSD::paginate(10);    
             }else{   
                 $query= SSD::where('kategori', $kategori)->get();
+                $items =  $query->count(); 
+                
             }             
         
          }
         $data = $query;
+        // dd($items);
         return view('SSD.kategori', compact('data','kategori', 'items'));
     }
 

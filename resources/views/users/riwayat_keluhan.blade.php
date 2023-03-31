@@ -5,19 +5,26 @@
 <div class="card mt-5 mr-3 ml-3 shadow  rounded">
   <div class="card-header">
     <h5 class="card-title">Riwayat Keluhan</h5>
-    <form action="{{ route('search.riwayat') }}" method="GET">
-
-      <div class="input-group mb-3 col-md-4 p-0">
-        <input id="keluhan" type="text" name="query" class="form-control bg-light" placeholder="Cari keluhan ...."
-          aria-label="Recipient's username" aria-describedby="basic-addon2">
-        <div class="input-group-append ">
-
-          <button type="submit" style="background:#eaecf4; border:0.2px solid #d1d3e2" class="btn "><i
-              class="fas fa-search"></i></button>
-
+    <div class="d-flex justify-content-between">
+      <form action="{{ route('search.riwayat') }}"  class="input-group mb-3 col-md-4 p-0" method="GET">
+  
+        
+          <input id="keluhan" type="text" name="query" class="form-control bg-light" placeholder="Cari keluhan ...."
+            aria-label="Recipient's username" aria-describedby="basic-addon2">
+          <div class="input-group-append ">
+  
+              <button type="submit" style="background:#eaecf4; border:0.2px solid #d1d3e2" class="btn "><i
+                class="fas fa-search"></i></button>
+  
+         
         </div>
-      </div>
-    </form>
+      </form>
+
+      
+        <a href="{{ URL::previous() }}" class="btn btn-outline-secondary text-dark mb-3 " id="btn-back"><i class="fa fa-arrow-left text-dark pr-1"></i>Kembali</a>
+     
+    </div>
+
     <table id="tabelrekap" class="table table-striped text-center">
       <thead>
         <tr>
