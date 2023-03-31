@@ -32,6 +32,14 @@ class PesanController extends Controller
             'pesan' => $pesan
         ]);
 
+        $pesanIf = Pesan::where('id_tiket', $id_tiket)->get();
+        if (count($pesanIf)) {
+            Pesan::create([
+                'id_tiket' => $id_tiket,
+                'pesan' => 'Kami telah menampung pertanyaan anda. Mohon menunggu sebentar, kami akan segera merespons anda'
+            ]);
+        }
+
         if ($tiket->get()) {
             $time = Carbon::now()->addMinute(30)->format('Y-m-d H:i:s');
             $tiket->update([

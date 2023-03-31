@@ -11,11 +11,14 @@
   style="max-height: 50vh; min-height: 50vh">
   <div class="text-center">
     <h1 id="home">
-      @if ($count && $adminHelpdesk &&$adminHelpdesk->active)
-      {{ $count }} Antrian Menunggu
+      @if ($adminHelpdesk && $adminHelpdesk->active)
+      <div id="countHome">
+      </div>
+      Antrian Menunggu
       @else
       Layanan Informasi Helpdesk
-      @endif</h1>
+      @endif
+    </h1>
     <h3>Mari melayani sepenuh hati</h3>
   </div>
 </div>

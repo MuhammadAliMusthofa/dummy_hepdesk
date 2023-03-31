@@ -1,6 +1,12 @@
 let id_tiket = localStorage['id_tiket'];
 let isiPesan = '';
 
+// select isi pesan yang dicari
+let selectPesan = [];
+let isSelected = '';
+let selectCount = 0;
+const dataPesan = [];
+
 $(document).ready(function () {
   $.ajaxSetup({
     headers: {
@@ -31,7 +37,6 @@ $(document).ready(function () {
         } else if (data.aksi == 'ditunda') {
           $(document).find("#pesan").html(`<strong>${data.message}</strong>`);
           $(document).find("#notifikasiPopup").click();
-          window.location = '/user/riwayat';
 
         } else if (data.aksi == 'kirim' && data.nama != id_pengguna) {
           let pesan;
@@ -48,13 +53,18 @@ $(document).ready(function () {
 
         } else if (data.aksi == 'waktu-10mnt') {
           $(document).find('#pesanPengingat').html(data.message);
+          $(document).find('#btn-alert').html('Kembali');
           $(document).find('#notifikasi').click();
 
         } else if (data.aksi == 'waktu habis') {
           $(document).find('#pesanPengingat').html(data.message);
+          $(document).find('#btn-alert').attr('href', '/user/riwayat');
+          $(document).find('#btn-alert').html('Lihat Riwayat');
           $(document).find('#notifikasi').click();
           localStorage['sessionDetail'] = 0;
           sessionDetail = 0;
+          // delay
+          window.location = '/user/riwayat';
         }
 
         pesan();
@@ -83,15 +93,84 @@ $(document).ready(function () {
     kirim();
   });
 
-  $(document).on('keyup', '.query', function (e) {
+  $(document).on('keyup', '#query', function (e) {
     isiPesan = $(this).val();
+    $(this).attr('style', 'height: auto'); // default height
+    const heightQuery = parseInt($(this)[0].scrollHeight);
+    $(this).attr('style', ('height: ' + heightQuery + "px"));
 
-    if (e.which === 13 && isiPesan != '') {
+    if (isiPesan == '') {
+      $(this).attr('style', ('height: auto')); // heigh default
+    }
+
+    if (e.ctrlKey && e.which === 13 && isiPesan != '') {
       $(this).val(''); // mengkosongkan formuilr pesan
       kirim(e);
     }
   })
 
+  // searching isi pesan 
+  $(document).on('click', '#serachIsiPesan', function () {
+    $('#formDefault').removeClass('d-flex');
+    $('#formDefault').addClass('d-none');
+    $('#formSearch').removeClass('d-none');
+    $('#formSearch').addClass('d-flex');
+    $('#upDown').attr('hidden', false);
+    $('#kirimPesan').attr('hidden', true);
+    $('.querySearchIsiPesan').focus();
+  });
+
+  // query search isi pesan
+  $(document).on('keyup', '.querySearchIsiPesan', function () {
+    isiPesan = $(this).val();
+    searchIsiPesan();
+  });
+
+  // select result search to up
+  $(document).on('click', '.fa-angle-up', function () {
+    const scrolling = $(document).find('#scrolling');
+    if (selectPesan.length != 0) {
+      scrolling.find('li').removeClass('third-bg-color');
+      if (selectCount < selectPesan.length) {
+        isSelected -= 1;
+        selectCount += 1;
+      }
+      $('#selectCount').html(selectCount);
+      scrolling.find('li:eq(' + selectPesan[isSelected] + ')').addClass('third-bg-color');
+    }
+    const selectElement = scrolling.find('.third-bg-color')[0].offsetTop;
+    scrolling[0].scrollTop = selectElement - 100;
+  });
+
+  // select result search to down
+  $(document).on('click', '.fa-angle-down', function () {
+    const scrolling = $(document).find('#scrolling');
+    if (selectPesan.length != 0) {
+      scrolling.find('li').removeClass('third-bg-color');
+      if (isSelected < (selectPesan.length - 1)) {
+        isSelected += 1;
+        selectCount -= 1;
+      }
+      $('#selectCount').html(selectCount);
+      scrolling.find('li:eq(' + selectPesan[isSelected] + ')').addClass('third-bg-color');
+    }
+    const selectElement = scrolling.find('.third-bg-color')[0].offsetTop;
+    scrolling[0].scrollTop = selectElement - 100;
+  });
+
+  // riwayat chat
+  // batal search isi pesan
+  $(document).on('click', '#batalCari', function () {
+    $('#formDefault').removeClass('d-none');
+    $('#formDefault').addClass('d-flex');
+    $('#formSearch').removeClass('d-flex');
+    $('#formSearch').addClass('d-none');
+    $('.querySearchIsiPesan').val('');
+    $('#upDown').attr('hidden', true);
+    $('#kirimPesan').attr('hidden', false);
+    isiPesan = '';
+    searchIsiPesan();
+  });
 });
 
 function pesan() {
@@ -103,11 +182,77 @@ function pesan() {
     success: function (data) {
       $('#subcontent').html(data);
       $(document).find('.query').val(isiPesan);
-    },
-    error: function () {
-      window.location = '/user/riwayat';
     }
   });
+}
+
+function searchIsiPesan() {
+  const scrolling = $(document).find('#scrolling');
+  const pesan = scrolling.find('p.mt-0');
+  const mark = pesan.find('mark');
+
+  mark.each(function () {
+    $(this).replaceWith($(this).text());
+  });
+
+  // Membuat regex untuk mencari teks yang cocok
+  var regex = new RegExp(isiPesan, 'gi');
+
+  pesan.each(function (i) {
+    // menambahkan isi pesan kedalam dataPesan jika panjangnya kurang dari panjang pesan
+    if (dataPesan.length < pesan.length) {
+      dataPesan[i] = $(this).html();
+    }
+    // Mendapatkan teks dari li pesan
+    var liText = $(this).html();
+
+    // Mengubah teks yang cocok dengan regex menjadi highlight
+    $(this).html(liText.replace(regex, function (match) {
+      return '<mark>' + match + '</mark>';
+    }));
+  });
+
+  scrolling.find('li').removeClass('third-bg-color');
+
+  // jika isi pesan yang dicari kosong
+  if (isiPesan == '') {
+    $('#count').html('0');
+    mark.remove();
+    pesan.each(function (i) {
+      $(this).html(dataPesan[i]);
+    });
+    isSelected = '';
+    selectCount = 0;
+  }
+
+  // menentukan jumlah pesan yang dicari
+  let selectLi = [];
+  scrolling.find('li').each(function (index) {
+    const spanHighlight = $(this).find('mark');
+    if (spanHighlight.length != 0) {
+      selectLi.push(index);
+    }
+  });
+  selectPesan = selectLi;
+
+  // mengisi jumlah hasil yang dicari dan pesan keberapa yang di pilih
+  if (selectPesan.length != 0) {
+    scrolling.find('li:eq(' + selectPesan.slice(-1) + ')').addClass('third-bg-color');
+    isSelected = selectPesan.length - 1;
+    selectCount = (selectPesan.length + 1) - selectPesan.length;
+  }
+
+  if (selectPesan.length == 0) {
+    selectCount = 0;
+  }
+  $('#selectCount').html(selectCount);
+  $('#count').html(selectPesan.length);
+
+  // otomatis scroll jika pesan terpilih
+  if (isiPesan != '' && selectCount != 0) {
+    const selectElement = scrolling.find('.third-bg-color')[0].offsetTop;
+    scrolling[0].scrollTop = selectElement - 100;
+  }
 }
 
 

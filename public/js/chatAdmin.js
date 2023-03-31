@@ -27,10 +27,14 @@ let fillterDepart = 0;
 // admin active melayani
 let active = localStorage['active'];
 
+// jumlah antrian
+let count;
+
 // select isi pesan yang dicari
 let selectPesan = [];
 let isSelected = '';
 let selectCount = 0;
+const dataPesan = [];
 
 $(document).ready(function () {
   $.ajaxSetup({
@@ -63,7 +67,7 @@ $(document).ready(function () {
       localStorage['sessionDetail'] = 0;
       sessionDetail = 0;
     } else if (data.aksi == 'kirim' && data.nama != id_pengguna) {
-      $(document).find("#pesan").html(`<strong>Pesan Baru dari Id Tiket ${data.nama} : </strong>${data.message}`);
+      $(document).find("#pesan").html(`<strong>Pesan Baru dari Id Tiket ${data.nama}</strong>`);
       $(document).find("#notifikasiPopup").click();
     }
 
@@ -80,13 +84,6 @@ $(document).ready(function () {
   });
 
   admin_chat_head();
-  if (parseInt(sessionDetail)) {
-    detail();
-  } else if (parseInt(id_tiket)) {
-    pesan();
-  } else {
-    home();
-  }
 
   // notifikasi
   $(document).find("#pesan").hide();
@@ -98,8 +95,10 @@ $(document).ready(function () {
 
   $(document).on('click', '.status', function () {
     $('.status').removeClass('selectedStatus');
+    $('.status').removeClass('font-weight-bold');
     $('.status').prop('disabled', false);
     $(this).addClass('selectedStatus');
+    $(this).addClass('font-weight-bold');
     $(this).prop('disabled', true);
     localStorage['statusChat'] = $(this).attr('id');
     statusChat = $(this).attr('id');
@@ -127,6 +126,16 @@ $(document).ready(function () {
   });
 
   // searching list pesan jika admin sedang melayani saja
+
+  // jika input cari sudah ditekan tidak bisa menutup box fillter
+  $(document).on('click', '#inputSearch', function () {
+    // 'data-toggle="collapse" data-target="#collapseFillter" aria-expanded="false" aria-controls="collapseExample"'
+    $(this).attr('data-toggle', false);
+    $(this).attr('data-target', false);
+    $(this).attr('aria-expanded', false);
+    $(this).attr('aria-controls', false);
+  });
+
   $(document).on('keyup', '.querySearch', function (e) {
     querySearch = $(this).val();
 
@@ -138,6 +147,10 @@ $(document).ready(function () {
 
   $(document).on('click', '#btnApplyFillter', function () {
     $('#collapseFillter').collapse('hide');
+    $('#inputSearch').attr('data-toggle', 'collapse');
+    $('#inputSearch').attr('data-target', '#collapseFillter');
+    $('#inputSearch').attr('aria-expanded', 'false');
+    $('#inputSearch').attr('aria-controls', 'collapseExample');
     if (querySearch || fillterNama || fillterWaktu || fillterDepart) {
       search();
     }
@@ -276,12 +289,19 @@ $(document).ready(function () {
   });
 
   // mengirim pesan dalam tiket jika input di enter
-  $(document).on('keyup', '.query', function (e) {
+  $(document).on('keyup', '#query', function (e) {
     listPesan = $(this).val();
+    $(this).attr('style', 'height: auto'); // default height
+    const heightQuery = parseInt($(this)[0].scrollHeight);
+    $(this).attr('style', ('height: ' + heightQuery + "px"));
 
-    if (e.which === 13 && listPesan != '') {
+    if (listPesan == '') {
+      $(this).attr('style', 'height: auto'); // default height
+    }
+
+    if (e.ctrlKey && e.which === 13 && listPesan != '') {
       $(this).val(''); // mengkosongkan formuilr pesan
-      kirim();
+      kirim(e);
     }
   });
 });
@@ -304,31 +324,53 @@ function pesan() {
 function searchIsiPesan() {
   const scrolling = $(document).find('#scrolling');
   const pesan = scrolling.find('p.mt-0');
-  pesan.each(function () {
-    let innerHTML = $(this)[0].innerHTML.replaceAll(/\<span class\=\"highlight\"\>(.*?)\<\/span\>/gi, "$1").replaceAll(isiPesan, '<span class="highlight">' + isiPesan + "</span>");
-    $(this).html(innerHTML);
+  const mark = pesan.find('mark');
+
+  mark.each(function () {
+    $(this).replaceWith($(this).text());
+  });
+
+  // Membuat regex untuk mencari teks yang cocok
+  var regex = new RegExp(isiPesan, 'gi');
+
+  pesan.each(function (i) {
+    // menambahkan isi pesan kedalam dataPesan jika panjangnya kurang dari panjang pesan
+    if (dataPesan.length < pesan.length) {
+      dataPesan[i] = $(this).html();
+    }
+    // Mendapatkan teks dari li pesan
+    var liText = $(this).html();
+
+    // Mengubah teks yang cocok dengan regex menjadi highlight
+    $(this).html(liText.replace(regex, function (match) {
+      return '<mark>' + match + '</mark>';
+    }));
   });
 
   scrolling.find('li').removeClass('third-bg-color');
 
+  // jika isi pesan yang dicari kosong
   if (isiPesan == '') {
     $('#count').html('0');
-    scrolling.find('li').find('span').remove();
+    mark.remove();
+    pesan.each(function (i) {
+      $(this).html(dataPesan[i]);
+    });
     isSelected = '';
     selectCount = 0;
   }
 
-
-
+  // menentukan jumlah pesan yang dicari
   let selectLi = [];
   scrolling.find('li').each(function (index) {
-    const spanHighlight = $(this).find('.highlight');
+    const spanHighlight = $(this).find('mark');
     if (spanHighlight.length != 0) {
       selectLi.push(index);
     }
   });
   selectPesan = selectLi;
 
+  // mengisi jumlah hasil yang dicari dan pesan keberapa yang di pilih
   if (selectPesan.length != 0) {
     scrolling.find('li:eq(' + selectPesan.slice(-1) + ')').addClass('third-bg-color');
     isSelected = selectPesan.length - 1;
@@ -340,8 +382,12 @@ function searchIsiPesan() {
   }
   $('#selectCount').html(selectCount);
   $('#count').html(selectPesan.length);
-  const selectElement = scrolling.find('.third-bg-color')[0].offsetTop;
-  scrolling[0].scrollTop = selectElement - 100;
+
+  // otomatis scroll jika pesan terpilih
+  if (isiPesan != '' && selectCount != 0) {
+    const selectElement = scrolling.find('.third-bg-color')[0].offsetTop;
+    scrolling[0].scrollTop = selectElement - 100;
+  }
 }
 
 function pesanMain() {
@@ -366,11 +412,19 @@ function admin_chat_head() {
       $('#contentPesan').html(data);
       $('.status').each(function () {
         if (statusChat == $(this).attr('id')) {
-          $(this).addClass('selectedStatus')
+          $(this).addClass('selectedStatus');
           $(this).prop('disabled', true);
         };
       });
       admin_chat_main();
+
+      if (parseInt(sessionDetail)) {
+        detail();
+      } else if (parseInt(id_tiket)) {
+        pesan();
+      } else {
+        home();
+      }
     },
     complete: function () {
       btnFillter();
@@ -408,6 +462,7 @@ function admin_chat_main() {
           $('.status-' + i).attr('hidden', true);
         }
       }
+      count = $(document).find('#list-pesan').find('li.status-0').length;
     },
     complete: function () {
       timer();
@@ -524,9 +579,14 @@ function home() {
     success: function (data) {
       $('#subcontent').html(data);
 
+
       if (statusChat != 0) {
         $('#home').html('Layanan Informasi Helpdesk')
       }
+
+    },
+    complete: function () {
+      $('#countHome').html(count);
     }
   });
 }
