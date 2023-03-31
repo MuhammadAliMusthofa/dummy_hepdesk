@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SSDController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -23,6 +24,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home/{page?}', 'SSDController@index')->name('home');
 
 Route::group(['middleware' => ['admin']], function () {
     // chat admin

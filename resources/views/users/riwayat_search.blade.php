@@ -1,26 +1,29 @@
 @extends('layouts.dashboard_layout')
 
 @section('content')
-<h1>Hasil pencarian untuk "{{ $query }}"</h1>
+<h1>Hasil pencarian untuk <b>"{{ $query }}"</b></h1>
 @if ($tikets->isEmpty())
-<p>Tidak ditemukan hasil pencarian untuk "{{ $query }}".</p>
-<a href="{{ route('user.riwayat') }}"> <i class="fas fa-sign-out-alt ml-auto"></i>kembali</a>
+<p>Tidak ditemukan hasil pencarian untuk <b>"{{ $query }}"</b>  pada riwayat reluhan.</p>
+
 
 
 <div class="card-header">
 
   <h5 class="card-title">Riwayat Keluhan</h5>
-  <form action="{{ route('search.riwayat') }}" method="GET">
+  <div class="d-flex justify-content-between">
+    <form action="{{ route('search.riwayat') }}"  class="input-group mb-3 col-md-4 p-0" method="GET">
+        <input id="keluhan" type="text" name="query" class="form-control bg-light" placeholder="Cari keluhan ...."
+          aria-label="Recipient's username" aria-describedby="basic-addon2">
+        <div class="input-group-append ">
 
-    <div class="input-group mb-3 col-md-4 p-0">
-      <input id="keluhan" type="text" name="query" class="form-control bg-light" placeholder="Cari keluhan ...."
-        aria-label="Recipient's username" aria-describedby="basic-addon2">
-      <div class="input-group-append ">
-        <span class="input-group-text" id="basic-addon2"><a href="#"><i class="fas fa-search"></i></a></span>
+            <button type="submit" style="background:#eaecf4; border:0.2px solid #d1d3e2" class="btn "><i
+              class="fas fa-search"></i></button>
 
-      </div>
-    </div>
-  </form>
+       
+        </div>
+    </form>
+        <a href="{{ URL::previous() }}" class="btn btn-outline-secondary text-dark mb-3 " id="btn-back"><i class="fa fa-arrow-left text-dark pr-1"></i>Kembali</a>
+  </div>
 
 </div>
 @else

@@ -9,15 +9,14 @@
         <form action="ssd/search" method="post">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <div class="input-group my-4">
-                <input type="text" class="form-control p-4" placeholder="Cari Keluhan" aria-label="Username"
+                <input type="text" class="form-control p-4" placeholder="Cari Keluhan" aria-label="Username" value="{{ session('querys') }}"
                     aria-describedby="basic-addon1" name="keluhan">
                 <div class="input-group-append border-right-0">
-                    <span class="input-group-text bg-white border-left-0" id="basic-addon1"><i
-                            class="fas fa-search"></i></span>
+                    <button type="submit" style="background:#eaecf4; border:0.2px solid #d1d3e2" class="btn "><i
+                        class="fas fa-search"></i></button>
                 </div>
             </div>
         </form>
-
 
         <div class="sdid">
             <p class="font-weight-bold h5  mt-5 mb-3">Pertanyaan yang sering muncul</p>
@@ -59,19 +58,39 @@
 <div class="text-center kategori">
     <h4 class="font-weight-bold mt-4 mb-4">Kategori</h4>
 
-    <div class="row">
-        <div class="col-3"><button type="button" class="btn  btn-primary   px-5 py-4 w-100 ">
-                <p class="h4 font-weight-bold text-light">LLDIKTI</p>
-            </button></div>
-        <div class="col-3"><button type="button" class="btn  btn-primary   px-5 py-4 w-100 ">
-                <p class="h4 font-weight-bold text-light">Dosen</p>
-            </button></div>
-        <div class="col-3"><button type="button" class="btn  btn-primary   px-5 py-4 w-100 ">
-                <p class="h4 font-weight-bold text-light">Asesor</p>
-            </button></div>
-        <div class="col-3"><button type="button" class="btn  btn-primary   px-5 py-4 w-100 ">
-                <p class="h4 font-weight-bold text-light">Pengelola BKD</p>
-            </button></div>
+    <div class="row d-flex justify-content-between">
+
+        <div class="px-2 basis-5">
+
+            <div class=""><a href="{{ url('/ssd/search_kategori?kategori=lldikti') }}"><button type="button" class="btn  btn-primary   px-5 py-4 w-100 ">
+                    <p class="h4 font-weight-bold text-light">LLDIKTI</p>
+                </button></a></div>
+        </div>
+
+        <div class="px-2 basis-5">
+
+            <div class=""><a href="{{ url('/ssd/search_kategori?kategori=dosen') }}"><button type="button" class="btn  btn-primary   px-5 py-4 w-100 ">
+                    <p class="h4 font-weight-bold text-light">Dosen</p>
+                </button></a></div>
+        </div>
+        <div class="px-2 basis-5">
+
+            <div class=""><a href="{{ url('/ssd/search_kategori?kategori=asesor') }}"><button type="button" class="btn  btn-primary   px-5 py-4 w-100 ">
+                    <p class="h4 font-weight-bold text-light">Asesor</p>
+                </button></a></div>
+        </div>
+        <div class="px-2 basis-5">
+
+            <div class=""><a href="{{ url('/ssd/search_kategori?kategori=admin-pt') }}"><button type="button" class="btn  btn-primary   px-3 py-4 w-100 ">
+                    <p class="h4 font-weight-bold text-light">Admin PT</p>
+                </button></a></div>
+        </div>
+        <div class="px-2 basis-5">
+
+            <div class=""><a href="{{ url('/ssd/search_kategori?kategori=all') }}"><button type="button" class="btn  btn-primary   px-5 py-4 w-100 ">
+                    <p class="h4 font-weight-bold text-light">Semua</p>
+                </button></a></div>
+        </div>
     </div>
 </div>
 

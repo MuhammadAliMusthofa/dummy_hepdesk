@@ -28,6 +28,9 @@
   <link rel="stylesheet" href="{{ asset('css/custom.css') }}" />
   <script src="{{ asset('js/index.js')}}"></script>
 
+  
+
+
 </head>
 
 <body id="page-top">
@@ -315,6 +318,8 @@
   {{-- <script src="js/demo/chart-area-demo.js"></script>
   <script src="js/demo/chart-pie-demo.js"></script> --}}
   <script src="{{ asset('js/chatUser.js') }}"></script>
+
+ 
 
   @yield('script')
 
