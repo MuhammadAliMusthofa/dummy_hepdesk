@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class SSD extends Model
 {
@@ -14,6 +15,6 @@ class SSD extends Model
 
     public function users()
     {
-        return $this->hasMany('App\User', 'id_pengguna');
+        return $this->belongsTo('App\User', 'updated_by', 'id_pengguna');
     }
 }

@@ -2,28 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\SSD;
 use Illuminate\Http\Request;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use  Illuminate\Database\Eloquent\Builder;
+use Yajra\Datatables\Datatables;
 
 
 class SSDController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function index(Request $request, $page = null)
     {
         if (Auth::user()->role == 0 ) {
-            $data = SSD::paginate(10);
-            return view('SSD.admin', compact('data'));
+            $data = SSD::with('users')->paginate(!$page ? 10 : $page);
+            return redirect('/ssd/admin/search');
 
         } else if (Auth::user()->role == 1) {
-            $data = SSD::paginate(10);
+            $data = SSD::paginate($page);
             return view('SSD.sdd', compact('data'));
         }
         Auth::logout();
@@ -39,8 +35,9 @@ class SSDController extends Controller
     public function editForm(Request $request, $id)
     
     {
-        $data = SSD::where('id_ssd','=',$id)->first();
-        return view('SSD.form', compact('data'));
+        $data = SSD::with('users')->where('id_ssd','=',$id)->first();
+        $page = "edit";
+        return view('SSD.form', compact('data', 'page'));
     }
 
     
@@ -96,14 +93,52 @@ class SSDController extends Controller
         
     }
 
-    // $query = $request->input('query');
-    // $datas = Tiket::where('id_tiket', 'LIKE', "%$query%")
-    // ->orWhere('tanggal', 'LIKE', "%$query%")
-    // ->orWhere('nama', 'LIKE', "%$query%")
-    // ->orWhere('email', 'LIKE', "%$query%")
-    // ->orWhere('departemen', 'LIKE', "%$query%")
-    // ->orWhere('status', 'LIKE', "%$query%")
-    // ->get();
+
+
+    public function adminShow(Request $request, SSD $sSD, $page = null)
+    {
+        $departemen = array(
+            $request->lldikti,
+        $request->dosen,
+            $request->asesor,
+        $request->perguruan_tinggi,
+        );
+
+
+        $query = SSD::query();
+
+        
+
+        $query->with('Users');
+
+        foreach($departemen as $d){
+            if($d){
+                $query->orWhere("kategori", "=", $d);
+            }    
+        };
+
+        if($request->status != NULL){
+            $query->where("status","=", $request->status);
+        };
+
+        if($request->keluhan){
+            $query->where("pertanyaan","=", $request->keluhan);
+        }
+
+        $query->orderBy('id_ssd','DESC');
+
+        if($page){
+            $data = $query->paginate($page);
+        } else {
+            $data = $query->paginate(10);
+        }
+
+
+        return view('SSD.admin', compact('data','kategori'));
+
+        
+    }
+
     public function search_kategori(Request $request, SSD $sSD)
     {
         $query = SSD::query();
@@ -157,9 +192,10 @@ class SSDController extends Controller
      */
     public function edit(SSD $id_ssd)
     {
-        $data=SSD::where('id_ssd','=', $id)->first();
+        $data=SSD::where('id_ssd','=', $id_ssd)->first();
+        $page = "edit";
         
-        return view('SSD.form',compact('data'));
+        return view('SSD.form',compact('data', 'page'));
     }
 
     /**
@@ -169,7 +205,7 @@ class SSDController extends Controller
      * @param  \App\SSD  $sSD
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, SSD $id_ssd)
+    public function update(Request $request, SSD $sSd, $id )
     {
         
         $data=SSD::where('id_ssd','=', $id)->first();
@@ -183,6 +219,26 @@ class SSDController extends Controller
         return redirect('/ssd')->with('success', 'SSD berhasil diupdate');
     }
 
+    public function hide(Request $request, $id)
+    {
+        $data=SSD::where('id_ssd','=', $id)->first();
+        $data->status = false;
+        
+        $data->save();
+
+        return redirect('/ssd')->with('success_hide', 'Data SSD dinonaktifkan');
+    }
+
+    public function visible(Request $request, $id)
+    {
+        $data=SSD::where('id_ssd','=', $id)->first();
+        $data->status = true;
+        
+        $data->save();
+
+        return redirect('/ssd')->with('success_visible', 'Data SSD diaktifkan');
+    }
+
     public function destroy(Request $request, $id)
     {
         $data=SSD::where('id_ssd','=', $id)->first();
@@ -190,6 +246,18 @@ class SSDController extends Controller
         $data->delete();
 
         return redirect('/ssd')->with('success', 'SSD berhasil dihapus');
+    }
+
+    public function findOne(Request $request, SSD $sSD, $id)
+    {
+            
+            $data=SSD::with('users')->where('id_ssd','=',$id)
+            ->first();
+
+            $page = "detail";
+            // return view('SSD.form', compact('data','page'));
+            dd($data);
+
     }
 
     /**
