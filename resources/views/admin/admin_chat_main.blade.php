@@ -1,4 +1,15 @@
 @if ($tiketsAntrian && $tiketsBerjalan && $tiketsTertunda && $tiketsSelesai)
+@php
+$show = 0;
+foreach ($tiketsAntrian as $tiketAntrian){
+foreach ($tiketAntrian->pesanPerTiket as $pesanPerTiket){
+if($pesanPerTiket->id_pengguna == $tiketAntrian->id_pengguna_user){
+$show = 1;
+}
+}
+}
+@endphp
+@if ($show)
 @foreach ($tiketsAntrian as $tiketAntrian)
 <li class="user pointer px-3 status-0" id="{{ $tiketAntrian->id_tiket }}" hidden>
   <div class="d-flex justify-content-between align-items-center">
@@ -19,8 +30,10 @@
     <div class="ml-auto my-1">
     </div>
   </div>
+  <hr class="m-0">
 </li>
 @endforeach
+@endif
 @foreach ($tiketsBerjalan as $tiket)
 <li class="user pointer px-3 status-{{ $tiket->status }}" id="{{ $tiket->id_tiket }}" hidden>
   <div class="d-flex justify-content-between align-items-center">
@@ -50,6 +63,7 @@
       @endif
     </div>
   </div>
+  <hr class="m-0">
 </li>
 @endforeach
 @foreach ($tiketsTertunda as $tiketTertunda)
@@ -72,6 +86,7 @@
     <div class="ml-auto my-1">
     </div>
   </div>
+  <hr class="m-0">
 </li>
 @endforeach
 @foreach ($tiketsSelesai as $tiketSelesai)
@@ -94,6 +109,7 @@
     <div class="ml-auto my-1">
     </div>
   </div>
+  <hr class="m-0">
 </li>
 @endforeach
 @endif

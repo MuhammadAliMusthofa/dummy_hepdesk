@@ -132,12 +132,8 @@ class AdminChatController extends Controller
     {
         $id_pengguna = Auth::id();
         $adminHelpdesk = AdminHelpdesk::where('id_pengguna', $id_pengguna)->first();
-        $tikets = Tiket::where([
-            'status' => 0,
-            'id_pengguna_admin' => null
-        ])->get();
-        $count = count($tikets);
-        return view('admin.subcontent.home', ['count' => $count, 'adminHelpdesk' => $adminHelpdesk]);
+
+        return view('admin.subcontent.home', ['adminHelpdesk' => $adminHelpdesk]);
     }
 
     public function melayani($active)
@@ -227,7 +223,7 @@ class AdminChatController extends Controller
 
     public function detail($id_tiket)
     {
-        $tiket = Tiket::where('id_tiket', $id_tiket)->first();
+        $tiket = Tiket::where('id_tiket', $id_tiket)->with('pengguna_admin')->first();
         return view('admin.subcontent.detail', ['tiket' => $tiket]);
     }
 

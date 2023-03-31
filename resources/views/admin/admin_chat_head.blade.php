@@ -12,7 +12,7 @@
     $data = ['Antrian', 'Berjalan', 'Tertunda', 'Ditutup'];
     @endphp
     @for ($i = 0; $i < count($data); $i++) <div class="p-2">
-      <button type="button" class="btn btn-sm bg-transparent status" id="{{ $i }}">
+      <button type="button" class="btn btn-sm bg-transparent status text-dark" id="{{ $i }}">
         {{ $data[$i] }}
       </button>
   </div>
@@ -20,8 +20,8 @@
 </div>
 </div>
 <div class="row m-0 third-bg-color">
-  <div class="input-group m-3" data-toggle="collapse" data-target="#collapseFillter" aria-expanded="false"
-    aria-controls="collapseExample">
+  <div id="inputSearch" class="input-group m-3" data-toggle="collapse" data-target="#collapseFillter"
+    aria-expanded="false" aria-controls="collapseExample">
     <div class="input-group-prepend">
       <span class="input-group-text bg-light" id="cari-pesan">
         <i class="fa fa-search" aria-hidden="true"></i>
@@ -30,7 +30,8 @@
     <input type="text" class="form-control querySearch" placeholder="Cari Pesan">
   </div>
 </div>
-<div id="collapseFillter" class="collapse" aria-expanded="false" aria-controls="collapseExample">
+<div id="collapseFillter" class="collapse" aria-expanded="false" aria-controls="collapseExample"
+  style="position: relative; z-index: 9999;">
   <div class="card">
     <div class="card-body text-dark">
       <div class="px-2">

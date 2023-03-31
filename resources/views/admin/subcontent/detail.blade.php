@@ -1,4 +1,4 @@
-<div class="p-4" style="background-color: #D6E2E9">
+<div class="p-2" style="background-color: #D6E2E9">
   <div class="d-flex flex-row justify-content-start">
     <div class="p-2 text-dark d-flex flex-row align-content-center pointer" id="back-pesan">
       <div class="p-2">
@@ -23,77 +23,103 @@
       <p class="m-0">ID Tiket: {{ $tiket->id_tiket }}</p>
     </div>
   </div>
-  <table>
-    <tbody>
-      <tr>
-        <th class="pr-5">
-          <h5>Departement</h5>
-        </th>
-        <td>{{ $tiket->departemen }}</td>
-      </tr>
-      <tr>
-        <th>
-          <h5>Email</h5>
-        </th>
-        <td>{{ $tiket->email }}</td>
-      </tr>
-      <tr>
-        <th>
-          <h5>Direspon oleh</h5>
-        </th>
-        <td>{{ $tiket->id_pengguna_admin }}</td>
-      </tr>
-    </tbody>
-  </table>
-  <hr>
-  <table>
-    <tbody>
-      <tr>
-        <th>
-          <h5>Tentang Obrolan</h5>
-        </th>
-      </tr>
-      <tr>
-        <th>
-          <h5>Dibuat</h5>
-        </th>
-        @php
-        $time=strtotime($tiket->tanggal);
-        @endphp
-        <td>{{ date("d M Y", $time) }}</td>
-      </tr>
-      <tr>
-        <th>
-          <h5>Sisa waktu</h5>
-        </th>
-        @if ($tiket->kadaluarsa == null)
-        <td>-</td>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-5 mb-2">
+        <h5 class="font-weight-bold">Dosen</h5>
+      </div>
+      <div class="col-sm-7 mb-2">
+        <p>242324244</p>
+      </div>
+      <div class="w-100"></div>
+      <div class="col-sm-5 mb-2">
+        <h5 class="font-weight-bold">Peran</h5>
+      </div>
+      <div class="col-sm-7 mb-2">
+        <p>Dosen</p>
+      </div>
+      <div class="w-100"></div>
+      <div class="col-sm-5 mb-2">
+        <h5 class="font-weight-bold">Asal PT</h5>
+      </div>
+      <div class="col-sm-7 mb-2">
+        <p>Universitas x</p>
+      </div>
+      <div class="w-100"></div>
+      <div class="col-sm-5 mb-2">
+        <h5 class="font-weight-bold">Email</h5>
+      </div>
+      <div class="col-sm-7 mb-2">
+        <p>{{ $tiket->email }}</p>
+      </div>
+      <div class="w-100"></div>
+      <div class="col-sm-5 mb-2">
+        <h5 class="font-weight-bold">Direspon Oleh</h5>
+      </div>
+      <div class="col-sm-7 mb-2">
+        @if ($tiket->pengguna_admin)
+        <p>{{ $tiket->pengguna_admin->user_name }}</p>
         @else
-        <td id="sisa_waktu-{{ $tiket->id_tiket }}">00:00</td>
+        <p>Belum ada yang merespon</p>
         @endif
-      </tr>
-      <tr>
-        <th>
-          <h5>Status</h5>
-        </th>
-        <td>
-          @if ($tiket->status == 3)
-          <p>Sesi Berakhir</p>
-          @elseif ($tiket->status == 1 || $tiket->status == 2)
-          @php
-          $data = ['Berjalan', 'Tertunda'];
-          @endphp
-          @for ($j = 1; $j < 3; $j++) @if ($tiket->status == $j)
-            <p>{{ $data[$j-1] }}</p>
-            @endif
-            @endfor
-            @else
-            <p>Dalam Antrian</p>
-            @endif
-        </td>
-      </tr>
-    </tbody>
-  </table>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-sm-5 mb-2">
+        <h5 class="font-weight-bold">Tentang Obrolan</h5>
+      </div>
+      <div class="w-100"></div>
+      <div class="col-sm-5 mb-2">
+        <h5 class="font-weight-bold">Dibuat</h5>
+      </div>
+      <div class="col-sm-7 mb-2">
+        @php
+        $time=strtotime($tiket->created_at);
+        @endphp
+        <p>{{ date('d M Y', $time) }} - {{ date('H:m', $time) }}</p>
+      </div>
+      <div class="w-100"></div>
+      <div class="col-sm-5 mb-2">
+        <h5 class="font-weight-bold">Sisa waktu</h5>
+      </div>
+      <div class="col-sm-7 mb-2">
+        @if ($tiket->kadaluarsa == null)
+        <p>-</p>
+        @else
+        <p id="sisa_waktu-{{ $tiket->id_tiket }}">00:00</p>
+        @endif
+      </div>
+      <div class="w-100"></div>
+      <div class="col-sm-5 mb-2">
+        <h5 class="font-weight-bold">Email</h5>
+      </div>
+      <div class="col-sm-7 mb-2">
+        <p>{{ $tiket->email }}</p>
+      </div>
+      <div class="w-100"></div>
+      <div class="col-sm-5 mb-2">
+        <h5 class="font-weight-bold">Sesi</h5>
+      </div>
+      <div class="col-sm-7 mb-2">
+        @if ($tiket->status == 3)
+        <p>Sesi Berakhir</p>
+        @elseif ($tiket->status == 1 || $tiket->status == 2)
+        @php
+        $data = ['Berjalan', 'Tertunda'];
+        @endphp
+        @for ($j = 1; $j < 3; $j++) @if ($tiket->status == $j)
+          <p>{{ $data[$j-1] }}</p>
+          @endif
+          @endfor
+          @else
+          <p>Dalam Antrian</p>
+          @endif
+      </div>
+    </div>
+  </div>
+
   <div class="d-flex justify-content-md-center pt-4">
     @if ($tiket->status == 0)
     <div class="card-footer position-sticky d-flex justify-content-center">

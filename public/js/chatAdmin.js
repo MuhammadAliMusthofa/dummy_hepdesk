@@ -27,6 +27,9 @@ let fillterDepart = 0;
 // admin active melayani
 let active = localStorage['active'];
 
+// jumlah antrian
+let count;
+
 // select isi pesan yang dicari
 let selectPesan = [];
 let isSelected = '';
@@ -64,7 +67,7 @@ $(document).ready(function () {
       localStorage['sessionDetail'] = 0;
       sessionDetail = 0;
     } else if (data.aksi == 'kirim' && data.nama != id_pengguna) {
-      $(document).find("#pesan").html(`<strong>Pesan Baru dari Id Tiket ${data.nama} : </strong>${data.message}`);
+      $(document).find("#pesan").html(`<strong>Pesan Baru dari Id Tiket ${data.nama}</strong>`);
       $(document).find("#notifikasiPopup").click();
     }
 
@@ -81,13 +84,6 @@ $(document).ready(function () {
   });
 
   admin_chat_head();
-  if (parseInt(sessionDetail)) {
-    detail();
-  } else if (parseInt(id_tiket)) {
-    pesan();
-  } else {
-    home();
-  }
 
   // notifikasi
   $(document).find("#pesan").hide();
@@ -99,8 +95,10 @@ $(document).ready(function () {
 
   $(document).on('click', '.status', function () {
     $('.status').removeClass('selectedStatus');
+    $('.status').removeClass('font-weight-bold');
     $('.status').prop('disabled', false);
     $(this).addClass('selectedStatus');
+    $(this).addClass('font-weight-bold');
     $(this).prop('disabled', true);
     localStorage['statusChat'] = $(this).attr('id');
     statusChat = $(this).attr('id');
@@ -128,6 +126,16 @@ $(document).ready(function () {
   });
 
   // searching list pesan jika admin sedang melayani saja
+
+  // jika input cari sudah ditekan tidak bisa menutup box fillter
+  $(document).on('click', '#inputSearch', function () {
+    // 'data-toggle="collapse" data-target="#collapseFillter" aria-expanded="false" aria-controls="collapseExample"'
+    $(this).attr('data-toggle', false);
+    $(this).attr('data-target', false);
+    $(this).attr('aria-expanded', false);
+    $(this).attr('aria-controls', false);
+  });
+
   $(document).on('keyup', '.querySearch', function (e) {
     querySearch = $(this).val();
 
@@ -139,6 +147,10 @@ $(document).ready(function () {
 
   $(document).on('click', '#btnApplyFillter', function () {
     $('#collapseFillter').collapse('hide');
+    $('#inputSearch').attr('data-toggle', 'collapse');
+    $('#inputSearch').attr('data-target', '#collapseFillter');
+    $('#inputSearch').attr('aria-expanded', 'false');
+    $('#inputSearch').attr('aria-controls', 'collapseExample');
     if (querySearch || fillterNama || fillterWaktu || fillterDepart) {
       search();
     }
@@ -400,11 +412,19 @@ function admin_chat_head() {
       $('#contentPesan').html(data);
       $('.status').each(function () {
         if (statusChat == $(this).attr('id')) {
-          $(this).addClass('selectedStatus')
+          $(this).addClass('selectedStatus');
           $(this).prop('disabled', true);
         };
       });
       admin_chat_main();
+
+      if (parseInt(sessionDetail)) {
+        detail();
+      } else if (parseInt(id_tiket)) {
+        pesan();
+      } else {
+        home();
+      }
     },
     complete: function () {
       btnFillter();
@@ -442,6 +462,7 @@ function admin_chat_main() {
           $('.status-' + i).attr('hidden', true);
         }
       }
+      count = $(document).find('#list-pesan').find('li.status-0').length;
     },
     complete: function () {
       timer();
@@ -558,9 +579,14 @@ function home() {
     success: function (data) {
       $('#subcontent').html(data);
 
+
       if (statusChat != 0) {
         $('#home').html('Layanan Informasi Helpdesk')
       }
+
+    },
+    complete: function () {
+      $('#countHome').html(count);
     }
   });
 }

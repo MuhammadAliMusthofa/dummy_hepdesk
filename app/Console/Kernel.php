@@ -28,6 +28,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        // $schedule->call(function () {
+        //     info('sudah berjalan');
+        // })->everyMinute();
         $tikets = Tiket::where('status', 1)->get();
         foreach ($tikets as $tiket) {
             $kadalurasa = strtotime($tiket->kadaluarsa);
