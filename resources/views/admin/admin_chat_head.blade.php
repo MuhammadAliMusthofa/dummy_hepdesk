@@ -30,8 +30,7 @@
     <input type="text" class="form-control querySearch" placeholder="Cari Pesan">
   </div>
 </div>
-<div id="collapseFillter" class="collapse" aria-expanded="false" aria-controls="collapseExample"
-  style="position: relative; z-index: 9999;">
+<div id="collapseFillter" class="collapse" aria-expanded="false" aria-controls="collapseExample">
   <div class="card">
     <div class="card-body text-dark">
       <div class="px-2">
