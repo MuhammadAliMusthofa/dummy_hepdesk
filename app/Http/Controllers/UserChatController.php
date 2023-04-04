@@ -81,7 +81,7 @@ class UserChatController extends Controller
                 'kadaluarsa' => null
             ]);
 
-            $this->notifikasi->index($tiket->id_tiket, $tiket->nama, 'Admin mengakhiri obrolan', 'diakhiri');
+            $this->notifikasi->index($tiket->id_tiket, $tiket->nama, 'User mengakhiri obrolan ini', 'diakhiri');
 
             return response('pesan diakhiri');
         } else {

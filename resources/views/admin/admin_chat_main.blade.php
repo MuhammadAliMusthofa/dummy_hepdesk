@@ -1,5 +1,5 @@
 @if ($tiketsAntrian && $tiketsBerjalan && $tiketsTertunda && $tiketsSelesai)
-@php
+<?php
 $show = 0;
 foreach ($tiketsAntrian as $tiketAntrian){
 foreach ($tiketAntrian->pesanPerTiket as $pesanPerTiket){
@@ -8,7 +8,7 @@ $show = 1;
 }
 }
 }
-@endphp
+?>
 @if ($show)
 @foreach ($tiketsAntrian as $tiketAntrian)
 <li class="user pointer px-3 status-0" id="{{ $tiketAntrian->id_tiket }}" hidden>

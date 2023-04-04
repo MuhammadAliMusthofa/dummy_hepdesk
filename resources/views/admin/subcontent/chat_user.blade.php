@@ -55,7 +55,7 @@
             @php
             $time=strtotime($pesanPerTiket->created_at);
             @endphp
-            <p>{{ date("m:i", $time) }}</p>
+            <p>{{ date("H:i", $time) }}</p>
           </div>
         </div>
       </li>
@@ -68,6 +68,13 @@
     <p class="pb-4">Sesi telah berakhir</p>
   </div>
   @elseif ($tiket->status == 2 || $tiket->status == 1)
+  @if ($tiket->status == 2)
+  <div class="d-flex justify-content-center">
+    <p class="p-2">
+      <i>Anda</i> telah mengubah status obrolan menjadi tertunda.
+    </p>
+  </div>
+  @endif
   <div id="kirimPesan" class="card-footer position-sticky secondary-bg-color">
     <div class="form-group d-flex justify-content-between align-items-center m-0">
       <textarea name="query" id="query" class="form-control mr-2 ml-2" placeholder="Ketik pesan disini"></textarea>

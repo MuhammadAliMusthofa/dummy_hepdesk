@@ -40,15 +40,16 @@
         <h5 class="text-dark">{{ date("d M Y", $time) }}</h5>
     </div>
 </div>
-<div class="card-body h-100 d-flex flex-column-reverse" style="max-height: 80vh; overflow-y: auto;" id="scrolling">
+<div class="card-body d-flex flex-column-reverse" style="max-height: 70vh; overflow-y: auto;" id="scrolling">
     <ul class=" list-unstyled">
         @foreach ($tiket->pesanPerTiket as $pesanPerTiket)
-        @if ($pesanPerTiket->id_pengguna == $tiket->id_pengguna_admin || $pesanPerTiket->id_pengguna == null)
-        <li class="media my-3" style="width:35%">
-            <div id="chat-left" class="media-body">
-                <p class="mt-0 mb-1 p-2">{{ $pesanPerTiket->pesan }}</p>
-
-                <div class="ml-2 d-flex justify-content-end align-items-end mr-2 mt-2">
+        @if ($tiket->id_pengguna_user == $pesanPerTiket->id_pengguna)
+        <li class="media my-3 d-flex flex-row-reverse">
+            <div id="chat-right" class="media-body">
+                <p class="mt-0 mb-1 p-2">
+                    {!! nl2br($pesanPerTiket->pesan) !!}
+                </p>
+                <div class="mr-2 d-flex justify-content-end mt-auto">
                     @php
                     $time=strtotime($pesanPerTiket->created_at);
                     @endphp
@@ -57,12 +58,11 @@
             </div>
         </li>
         @else
-        <li class="media my-3 d-flex flex-row-reverse">
-            <div id="chat-right" class="media-body">
-                <p class="mt-0 mb-1 p-2">
-                    {{ $pesanPerTiket->pesan }}
-                </p>
-                <div class="mr-2 d-flex justify-content-end mt-auto">
+        <li class="media my-3">
+            <div id="chat-left" class="media-body">
+                <p class="mt-0 mb-1 p-2">{!! nl2br($pesanPerTiket->pesan) !!}</p>
+
+                <div class="ml-2 d-flex justify-content-end align-items-end mr-2 mt-2">
                     @php
                     $time=strtotime($pesanPerTiket->created_at);
                     @endphp

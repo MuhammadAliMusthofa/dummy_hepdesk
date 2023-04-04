@@ -70,7 +70,7 @@ $pesanUser = 1;
     @endif
   </ul>
 </div>
-@if ($tiket->status == 1 || $tiket->status == 2 || $tiket->id_pengguna_admin || count($tiket->pesanPerTiket) == 2)
+@if ($tiket->status == 1 || $tiket->status != 2 || count($tiket->pesanPerTiket) == 2)
 <div id="kirimPesan" class="card-footer position-sticky secondary-bg-color">
   <div class="form-group d-flex justify-content-between align-items-center m-0">
     <textarea name="query" id="query" class="form-control mr-2 ml-2" placeholder="Ketik pesan disini"></textarea>

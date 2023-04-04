@@ -93,13 +93,6 @@
       </div>
       <div class="w-100"></div>
       <div class="col-sm-5 mb-2">
-        <h5 class="font-weight-bold">Email</h5>
-      </div>
-      <div class="col-sm-7 mb-2">
-        <p>{{ $tiket->email }}</p>
-      </div>
-      <div class="w-100"></div>
-      <div class="col-sm-5 mb-2">
         <h5 class="font-weight-bold">Sesi</h5>
       </div>
       <div class="col-sm-7 mb-2">

@@ -57,12 +57,12 @@ $(document).ready(function () {
       $(document).find("#pesan").html(`<strong>${data.message}</strong>`);
       $(document).find("#notifikasiPopup").click();
     } else if (data.aksi == 'waktu habis') {
-      $(document).find("#pesan").html(`<strong>${data.message} dengan ${data.nama}</strong>`);
+      $(document).find("#pesan").html(`<strong>${data.message}</strong>`);
       $(document).find("#notifikasiPopup").click();
       localStorage['sessionDetail'] = 0;
       sessionDetail = 0;
     } else if (data.aksi == 'diakhiri') {
-      $(document).find("#pesan").html(`<strong>${data.message} dengan ${data.nama}</strong>`);
+      $(document).find("#pesan").html(`<strong>${data.message} oleh ${data.nama}</strong>`);
       $(document).find("#notifikasiPopup").click();
       localStorage['sessionDetail'] = 0;
       sessionDetail = 0;
@@ -314,9 +314,10 @@ function pesan() {
     cache: false,
     success: function (data) {
       $('#subcontent').html(data);
-      $(document).find('.query').val(listPesan);
       $('#formSearch').removeClass('d-flex');
       $('#formSearch').addClass('d-none');
+      $('#query').val(listPesan);
+      $('#query').focus();
     },
   });
 }

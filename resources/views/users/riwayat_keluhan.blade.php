@@ -6,23 +6,24 @@
   <div class="card-header">
     <h5 class="card-title">Riwayat Keluhan</h5>
     <div class="d-flex justify-content-between">
-      <form action="{{ route('search.riwayat') }}"  class="input-group mb-3 col-md-4 p-0" method="GET">
-  
-        
-          <input id="keluhan" type="text" name="query" class="form-control bg-light" placeholder="Cari keluhan ...."
-            aria-label="Recipient's username" aria-describedby="basic-addon2">
-          <div class="input-group-append ">
-  
-              <button type="submit" style="background:#eaecf4; border:0.2px solid #d1d3e2" class="btn "><i
-                class="fas fa-search"></i></button>
-  
-         
+      <form action="{{ route('search.riwayat') }}" class="input-group mb-3 col-md-4 p-0" method="GET">
+
+
+        <input id="keluhan" type="text" name="query" class="form-control bg-light" placeholder="Cari keluhan ...."
+          aria-label="Recipient's username" aria-describedby="basic-addon2">
+        <div class="input-group-append ">
+
+          <button type="submit" style="background:#eaecf4; border:0.2px solid #d1d3e2" class="btn "><i
+              class="fas fa-search"></i></button>
+
+
         </div>
       </form>
 
-      
-        <a href="{{ URL::previous() }}" class="btn btn-outline-secondary text-dark mb-3 " id="btn-back"><i class="fa fa-arrow-left text-dark pr-1"></i>Kembali</a>
-     
+
+      <a href="{{ URL::previous() }}" class="btn btn-outline-secondary text-dark mb-3 " id="btn-back"><i
+          class="fa fa-arrow-left text-dark pr-1"></i>Kembali</a>
+
     </div>
 
     <table id="tabelrekap" class="table table-striped text-center">
@@ -40,8 +41,12 @@
         @foreach ($tikets as $tiket )
         <tr>
           <th scope="row">{{ $tiket->id_tiket }}</th>
-          <td>{{$tiket->tanggal}}</td>
-          <td>{{ $tiket->departemen }}</td>
+          <?php
+          $date=strtotime($tiket->tanggal);
+          ?>
+          <td>{{ date("d M Y", $date) }}</td>
+          {{-- <td>{{ $tiket->departemen }}</td> --}}
+          <td>Dosen</td>
 
           @if ($tiket->status == 3)
           <td><a href="{{ route('user.riwayat.detail', $tiket->id_tiket) }}" class="btn btn-primary text-light"><i

@@ -65,6 +65,13 @@ $(document).ready(function () {
           sessionDetail = 0;
           // delay
           window.location = '/user/riwayat';
+        } else if (data.aksi == 'diakhiri') {
+          $(document).find('#pesanPengingat').html(data.message);
+          $(document).find('#btn-alert').attr('href', '/user/riwayat');
+          $(document).find('#btn-alert').html('Lihat Riwayat');
+          $(document).find('#notifikasi').click();
+          // delay
+          window.location = '/user/riwayat';
         }
 
         pesan();
@@ -181,7 +188,8 @@ function pesan() {
     cache: false,
     success: function (data) {
       $('#subcontent').html(data);
-      $(document).find('.query').val(isiPesan);
+      $('#query').val(isiPesan);
+      $('#query').focus();
     }
   });
 }
@@ -290,6 +298,9 @@ function akhiri() {
     url: '/user/pesan/akhiri/' + id_tiket,
     data: '',
     cache: false,
+    success: function () {
+      window.location = '/user/riwayat';
+    }
   });
 }
 

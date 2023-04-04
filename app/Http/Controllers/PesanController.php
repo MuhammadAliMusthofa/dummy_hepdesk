@@ -26,21 +26,24 @@ class PesanController extends Controller
             'status' => 2,
         ]);
 
+        $thisTiket = Tiket::where([
+            'id_tiket' => $id_tiket,
+        ])->first();
+
         Pesan::create([
             'id_tiket' => $id_tiket,
             'id_pengguna' => $id_pengguna,
             'pesan' => $pesan
         ]);
 
-        $pesanIf = Pesan::where('id_tiket', $id_tiket)->get();
-        if (count($pesanIf)) {
+        if ($thisTiket->id_pengguna_admin == null) {
             Pesan::create([
                 'id_tiket' => $id_tiket,
                 'pesan' => 'Kami telah menampung pertanyaan anda. Mohon menunggu sebentar, kami akan segera merespons anda'
             ]);
         }
 
-        if ($tiket->get()) {
+        if ($tiket->get() && $thisTiket->id_pengguna_admin == $id_pengguna) {
             $time = Carbon::now()->addMinute(30)->format('Y-m-d H:i:s');
             $tiket->update([
                 'status' => 1,

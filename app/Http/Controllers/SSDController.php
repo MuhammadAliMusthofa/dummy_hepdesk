@@ -20,7 +20,7 @@ class SSDController extends Controller
 
         } else if (Auth::user()->role == 1) {
             $data = SSD::paginate($page);
-            return view('SSD.sdd', compact('data'));
+            return view('SSD.ssd', compact('data'));
         }
         Auth::logout();
         return redirect('/login');
