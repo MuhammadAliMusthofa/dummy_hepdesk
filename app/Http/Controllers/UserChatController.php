@@ -51,8 +51,6 @@ class UserChatController extends Controller
                 'pesan' => 'Silahkan Melengkapi informasi berikut:<br />Nama:<br /> NIDN:<br /> Instansi:<br /> Versi SISTER:<br /> Keluhan:'
             ]);
 
-
-            $this->notifikasi->index($tiket->id_tiket, $user->user_name, 'Antrian baru', 'membuat tiket');
         }
 
         return view('users.pesan', ['tiket' => $tiket]);
@@ -68,6 +66,11 @@ class UserChatController extends Controller
             'users.isi_pesan',
             ['tiket' => $tiket]
         );
+    }
+
+    public function test()
+    {
+        # code...
     }
 
     public function akhiri($id_tiket)

@@ -77,6 +77,8 @@ Route::get('/notifikasi/{id_tiket}/{pesan}/{aksi}', 'NotifikasiController@index'
 // ssd home
 Route::get('/ssd', 'SSDController@index')->name('ssd');
 
+Route::get('pesan/{id_tiket}/{nama}/{pesan}/{aksi}', 'NotifikasiController@index')->name('pesan.notifikasi');
+
 Route::group(
     ['middleware' => ['auth']],
     function () {

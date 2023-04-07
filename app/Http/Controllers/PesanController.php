@@ -7,6 +7,7 @@ use App\Models\Pesan;
 use App\Models\Tiket;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PesanController extends Controller
 {
@@ -17,6 +18,7 @@ class PesanController extends Controller
     }
     public function kirimPesan(Request $request)
     {
+        $user = Auth::user();
         $id_tiket = $request->id_tiket;
         $id_pengguna = $request->id_pengguna;
         $pesan = $request->pesan;
@@ -37,6 +39,8 @@ class PesanController extends Controller
         ]);
 
         if ($thisTiket->id_pengguna_admin == null) {
+            $this->notifikasi->index($id_tiket, $user->user_name, 'Antrian baru', 'membuat tiket');
+
             Pesan::create([
                 'id_tiket' => $id_tiket,
                 'pesan' => 'Kami telah menampung pertanyaan anda. Mohon menunggu sebentar, kami akan segera merespons anda'
